@@ -16,6 +16,7 @@ public class ConfigMensaje implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="ID", nullable = true)
 	private int id;
 
 	@Column(name="CORRELACION_CODIGOS")
