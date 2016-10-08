@@ -16,7 +16,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableJpaRepositories("org.repositorios")
 @EntityScan("org.model")
-@ComponentScan("org.aplicacion")
+@ComponentScan( basePackages = {"org.aplicacion", "org.controller"})
 public class Aplicacion {
 
 	private static final Logger log = LoggerFactory.getLogger(Aplicacion.class);
