@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+ 
+    <title>Mensajes OML</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h2>Pagina para la generación de mensajes HL7 del tipo OML</h2>
+<br/>
+
+<form th:object="${mensajeHL7}" th:action="@{/ResultadoMensajesHL7}" method="post">
+	<input type="text" th:field="*{mensaje}" />
+	<button type="submit">Generar Mensaje</button>
+</form>
+
+
+</body>
+</html>

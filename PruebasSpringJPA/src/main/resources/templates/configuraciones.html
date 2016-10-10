@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>Spring Framework Guru</title>
+
+</head>
+<body>
+
+    <div th:if="${not #lists.isEmpty(configuraciones)}">
+        <h2>Lista de configuraciones</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Mensaje Origen</th>
+                <th>Sistema Origen</th>
+                <th>Sistema Destino</th>
+            </tr>
+            <tr th:each="ConfigMensaje : ${configuraciones}">
+<!--                 <td th:text="${ConfigMensaje.id}"><a href="/product/${product.id}">Id</a></td> -->
+                <td th:text="${ConfigMensaje.mensajeOrigen}">Product Id</td>
+                <td th:text="${ConfigMensaje.sistemaOrigen}">descirption</td>
+                <td th:text="${ConfigMensaje.sistemaDestino}">price</td>
+                <!-- <td><a th:href="${'/product/' + product.id}">View</a></td>
+                <td><a th:href="${'/product/edit/' + product.id}">Edit</a></td>
+                <td><a th:href="${'/product/delete/' + product.id}">Delete</a></td> -->
+            </tr>
+        </table>
+
+    </div>
+
+
+</body>
+</html>
