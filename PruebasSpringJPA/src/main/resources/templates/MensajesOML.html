@@ -4,16 +4,48 @@
  
     <title>Mensajes OML</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen" />
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+    <link href="../static/css/guru.css"
+          th:href="@{css/guru.css}" rel="stylesheet" media="screen"/>
 </head>
 <body>
-<h2>Pagina para la generación de mensajes HL7 del tipo OML</h2>
-<br/>
+<div class="container">
+    <div class="jumbotron">
+		<h2>Pagina para la generación de mensajes HL7 del tipo OML</h2>
+	</div>
 
-<form th:object="${mensajeHL7}" th:action="@{/ResultadoMensajesHL7}" method="post">
-	<input type="text" th:field="*{mensaje}" />
-	<button type="submit">Generar Mensaje</button>
-</form>
+	<form class="form-horizontal" th:object="${mensajeHL7}" th:action="@{/ResultadoMensajesHL7}" method="post">
+		
+		<div class="form-group">
+    		<label for="sistemaOrigen" class="col-sm-2 control-label">Sistema Origen:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="sistemaOrigen" placeholder="sistemaOrigen"/>
+    		</div>
+    	</div>	
+    	<div class="form-group">
+    		<label for="sistemaDestino" class="col-sm-2 control-label">Sistema Destino:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="sistemaDestino" placeholder="sistemaDestino"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="correlativo" class="col-sm-2 control-label">Correlativo mensaje:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="correlativo" placeholder="Identificativo único del mensaje"/>
+    		</div>
+  		</div>
+		
+		<input type="text" th:field="*{mensaje}" />
+		<button type="submit">Generar Mensaje</button>
+		
+		
+		
+	</form>
 
-
+</div>
 </body>
 </html>
