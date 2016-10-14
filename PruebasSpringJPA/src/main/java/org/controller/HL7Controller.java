@@ -37,7 +37,7 @@ public class HL7Controller {
 	
 	@RequestMapping(value = "/ResultadoMensajesHL7", method = RequestMethod.POST)
 	public String ResultadoMensajesHL7(Model model, MensajeHL7 mensaje) {
-		mensaje.setMensaje(hl7Service.convertirMensajeOML(mensaje.getMensaje()));
+		mensaje.setMensaje(hl7Service.convertirMensajeOML(mensaje.getSistemaOrigen(), mensaje.getSistemaDestino(), mensaje.getMensaje()));
 		model.addAttribute("mensaje", mensaje);
 		return "ResultadoMensajesHL7";
 	}

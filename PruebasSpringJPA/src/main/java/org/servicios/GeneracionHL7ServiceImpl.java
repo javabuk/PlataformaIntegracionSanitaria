@@ -19,7 +19,7 @@ public class GeneracionHL7ServiceImpl implements GeneracionHL7Service {
 	private final static Logger slf4jLogger = LoggerFactory.getLogger(GeneracionHL7ServiceImpl.class);
 	
 	@Override
-	public String convertirMensajeOML(String texto) {
+	public String convertirMensajeOML(String sistemaOrigen, String sistemaDestino, String texto) {
 		 try {
 				// TODO Auto-generated method stub
 				ADT_A01 adt = new ADT_A01();
@@ -29,7 +29,8 @@ public class GeneracionHL7ServiceImpl implements GeneracionHL7Service {
 				// Populate the MSH Segment
 				MSH mshSegment = adt.getMSH();
 				
-				mshSegment.getMsh3_SendingApplication().getHd1_NamespaceID().setValue("INFO33");
+				mshSegment.getMsh3_SendingApplication().getHd1_NamespaceID().setValue(sistemaOrigen);
+				mshSegment.getMsh5_ReceivingApplication().getHd1_NamespaceID().setValue(sistemaDestino);
 				mshSegment.getMsh7_DateTimeOfMessage().getTs1_Time().setValue("20160627122000");
 				//mshSegment.getSendingApplication().getNamespaceID().setValue("TestSendingSystem");
 				//mshSegment.getSequenceNumber().setValue("123");
@@ -48,6 +49,7 @@ public class GeneracionHL7ServiceImpl implements GeneracionHL7Service {
 				Escaping escape = config.getEscaping();
 				Parser parser = context.getPipeParser();
 				String encodedMessage = parser.encode(adt);
+				texto = encodedMessage;
 				//System.out.println("Printing ER7 Encoded Message:");
 				//System.out.println(encodedMessage.toCharArray());
 				//System.out.println(encodedMessage.toString());
@@ -56,7 +58,7 @@ public class GeneracionHL7ServiceImpl implements GeneracionHL7Service {
 				// Next, let's use the XML parser to encode as XML
 				parser = context.getXMLParser();
 				encodedMessage = parser.encode(adt);
-				texto = encodedMessage;
+				//texto = encodedMessage;
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
