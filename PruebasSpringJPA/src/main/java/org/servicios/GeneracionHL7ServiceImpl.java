@@ -50,9 +50,7 @@ public class GeneracionHL7ServiceImpl implements GeneracionHL7Service {
 				Parser parser = context.getPipeParser();
 				String encodedMessage = parser.encode(adt);
 				texto = encodedMessage;
-				//System.out.println("Printing ER7 Encoded Message:");
-				//System.out.println(encodedMessage.toCharArray());
-				//System.out.println(encodedMessage.toString());
+				
 				slf4jLogger.info(encodedMessage);
 				slf4jLogger.info(replaceNewlines(encodedMessage));
 				// Next, let's use the XML parser to encode as XML
