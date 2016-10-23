@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Vista General 3</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen" />
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+    <link href="../static/css/guru.css"
+          th:href="@{css/guru.css}" rel="stylesheet" media="screen"/>
+	<style>
+		.list-group-horizontal .list-group-item {
+    display: inline-block;
+}
+.list-group-horizontal .list-group-item {
+	margin-bottom: 0;
+	margin-left:-4px;
+	margin-right: 0;
+}
+.list-group-horizontal .list-group-item:first-child {
+	border-top-right-radius:0;
+	border-bottom-left-radius:4px;
+}
+.list-group-horizontal .list-group-item:last-child {
+	border-top-right-radius:4px;
+	border-bottom-left-radius:0;
+}
+	</style>
+	
+</head>
+<body>
+<div class="container">
+	<div class="row" style="padding-top:10px">
+		
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-center">
+	
+            <div class="list-group list-group-horizontal">
+                <a href="#" class="list-group-item active">Mapa de integración</a>
+                <a href="#" class="list-group-item">Catálogos</a>
+                <!-- <textarea rows="10" cols="50"  th:field="*{datosLogin.usuario}"> </textarea> -->
+            </div>
+			
+        </div>
+
+	</div>
+</div>
+</body>
+</html>

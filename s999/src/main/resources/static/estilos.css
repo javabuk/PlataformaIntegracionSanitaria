@@ -1,0 +1,11 @@
+.span4 > div, .span8 > div
+{
+   background-color:#eee;
+   border: 1px solid #888;
+   border-radius:3px;
+}
+.jorge {
+	border: 1px solid;
+	border-top:0 ;
+	border-width:1px;
+}
