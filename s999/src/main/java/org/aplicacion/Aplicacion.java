@@ -25,9 +25,10 @@ public class Aplicacion {
 		SpringApplication.run(Aplicacion.class);
 	}
 	
-	@Bean
+	
+	/*@Bean
 	public CommandLineRunner demo(ConfigMensajeRepositorio repository) {
 		return (args) -> {
 		};
-	}
+	}*/
 }

@@ -4,70 +4,87 @@
   <artifactId>s999</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   
-  <parent>
+   <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.4.1.RELEASE</version>
-    </parent>
+    </parent> 
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>1.7</java.version>
     </properties>
 
     <dependencies>
+    	<!-- <dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-parent</artifactId>
+    		<version>1.4.1.RELEASE</version>
+		</dependency> -->
+    
     	<!-- Dependencia para el acceso a BBDD por JPA -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>1.4.1.RELEASE</version>
         </dependency>
         <!-- //////////////////////////////// -->
         <!-- Dependencia para los WS de REST -->
         <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<version>1.4.1.RELEASE</version>
 		</dependency>
 		<!-- //////////////////////////////// -->
 		<!-- Dependencia para la aplicación web -->
 		<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <version>1.4.1.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
+            <version>1.4.1.RELEASE</version>
             <optional>true</optional>
         </dependency>
         <!-- //////////////////////////////// -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <version>1.4.191</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>6.0.4</version>
         </dependency>
         <dependency>
 			<groupId>com.jayway.jsonpath</groupId>
 			<artifactId>json-path</artifactId>
+			<version>2.2.0</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- Dependencia para implementar serivcios web SOAP -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-ws</artifactId>
+			<version>1.4.1.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>wsdl4j</groupId>
 			<artifactId>wsdl4j</artifactId>
+			<version>1.6.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<version>1.4.1.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
     		<groupId>org.springframework.boot</groupId>
     		<artifactId>spring-boot</artifactId>
+    		<version>1.4.1.RELEASE</version>
 		</dependency>
         <!-- //////////////////////////////// -->
         <!-- Dependencias para la mensajeria HL7 -->
@@ -121,11 +138,20 @@
     </build>
 
     <repositories>
-        <repository>
+    	<!-- <repository>
+            <id>spring-libs-milestone</id>
+            <url>https://repo.spring.io/libs-milestone</url>
+        </repository> -->
+         <repository>
             <id>spring-releases</id>
             <name>Spring Releases</name>
             <url>https://repo.spring.io/libs-release</url>
-        </repository>
+        </repository> 
+        <!-- <repository>
+    		<id>spring-repo</id>
+    		<name>Spring Repository</name>
+    		<url>http://repo.spring.io/release</url>
+		</repository>-->
         <repository>
             <id>org.jboss.repository.releases</id>
             <name>JBoss Maven Release Repository</name>
