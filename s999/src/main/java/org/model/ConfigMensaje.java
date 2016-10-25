@@ -8,7 +8,7 @@ import javax.persistence.*;
  * The persistent class for the CONFIG_MENSAJES database table.
  * 
  */
-@Entity
+//@Entity 
 @Table(name="CONFIG_MENSAJES")
 @NamedQuery(name="ConfigMensaje.findAll", query="SELECT c FROM ConfigMensaje c")
 public class ConfigMensaje implements Serializable {
