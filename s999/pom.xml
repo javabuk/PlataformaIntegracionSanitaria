@@ -126,6 +126,13 @@
 			<version>2.1.4</version>
 		</dependency>
         <!-- //////////////////////////////// -->
+        <!-- Driver de acceso a Oracle -->
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>11.2.0.3</version>
+        </dependency>
+        <!-- //////////////////////////////// -->
     </dependencies>
 
     <build>
