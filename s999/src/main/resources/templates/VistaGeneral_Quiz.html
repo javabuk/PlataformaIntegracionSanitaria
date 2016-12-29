@@ -26,11 +26,17 @@ function getCheckedRadio(nombre) {
         	button = null;
         }
     }
+	// Deshabilitamos el boton
+	var idBoton = nombre.concat('button');
+	document.getElementById(idBoton).disabled = true;
+	
 	if(button !=null ){
 		if (button.value == 'true'){
-			alert('acierto');
+			//alert('acierto');
+			document.getElementById(idBoton).style.backgroundColor="#4ef442";
 		} else {
-			alert('error');
+			//alert('error');
+			document.getElementById(idBoton).style.backgroundColor="#f44242";
 			var nombreTextarea = nombre.concat('textarea');
 			document.getElementById(nombreTextarea).setAttribute('style','visibility:visible');
 		}
@@ -39,16 +45,13 @@ function getCheckedRadio(nombre) {
 	for (var i = 0; i < radio_group.length; i++) {
         var button = radio_group[i];
         var idLabel = button.id.concat('label');
-        alert(idLabel);
         if (button.value == 'true') {
         	document.getElementById(idLabel).style.color = "green";
         }else{
         	document.getElementById(idLabel).style.color = "red";
         }
     }
-	// Deshabilitamos el boton
-	var idBoton = nombre.concat('button');
-	document.getElementById(idBoton).disabled = true;
+	
 	
 }
 /*]]>*/
