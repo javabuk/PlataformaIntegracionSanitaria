@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Insert title here</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen" />
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link href="../static/css/guru.css"
+          th:href="@{css/tabs.css}" rel="stylesheet" media="screen"/>
+	<style>
+</style>
+<script th:inline="javascript">
+/*<![CDATA[*/
+function getCheckedRadio(nombre) {
+	var radio_group = document.getElementsByName(nombre);
+    var button;
+	for (var i = 0; i < radio_group.length; i++) {
+        var button = radio_group[i];
+        if (button.checked) {
+            break;
+        }else{
+        	button = null;
+        }
+    }
+	if(button !=null ){
+		if (button.value == 'true'){
+			alert('acierto');
+		} else {
+			alert('error');
+		}
+	}
+}
+/*]]>*/
+</script>
+</head>
+<body>
+<div class="container">
+	<!-- <div class="row" style="padding-top:10px">
+		
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-center">
+	
+            <div class="list-group list-group-horizontal">
+                <a href="#" class="list-group-item active">Mapa de integración</a>
+                <a href="#" class="list-group-item">Catálogos</a>
+                <textarea rows="10" cols="50"  th:field="*{datosLogin.usuario}"> </textarea>
+            </div>
+			
+        </div>
+
+	</div> 
+		<ul class="nav nav-pills">
+			<li role="presentation" class="active"><a href="#">Home</a></li>
+			<li role="presentation"><a href="#">Profile</a></li>
+			<li role="presentation"><a href="#">Messages</a></li>
+		</ul>-->
+		
+		
+		
+		<h2>Jorquiz</h2></div>
+<div id="exTab3" class="container">	
+<ul  class="nav nav-pills">
+			<li class="active">
+        <a  href="#1b" data-toggle="tab">Añadir Preguntas</a>
+			</li>
+			<li><a href="#2b" data-toggle="tab">Using nav-pills</a>
+			</li>
+			<li><a href="#3b" data-toggle="tab">Applying clearfix</a>
+			</li>
+  		<li><a href="#4a" data-toggle="tab">Background color</a>
+			</li>
+		</ul>
+
+			<div class="tab-content clearfix">
+			  <div class="tab-pane active" id="1b">          
+          <div th:each="pregunta, stat : ${preguntas.getPreguntas()}">   
+          	<label th:text="${pregunta.texto}"></label>      
+          	<br></br>
+  				<div th:each="ty, statResp : ${pregunta.respuestas}">
+    				<input type="radio" th:name="${pregunta.id}" th:value="${ty.verdadero}" th:id="${pregunta.id + statResp.count} "/>
+    				<label th:text="${ty.respuesta}">Wireframe</label>    				
+  				</div>
+			<br></br>			
+			<input type="button" value="Responder" th:onclick="'javascript:getCheckedRadio(\'' + ${pregunta.id} + '\');'"/>
+			
+			<br></br> 
+			<br></br> 
+    		<!-- <input type="text" th:name="|preguntas[${stat.index}]|" th:value="${pregunta.texto}"/> -->
+  		</div>
+				</div>
+				<div class="tab-pane" id="2b">
+          <h3>We use the class nav-pills instead of nav-tabs which automatically creates a background color for the tab</h3>
+				</div>
+        <div class="tab-pane" id="3b">
+          <h3>We applied clearfix to the tab-content to rid of the gap between the tab and the content</h3>
+				</div>
+          <div class="tab-pane" id="4b">
+          <h3>We use css to change the background color of the content to be equal to the tab</h3>
+				</div>
+			</div>
+	</div>
+</body>
+</html>
