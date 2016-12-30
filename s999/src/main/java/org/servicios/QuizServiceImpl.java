@@ -75,4 +75,9 @@ public class QuizServiceImpl implements QuizService {
 		return this.categoriaRepository.findAll();
 	}
 
+	@Override
+	public void savePregunta(Pregunta pregunta) {
+		this.preguntaRepository.save(pregunta);		
+	}
+
 }

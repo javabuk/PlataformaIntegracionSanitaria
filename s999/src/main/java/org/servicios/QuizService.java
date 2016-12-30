@@ -23,4 +23,6 @@ public interface QuizService {
 	
 	public List<Categoria> findAllCategorias();
 	
+	public void savePregunta(Pregunta pregunta);
+	
 }

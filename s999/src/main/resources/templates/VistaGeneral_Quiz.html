@@ -101,29 +101,29 @@ function getCheckedRadio(nombre) {
  <div class="container-fluid">
   <div class="row">
    <div class="col-md-6 col-sm-6 col-xs-12">
-    <form method="post">
+    <form method="post" th:object="${datosPregunta}" th:action="@{/ResultadoOperacion}">
      <div class="form-group ">
-      <label class="control-label requiredField" for="textoPregunta">
+      <label class="control-label requiredField" for="texto">
        Texto
        <span class="asteriskField">
         *
        </span>
       </label>
-      <input class="form-control" id="textoPregunta" name="textoPregunta" type="text"/>
+      <input class="form-control" id="texto" name="texto" type="text"/>
      </div>
      <div class="form-group ">
-      <label class="control-label " for="textareaExplicacion">
+      <label class="control-label " for="explicacion">
        Explicacion
       </label>
-      <textarea class="form-control" cols="40" id="textareaExplicacion" name="textareaExplicacion" rows="10"></textarea>
+      <textarea class="form-control" cols="40" id="explicacion" name="explicacion" rows="10"></textarea>
      </div>
      <div class="form-group ">
-      <label class="control-label " for="selectTipo">
+      <label class="control-label " for="tipo">
        Tipo
       </label>
-      <select class="select form-control" id="selectTipo" name="selectTipo">
+      <select class="select form-control" id="tipo" name="tipo">
        <option th:each="tipo : ${tipos}" 
-          th:value="${tipo.id}" 
+          th:value="${#numbers.formatInteger(tipo.id,3)}" 
           th:text="${tipo.descripcion}">
         First Choice
        </option>
@@ -134,16 +134,43 @@ function getCheckedRadio(nombre) {
      </div>
      
      <div class="form-group ">
-      <label class="control-label " for="selectCategoria">
+      <label class="control-label " for="categoria">
        Categoria
       </label>
-      <select class="select form-control" id="selectCategoria" name="selectCategoria">
+      <select class="select form-control" id="categoria" name="categoria">
        <option th:each="categoria : ${categorias}" 
-          th:value="${categoria.id}" 
+          th:value="${#numbers.formatInteger(categoria.id,3)}" 
           th:text="${categoria.descripcion}">
         First Choice
        </option>       
       </select>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="respuestaCorrecta">
+       Respuesta correcta
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <input class="form-control" id="respuestaCorrecta" name="respuestaCorrecta" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="respuestaErronea1">
+       Respuesta erronea 1
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <input class="form-control" id="respuestaErronea1" name="respuestaErronea1" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="respuestaErronea2">
+       Respuesta erronea 2
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <input class="form-control" id="respuestaErronea2" name="respuestaErronea2" type="text"/>
      </div>
      <div class="form-group">
       <div>

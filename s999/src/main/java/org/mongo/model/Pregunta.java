@@ -22,6 +22,10 @@ public class Pregunta {
 	
 	public List<Respuesta> respuestas = new ArrayList<Respuesta>();
 
+	public Pregunta(){
+		
+	}
+	
 	public Pregunta(String id, String texto, String explicacion, int tipo, int categoria, List<Respuesta> respuestas) {
 		this.id = id;
 		this.texto = texto;
