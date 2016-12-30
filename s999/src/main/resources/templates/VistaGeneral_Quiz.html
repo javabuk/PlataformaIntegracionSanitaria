@@ -11,6 +11,9 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <link href="../static/css/guru.css"
           th:href="@{css/tabs.css}" rel="stylesheet" media="screen"/>
+          
+          <!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
+		<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
 	<style>
 </style>
 <script th:inline="javascript">
@@ -93,6 +96,67 @@ function getCheckedRadio(nombre) {
 				</div>
 				<div class="tab-pane" id="2b">
           <h3>We use the class nav-pills instead of nav-tabs which automatically creates a background color for the tab</h3>
+          <!-- HTML Form (wrapped in a .bootstrap-iso div) -->
+<div class="bootstrap-iso">
+ <div class="container-fluid">
+  <div class="row">
+   <div class="col-md-6 col-sm-6 col-xs-12">
+    <form method="post">
+     <div class="form-group ">
+      <label class="control-label requiredField" for="textoPregunta">
+       Texto
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <input class="form-control" id="textoPregunta" name="textoPregunta" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="textareaExplicacion">
+       Explicacion
+      </label>
+      <textarea class="form-control" cols="40" id="textareaExplicacion" name="textareaExplicacion" rows="10"></textarea>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="selectTipo">
+       Tipo
+      </label>
+      <select class="select form-control" id="selectTipo" name="selectTipo">
+       <option th:each="tipo : ${tipos}" 
+          th:value="${tipo.id}" 
+          th:text="${tipo.descripcion}">
+        First Choice
+       </option>
+      </select>
+      <span class="help-block" id="hint_selectTipo">
+       Instrucciones
+      </span>
+     </div>
+     
+     <div class="form-group ">
+      <label class="control-label " for="selectCategoria">
+       Categoria
+      </label>
+      <select class="select form-control" id="selectCategoria" name="selectCategoria">
+       <option th:each="categoria : ${categorias}" 
+          th:value="${categoria.id}" 
+          th:text="${categoria.descripcion}">
+        First Choice
+       </option>       
+      </select>
+     </div>
+     <div class="form-group">
+      <div>
+       <button class="btn btn-primary " name="submit" type="submit">
+        Submit
+       </button>
+      </div>
+     </div>
+    </form>
+   </div>
+  </div>
+ </div>
+</div>
 				</div>
         <div class="tab-pane" id="3b">
           <h3>We applied clearfix to the tab-content to rid of the gap between the tab and the content</h3>
