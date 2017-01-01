@@ -78,7 +78,7 @@ public class IndexController {
     
     
     @RequestMapping(value = "/ResultadoOperacion", method = RequestMethod.POST)
-	public String ResultadoMensajesHL7(Model model, DatosPregunta datosPregunta,MensajeConfirmacion mensajeConfirmacion) {
+	public String ResultadoMensajesHL7(Model model, DatosPregunta datosPregunta, MensajeConfirmacion mensajeConfirmacion) {
 		
     	//MensajeConfirmacion mensajeConfirmacion = new MensajeConfirmacion();
 		Pregunta pregunta = new Pregunta();

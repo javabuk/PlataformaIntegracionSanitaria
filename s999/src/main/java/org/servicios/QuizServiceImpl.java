@@ -107,4 +107,9 @@ public class QuizServiceImpl implements QuizService {
 		return this.examenRepository.findAll();
 	}
 
+	@Override
+	public void saveExamen(Examen examen) {
+		this.examenRepository.save(examen);
+	}
+
 }

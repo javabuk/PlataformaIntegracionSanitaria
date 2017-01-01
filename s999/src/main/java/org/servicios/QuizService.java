@@ -31,4 +31,6 @@ public interface QuizService {
 	
 	public List<Examen> findAllExamen();
 	
+	public void saveExamen(Examen examen);
+	
 }
