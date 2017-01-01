@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Insert title here</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+	rel="stylesheet" media="screen" />
+<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+	th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+<link href="../static/css/guru.css" th:href="@{css/guru.css}"
+	rel="stylesheet" media="screen" />
+</head>
+<body>
+	<div class="container">
+		<h3>Examenes existentes</h3>
+		<br></br>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>Nombre</th>
+					<th>Porcentaje</th>
+					<th>Fecha</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="examen : ${examenes}">
+					<td th:text="${examen.id}">1</td>
+					<td th:text="${examen.nombre}">Mark</td>
+					<td th:text="${examen.porcentaje}">Otto</td>
+					<td th:text="${examen.fechaCreacion}">Otto</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

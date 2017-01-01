@@ -3,6 +3,8 @@ package org.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.model.DatosLogin;
 import org.model.DatosPregunta;
 import org.model.MensajeConfirmacion;
@@ -13,6 +15,7 @@ import org.mongo.model.Pregunta;
 import org.mongo.model.PreguntasConsulta;
 import org.mongo.model.Respuesta;
 import org.mongo.model.Tipo;
+import org.mongo.model.Usuario;
 import org.repositorios.PerfilRepository;
 import org.servicios.GeneracionHL7Service;
 import org.servicios.QuizService;
@@ -43,15 +46,18 @@ public class IndexController {
     }
     
     @RequestMapping(value = "/VistaGeneral" , method = RequestMethod.POST)
-    String vistaGeneral(Model model, DatosLogin datosLogin, List<Perfil> perfiles, @ModelAttribute PreguntasConsulta preguntas, List<Tipo> tipos, List<Categoria> categorias){
+    String vistaGeneral(Model model, HttpSession session, DatosLogin datosLogin, List<Perfil> perfiles, @ModelAttribute PreguntasConsulta preguntas, List<Tipo> tipos, List<Categoria> categorias){
+    	List<Usuario> usuarios = quizService.findUsuarioByNombre(datosLogin.getUsuario());
+    	if(usuarios.size()>0){
+    		session.setAttribute("usuario", usuarios.get(0));
+    	}
+    	
+    	
     	if(datosLogin.getUsuario().equalsIgnoreCase("jorge")){
     		
     		perfiles  = quizService.findAll();
     		tipos = quizService.findAllTipos();
     		categorias = quizService.findAllCategorias();
-    		System.out.println("Perfiles ///////////////");
-    		System.out.println("Perfiles " + perfiles.size());
-    		System.out.println("Perfiles ///////////////");
     		// Objeto para utilizar en el formulario para registrar preguntas.
     		DatosPregunta datosPregunta = new DatosPregunta();
     		
