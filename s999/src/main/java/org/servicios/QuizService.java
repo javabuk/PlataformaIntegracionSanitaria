@@ -33,4 +33,10 @@ public interface QuizService {
 	
 	public void saveExamen(Examen examen);
 	
+	public Examen findExamen(String id);
+	
+	public List<Examen> findExamenes(List<String> ids);
+	
+	public List<Pregunta> findPreguntas(List<String> ids);
+	
 }

@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Examen {
 	
 	@Id
-    public int id;
+    public String id;
 		
 	private String nombre;
 	
@@ -33,11 +33,11 @@ public class Examen {
 		this.preguntas.add(tipo);
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

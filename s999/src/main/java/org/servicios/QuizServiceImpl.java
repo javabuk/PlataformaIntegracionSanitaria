@@ -112,4 +112,21 @@ public class QuizServiceImpl implements QuizService {
 		this.examenRepository.save(examen);
 	}
 
+	@Override
+	public Examen findExamen(String id) {
+		
+		return this.examenRepository.findOne(id);
+	}
+
+	@Override
+	public List<Examen> findExamenes(List<String> ids) {
+		
+		return (List<Examen>) this.examenRepository.findAll(ids);
+	}
+
+	@Override
+	public List<Pregunta> findPreguntas(List<String> ids) {
+		return (List<Pregunta>) this.preguntaRepository.findAll(ids);
+	}
+
 }

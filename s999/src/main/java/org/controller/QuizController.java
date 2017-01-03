@@ -1,17 +1,23 @@
 package org.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
 import org.model.DatosExamen;
 import org.model.DatosLogin;
+import org.model.DatosPregunta;
+import org.model.DatosSeleccionExamen;
 import org.model.MensajeConfirmacion;
 import org.mongo.model.Examen;
 import org.mongo.model.ExamenPregunta;
 import org.mongo.model.Pregunta;
+import org.mongo.model.PreguntasConsulta;
 import org.mongo.model.Usuario;
 import org.servicios.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,5 +101,50 @@ public class QuizController {
 		
 		model.addAttribute("mensaje", mensajeConfirmacion);
 		return "ConfirmacionOperacion";
+	}
+	
+	@RequestMapping(value = "/SeleccionExamen", method = RequestMethod.GET)
+	public String seleccionExamen(Model model, HttpSession session, DatosSeleccionExamen datosSeleccionExamen) {
+
+		List<Examen> examenes = quizService.findAllExamen();
+		
+		model.addAttribute("examenes", examenes);
+		model.addAttribute("datosSeleccionExamen", datosSeleccionExamen);
+		
+		return "SeleccionExamen";
+	}
+	
+	@RequestMapping(value = "/Examen", method = RequestMethod.POST)
+	public String examen(Model model, HttpSession session, DatosSeleccionExamen datosSeleccionExamen) {
+
+		String idExamen = datosSeleccionExamen.getIdMensaje();
+		Examen examen = quizService.findExamen(idExamen);
+		
+		List<String> idsPreguntas = new ArrayList<String>();
+		List<ExamenPregunta> preguntas = examen.getPreguntas();
+		for (Iterator iterator = preguntas.iterator(); iterator.hasNext();) {
+			ExamenPregunta examenPregunta = (ExamenPregunta) iterator.next();
+			idsPreguntas.add(examenPregunta.getId_pregunta());		
+		}
+		
+		long seed = System.nanoTime(); // Para alterar el orden de las colecciones
+		List<Pregunta> preguntasExamen = quizService.findPreguntas(idsPreguntas);		
+		Collections.shuffle(preguntasExamen, new Random(seed)); // Genera un nuevo orden de las preguntas del examen
+		
+		for (Iterator iterator = preguntasExamen.iterator(); iterator.hasNext();) {
+			seed = System.nanoTime(); // Para alterar el orden de las colecciones
+			Pregunta pregunta = (Pregunta) iterator.next();
+			Collections.shuffle(pregunta.respuestas, new Random(seed)); // Genera un nuevo orden de las respuestas de las preguntas
+		}
+		
+		
+		
+		PreguntasConsulta preguntasConsulta = new PreguntasConsulta();
+		preguntasConsulta.setPreguntas(preguntasExamen);
+		
+		model.addAttribute("datosSeleccionExamen", datosSeleccionExamen);
+		model.addAttribute("preguntasExamen", preguntasConsulta);
+		
+		return "Examen";
 	}
 }
