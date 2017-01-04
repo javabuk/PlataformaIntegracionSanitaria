@@ -144,7 +144,14 @@ public class QuizController {
 		
 		model.addAttribute("datosSeleccionExamen", datosSeleccionExamen);
 		model.addAttribute("preguntasExamen", preguntasConsulta);
+		model.addAttribute("examen", examen);
 		
 		return "Examen";
+	}
+	
+	@RequestMapping(value = "/Prueba", method = RequestMethod.GET)
+	public String prueba(Model model, HttpSession session) {
+		return "Prueba";
+	
 	}
 }
