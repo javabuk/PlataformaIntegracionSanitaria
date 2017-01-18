@@ -3,10 +3,12 @@ package org.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.model.DatosExamen;
@@ -21,6 +23,7 @@ import org.mongo.model.PreguntasConsulta;
 import org.mongo.model.Usuario;
 import org.servicios.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -148,6 +151,29 @@ public class QuizController {
 		
 		return "Examen";
 	}
+	
+	@RequestMapping(value = "/ResultadoExamen", method = RequestMethod.POST)
+	public String resultadosExamen(Model model, HttpSession session, HttpRequest request, HttpServletRequest servletRequest, MensajeConfirmacion mensajeConfirmacion){
+		
+		Enumeration <String> nombresParametros = servletRequest.getParameterNames();
+		int totalPreguntas = 0;
+		int totalErrores = 0;
+		while (nombresParametros.hasMoreElements()){
+			String nombreParametro = nombresParametros.nextElement();
+			if(!nombreParametro.startsWith("Submit")){
+				totalPreguntas++;
+				if(!servletRequest.getParameter(nombreParametro).equalsIgnoreCase("true")){
+					totalErrores++;
+				}
+			}
+		}
+		
+		mensajeConfirmacion.setMensaje("Total preguntas " + totalPreguntas + ", Total errores: " + totalErrores);
+		
+		model.addAttribute("mensaje", mensajeConfirmacion);
+		return "ResultadoExamen";
+	}
+	
 	
 	@RequestMapping(value = "/Prueba", method = RequestMethod.GET)
 	public String prueba(Model model, HttpSession session) {

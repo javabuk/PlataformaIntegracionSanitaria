@@ -6,6 +6,7 @@ import org.mongo.model.Categoria;
 import org.mongo.model.Examen;
 import org.mongo.model.Perfil;
 import org.mongo.model.Pregunta;
+import org.mongo.model.RespuestaUsuario;
 import org.mongo.model.Tipo;
 import org.mongo.model.Usuario;
 import org.repositorios.CategoriaRepository;
@@ -13,6 +14,7 @@ import org.repositorios.ConfigMensajeRepositorio;
 import org.repositorios.ExamenRepository;
 import org.repositorios.PerfilRepository;
 import org.repositorios.PreguntaRepository;
+import org.repositorios.RespuestaUsuarioRepository;
 import org.repositorios.TipoRepository;
 import org.repositorios.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ public class QuizServiceImpl implements QuizService {
 	private CategoriaRepository categoriaRepository;
 	private UsuarioRepository usuarioRepository;
 	private ExamenRepository examenRepository;
+	private RespuestaUsuarioRepository respuestaUsuarioRepository;
 	
 
     @Autowired
@@ -63,6 +66,11 @@ public class QuizServiceImpl implements QuizService {
 	@Autowired
     public void setExamenRepository(ExamenRepository examenRepository) {
         this.examenRepository = examenRepository;
+    }
+	
+	@Autowired
+    public void setRespuestaUsuarioRepository(RespuestaUsuarioRepository respuestaUsuarioRepository) {
+        this.respuestaUsuarioRepository = respuestaUsuarioRepository;
     }
 	
 
@@ -127,6 +135,16 @@ public class QuizServiceImpl implements QuizService {
 	@Override
 	public List<Pregunta> findPreguntas(List<String> ids) {
 		return (List<Pregunta>) this.preguntaRepository.findAll(ids);
+	}
+
+	@Override
+	public void saveRespuestaUsuario(RespuestaUsuario respuestaUsuario) {
+		this.respuestaUsuarioRepository.save(respuestaUsuario);
+	}
+
+	@Override
+	public List<RespuestaUsuario> findRespuestasUsuario(String id) {
+		return this.respuestaUsuarioRepository.findByUsuario(id);
 	}
 
 }
