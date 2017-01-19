@@ -16,10 +16,12 @@ import org.model.DatosLogin;
 import org.model.DatosPregunta;
 import org.model.DatosSeleccionExamen;
 import org.model.MensajeConfirmacion;
+import org.mongo.model.ErroresUsuario;
 import org.mongo.model.Examen;
 import org.mongo.model.ExamenPregunta;
 import org.mongo.model.Pregunta;
 import org.mongo.model.PreguntasConsulta;
+import org.mongo.model.RespuestaUsuario;
 import org.mongo.model.Usuario;
 import org.servicios.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -158,17 +160,35 @@ public class QuizController {
 		Enumeration <String> nombresParametros = servletRequest.getParameterNames();
 		int totalPreguntas = 0;
 		int totalErrores = 0;
+		List<ErroresUsuario> preguntasErroneas = new ArrayList<ErroresUsuario>();
 		while (nombresParametros.hasMoreElements()){
 			String nombreParametro = nombresParametros.nextElement();
-			if(!nombreParametro.startsWith("Submit")){
+			if(!nombreParametro.startsWith("submit") && !nombreParametro.startsWith("examen")){
 				totalPreguntas++;
 				if(!servletRequest.getParameter(nombreParametro).equalsIgnoreCase("true")){
 					totalErrores++;
+					ErroresUsuario preguntaErronea = new ErroresUsuario(nombreParametro);
+					preguntasErroneas.add(preguntaErronea);
 				}
 			}
 		}
 		
-		mensajeConfirmacion.setMensaje("Total preguntas " + totalPreguntas + ", Total errores: " + totalErrores);
+		Usuario datosUsuario = (Usuario)session.getAttribute("usuario");
+		
+		int porcentajeRealizado = (int)(((totalPreguntas - totalErrores) * 100.0f) / totalPreguntas);
+		
+		
+		RespuestaUsuario datosRespuestasExamen = new RespuestaUsuario();
+		datosRespuestasExamen.setExamen(servletRequest.getParameter("examenId"));
+		datosRespuestasExamen.setFechaRealizacion(new Date());
+		datosRespuestasExamen.setUsuario(datosUsuario.getId());
+		datosRespuestasExamen.setPorcentaje(Integer.parseInt(servletRequest.getParameter("examenPorcentaje")));
+		datosRespuestasExamen.setPorcentajeRealizado(porcentajeRealizado);
+		datosRespuestasExamen.setErrores(preguntasErroneas);
+		quizService.saveRespuestaUsuario(datosRespuestasExamen);
+		
+		
+		mensajeConfirmacion.setMensaje("Total preguntas " + totalPreguntas + ", Total errores: " + totalErrores + ", Porcentaje: " +servletRequest.getParameter("examenPorcentaje"));
 		
 		model.addAttribute("mensaje", mensajeConfirmacion);
 		return "ResultadoExamen";

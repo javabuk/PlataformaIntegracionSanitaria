@@ -82,6 +82,14 @@ public class RespuestaUsuario {
 	public void setErrores(List<ErroresUsuario> errores) {
 		this.errores = errores;
 	}
+
+	public int getPorcentajeRealizado() {
+		return porcentajeRealizado;
+	}
+
+	public void setPorcentajeRealizado(int porcentajeRealizado) {
+		this.porcentajeRealizado = porcentajeRealizado;
+	}
 	
 	
 

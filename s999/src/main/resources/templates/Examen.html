@@ -285,7 +285,9 @@ function getCheckedRadio(nombre) {
 						</div> --> 
 						<!-- //////////// -->
 						</div>				
-					</div> 
+					</div>
+					<input type="hidden" th:id="examenPorcentaje" th:name="examenPorcentaje" th:value="${examen.getPorcentaje()}"></input> 
+					<input type="hidden" th:id="examenId" th:name="examenId" th:value="${examen.getId()}"></input>
 					</form>           	
             	</div>
         	</div>
