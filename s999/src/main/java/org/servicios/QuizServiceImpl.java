@@ -147,4 +147,10 @@ public class QuizServiceImpl implements QuizService {
 		return this.respuestaUsuarioRepository.findByUsuario(id);
 	}
 
+	@Override
+	public List<RespuestaUsuario> findByUsuarioExamen(int usuario, String examen) {
+		
+		return this.respuestaUsuarioRepository.findByUsuarioExamen(usuario, examen);
+	}
+
 }

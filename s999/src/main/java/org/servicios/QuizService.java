@@ -44,4 +44,6 @@ public interface QuizService {
 	
 	public List<RespuestaUsuario> findRespuestasUsuario(String id);
 	
+	public List<RespuestaUsuario> findByUsuarioExamen(int usuario, String examen);
+	
 }

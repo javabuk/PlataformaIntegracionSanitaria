@@ -187,8 +187,13 @@ public class QuizController {
 		datosRespuestasExamen.setErrores(preguntasErroneas);
 		quizService.saveRespuestaUsuario(datosRespuestasExamen);
 		
+		int totalRespuestasRealizadas = 0;
+		List<RespuestaUsuario> respuestasRealizadas = quizService.findByUsuarioExamen(datosUsuario.getId(), servletRequest.getParameter("examenId"));
+		if(respuestasRealizadas!=null){
+			totalRespuestasRealizadas =respuestasRealizadas.size();
+		}
 		
-		mensajeConfirmacion.setMensaje("Total preguntas " + totalPreguntas + ", Total errores: " + totalErrores + ", Porcentaje: " +servletRequest.getParameter("examenPorcentaje"));
+		mensajeConfirmacion.setMensaje("Total preguntas " + totalPreguntas + ", Total errores: " + totalErrores + ", Porcentaje: " +servletRequest.getParameter("examenPorcentaje") +  ", Has hecho " + totalRespuestasRealizadas + " examenes");
 		
 		model.addAttribute("mensaje", mensajeConfirmacion);
 		return "ResultadoExamen";
