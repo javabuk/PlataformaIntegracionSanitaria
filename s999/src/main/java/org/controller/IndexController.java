@@ -70,7 +70,8 @@ public class IndexController {
     		model.addAttribute("preguntas", preguntas);
     		model.addAttribute("datosPregunta", datosPregunta);
     		
-    		return "VistaGeneral_Quiz";
+    		//return "VistaGeneral_Quiz";
+    		return "VistaGeneral3";
     	}else{
     		return "ErrorLogin";
     	}

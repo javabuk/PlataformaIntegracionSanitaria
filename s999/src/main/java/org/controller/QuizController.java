@@ -48,7 +48,8 @@ public class QuizController {
 			session.setAttribute("usuario", usuarios.get(0));
 		}
 		if (usuarios.size() > 0 && usuarios.get(0).getContraseña().equalsIgnoreCase(datosLogin.getPassword())) {
-			return "VistaMenuInicio";
+			//return "VistaMenuInicio";
+			return "VistaGeneral";
 		} else {
 			return "ErrorLogin";
 		}

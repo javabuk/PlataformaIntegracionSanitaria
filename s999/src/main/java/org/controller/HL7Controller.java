@@ -35,10 +35,24 @@ public class HL7Controller {
 		return "MensajesOML";
 	}
 	
+	@RequestMapping(value = "/MensajesOMG", method = RequestMethod.GET)
+	public String mensajesOMG(Model model) {
+		model.addAttribute("mensajeHL7", new MensajeHL7());
+		return "MensajesOMG";
+	}
+	
 	@RequestMapping(value = "/ResultadoMensajesHL7", method = RequestMethod.POST)
 	public String ResultadoMensajesHL7(Model model, MensajeHL7 mensaje) {
 		//mensaje.setMensaje(hl7Service.convertirMensajeOML(mensaje.getSistemaOrigen(), mensaje.getSistemaDestino(), mensaje.getMensaje()));
 		mensaje.setMensaje(hl7Service.convertirMensajeOML(mensaje));
+		model.addAttribute("mensaje", mensaje);
+		return "ResultadoMensajesHL7";
+	}
+	
+	@RequestMapping(value = "/ResultadoMensajesHL7OMG", method = RequestMethod.POST)
+	public String ResultadoMensajesHL7OMG(Model model, MensajeHL7 mensaje) {
+		//mensaje.setMensaje(hl7Service.convertirMensajeOML(mensaje.getSistemaOrigen(), mensaje.getSistemaDestino(), mensaje.getMensaje()));
+		mensaje.setMensaje(hl7Service.convertirMensajeOMG(mensaje));
 		model.addAttribute("mensaje", mensaje);
 		return "ResultadoMensajesHL7";
 	}
