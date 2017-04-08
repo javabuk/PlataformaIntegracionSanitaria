@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Insert title here</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+	rel="stylesheet" media="screen" />
+<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+	th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+<link href="../static/css/guru.css" th:href="@{css/guru.css}"
+	rel="stylesheet" media="screen" />
+</head>
+<body>
+	<div class="container">
+		<h2>Nuevo Examen</h2>
+		<form method="post" th:object="${datosExamen}"
+			th:action="@{/GrabarExamen}">
+			
+			<div class="form-group ">
+      			<label class="control-label requiredField" for="nombre">
+       				Texto
+       				<span class="asteriskField">*</span>
+      			</label>
+      			<input class="form-control" id="nombre" name="nombre" type="text"/>
+     		</div>
+			<div class="form-group ">
+      			<label class="control-label requiredField" for="porcentaje">
+       				Porcentaje
+      			</label>
+      			<input class="form-control" id="porcentaje" name="porcentaje" type="text"/>
+     		</div>
+			<div class="form-group ">
+
+				<select class="selectpicker" data-style="btn-primary"
+					multiple="multiple" data-max-options="2" size="20"
+					style='height: 80%;' name="comboPreguntas" id="comboPreguntas">
+					<option th:each="pregunta : ${preguntas}" th:value="${pregunta.id}"
+						th:text="${pregunta.texto}">
+        				First Choice
+       				</option>
+				</select>
+			</div>
+			<div class="form-group">
+      			<div>
+       				<button class="btn btn-primary " name="submit" type="submit">
+        				Grabar
+       				</button>
+      			</div>
+     		</div>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Insert title here</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen" />
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link href="../static/css/guru.css"
+          th:href="@{css/tabs.css}" rel="stylesheet" media="screen"/>
+          
+          <!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
+		<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+	<style>
+</style>
+<script th:inline="javascript">
+/*<![CDATA[*/
+function getCheckedRadio(nombre) {
+	var radio_group = document.getElementsByName(nombre);
+    var button;
+	for (var i = 0; i < radio_group.length; i++) {
+        var button = radio_group[i];
+        if (button.checked) {
+            break;
+        }else{
+        	button = null;
+        }
+    }
+	// Deshabilitamos el boton
+	var idBoton = nombre.concat('button');
+	document.getElementById(idBoton).disabled = true;
+	
+	if(button !=null ){
+		if (button.value == 'true'){
+			//alert('acierto');
+			document.getElementById(idBoton).style.backgroundColor="#4ef442";
+		} else {
+			//alert('error');
+			document.getElementById(idBoton).style.backgroundColor="#f44242";
+			var nombreTextarea = nombre.concat('textarea');
+			document.getElementById(nombreTextarea).setAttribute('style','visibility:visible');
+		}
+	}
+	// Cambiamos el color de la fuente de los labels de las respuestas
+	for (var i = 0; i < radio_group.length; i++) {
+        var button = radio_group[i];
+        var idLabel = button.id.concat('label');
+        if (button.value == 'true') {
+        	document.getElementById(idLabel).style.color = "green";
+        }else{
+        	document.getElementById(idLabel).style.color = "red";
+        }
+    }
+	
+	
+}
+/*]]>*/
+</script>
+</head>
+<body>
+<div class="container">
+		<h2>Jorquiz</h2></div>
+<div id="exTab3" class="container">	
+<ul  class="nav nav-pills">
+			<li class="active">
+        <a  href="#1b" data-toggle="tab">Añadir Preguntas</a>
+			</li>
+			<li><a href="#2b" data-toggle="tab">Using nav-pills</a>
+			</li>
+			<li><a href="#3b" data-toggle="tab">Applying clearfix</a>
+			</li>
+  		<li><a href="#4a" data-toggle="tab">Background color</a>
+			</li>
+		</ul>
+
+			<div class="tab-content clearfix">
+			  <div class="tab-pane active" id="1b">          
+          <div th:each="pregunta, stat : ${preguntas.getPreguntas()}">   
+          	<label th:text="${pregunta.texto}"></label>      
+          	<br></br>
+  				<div th:each="ty, statResp : ${pregunta.respuestas}">
+    				<input type="radio" th:name="${pregunta.id}" th:value="${ty.verdadero}" th:id="${pregunta.id + statResp.count} "/>
+    				<label th:id="${ pregunta.id + statResp.count + 'label'} " th:text="${ty.respuesta}">Wireframe</label>    				
+  				</div>
+			<br></br>			
+			<input type="button" value="Responder" th:id="${pregunta.id + 'button'}" th:onclick="'javascript:getCheckedRadio(\'' + ${pregunta.id } + '\');'"/>
+			<br></br>
+			<br></br>  
+			<textarea rows="3" cols="100" th:id="${pregunta.id + 'textarea'} " th:text="${pregunta.explicacion}" style="display:none"></textarea>
+			<br></br> 
+    		
+  		</div>
+				</div>
+				<div class="tab-pane" id="2b">
+          <h3>We use the class nav-pills instead of nav-tabs which automatically creates a background color for the tab</h3>
+          <!-- HTML Form (wrapped in a .bootstrap-iso div) -->
+<div class="bootstrap-iso">
+ <div class="container-fluid">
+  <div class="row">
+   <div class="col-md-6 col-sm-6 col-xs-12">
+    <form method="post" th:object="${datosPregunta}" th:action="@{/ResultadoOperacion}">
+     <div class="form-group ">
+      <label class="control-label requiredField" for="texto">
+       Texto
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <input class="form-control" id="texto" name="texto" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="explicacion">
+       Explicacion
+      </label>
+      <textarea class="form-control" cols="40" id="explicacion" name="explicacion" rows="10"></textarea>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="tipo">
+       Tipo
+      </label>
+      <select class="select form-control" id="tipo" name="tipo">
+       <option th:each="tipo : ${tipos}" 
+          th:value="${#numbers.formatInteger(tipo.id,3)}" 
+          th:text="${tipo.descripcion}">
+        First Choice
+       </option>
+      </select>
+      <span class="help-block" id="hint_selectTipo">
+       Instrucciones
+      </span>
+     </div>
+     
+     <div class="form-group ">
+      <label class="control-label " for="categoria">
+       Categoria
+      </label>
+      <select class="select form-control" id="categoria" name="categoria">
+       <option th:each="categoria : ${categorias}" 
+          th:value="${#numbers.formatInteger(categoria.id,3)}" 
+          th:text="${categoria.descripcion}">
+        First Choice
+       </option>       
+      </select>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="respuestaCorrecta">
+       Respuesta correcta
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <input class="form-control" id="respuestaCorrecta" name="respuestaCorrecta" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="respuestaErronea1">
+       Respuesta erronea 1
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <input class="form-control" id="respuestaErronea1" name="respuestaErronea1" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="respuestaErronea2">
+       Respuesta erronea 2
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <input class="form-control" id="respuestaErronea2" name="respuestaErronea2" type="text"/>
+     </div>
+     <div class="form-group">
+      <div>
+       <button class="btn btn-primary " name="submit" type="submit">
+        Submit
+       </button>
+      </div>
+     </div>
+    </form>
+   </div>
+  </div>
+ </div>
+</div>
+				</div>
+        <div class="tab-pane" id="3b">
+          <h3>We applied clearfix to the tab-content to rid of the gap between the tab and the content</h3>
+				</div>
+          <div class="tab-pane" id="4b">
+          <h3>We use css to change the background color of the content to be equal to the tab</h3>
+				</div>
+			</div>
+	</div>
+</body>
+</html>
