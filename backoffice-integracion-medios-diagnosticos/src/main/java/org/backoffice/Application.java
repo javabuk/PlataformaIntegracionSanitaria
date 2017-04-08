@@ -21,7 +21,8 @@ import static java.lang.System.exit;
 //        basePackageClasses = { SpringBootConsoleApplication.class, Jsr310JpaConverters.class }
 //)
 @SpringBootApplication
-public class Application implements CommandLineRunner {
+public class Application{
+//public class Application implements CommandLineRunner {
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -32,6 +33,7 @@ public class Application implements CommandLineRunner {
         SpringApplication.run(Application.class, args);
     }
 
+    /*
     //@Transactional(readOnly = true)
     @Transactional (propagation = Propagation.NEVER)
     @Override
@@ -51,6 +53,6 @@ public class Application implements CommandLineRunner {
         System.out.println("Done!");
 
         exit(0);
-    }
+    }*/
 
 }
