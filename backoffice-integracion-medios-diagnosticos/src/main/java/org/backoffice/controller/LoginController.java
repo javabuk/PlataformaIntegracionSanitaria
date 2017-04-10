@@ -28,4 +28,12 @@ public class LoginController {
         return "login";
     }
 	
+	
+	@RequestMapping("/menuprincipal")
+    public String menuPrincipal(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
+        model.addAttribute("name", name);
+        
+        return "menuprincipal";
+    }
+	
 }
