@@ -36,4 +36,25 @@ public class LoginController {
         return "menuprincipal";
     }
 	
+	@RequestMapping("/tabla")
+    public String tabla(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
+        
+        
+        return "tabla";
+    }
+	
+	@RequestMapping("/form")
+    public String form(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
+        
+        
+        return "form";
+    }
+	
+	@RequestMapping("/upload")
+    public String upload(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
+        
+        
+        return "upload";
+    }
+	
 }
