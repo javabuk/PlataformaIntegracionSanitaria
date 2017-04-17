@@ -9,7 +9,11 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script >
   function go() {
-	  document.getElementById("principal").src = "login";
+	  document.getElementById("principal").src = "codigos";
+	}
+  
+  function goFormularioCodigo() {
+	  document.getElementById("principal").src = "formulariocodigo";
 	}
   </script>
 </head>
@@ -25,6 +29,7 @@
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Correlaciones <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="#" onclick="go()">Codigos</a></li>
+          <li><a href="#" onclick="goFormularioCodigo()">Nuevo codigo</a></li>
           <li><a href="#">Correlaciones</a></li>
           <li><a href="#">Carga automatica</a></li>
         </ul>
@@ -38,7 +43,7 @@
 </nav>
   
 <div class="container" >
-<iframe id="principal" width="100%" height="100%" frameBorder="0">
+<iframe id="principal" width="100%" height="600" frameBorder="0">
 	<h3>Right Aligned Navbar</h3>
   	<p>The .navbar-right class is used to right-align navigation bar buttons.</p>
 </iframe>  
