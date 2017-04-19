@@ -15,6 +15,10 @@
   function goFormularioCodigo() {
 	  document.getElementById("principal").src = "formulariocodigo";
 	}
+  
+  function goCargaAutomatica() {
+	  document.getElementById("principal").src = "uploadFile";
+	}
   </script>
 </head>
 <body>
@@ -31,7 +35,7 @@
           <li><a href="#" onclick="go()">Codigos</a></li>
           <li><a href="#" onclick="goFormularioCodigo()">Nuevo codigo</a></li>
           <li><a href="#">Correlaciones</a></li>
-          <li><a href="#">Carga automatica</a></li>
+          <li><a href="#" onclick="goCargaAutomatica()">Carga automatica</a></li>
         </ul>
       </li>
       <li><a href="#">Inactivo</a></li>
