@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Iterator;
+import java.util.List;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -22,6 +23,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.backoffice.fuentedatos.CodigoDTO;
+import org.backoffice.fuentedatos.FicheroHojaCalculo;
 
 @Controller
 public class UploadController {
@@ -50,6 +53,16 @@ public class UploadController {
             
             InputStream fichero = new ByteArrayInputStream(bytes);
             
+            
+            FicheroHojaCalculo ficheroHojaCalculo = new FicheroHojaCalculo(fichero);
+            List<CodigoDTO> codigos = ficheroHojaCalculo.recuperarCodigos("INFO33", "LAB");
+            StringBuffer buffer = new StringBuffer();
+            for (Iterator iterator = codigos.iterator(); iterator.hasNext();) {
+				CodigoDTO codigoDTO = (CodigoDTO) iterator.next();
+				buffer.append(codigoDTO.toString() + "-");
+			}
+            
+          /*  
           //Create Workbook instance holding reference to .xlsx file
             XSSFWorkbook workbook = new XSSFWorkbook(fichero);
             
@@ -67,7 +80,7 @@ public class UploadController {
                 	buffer.append(row.getCell(0).getNumericCellValue() + ",");
                 }
                 contador++;
-            }
+            }*/
             /*Path path = Paths.get(UPLOAED_FOLDER + file.getOriginalFilename());
             Files.write(path, bytes);
 
@@ -75,16 +88,30 @@ public class UploadController {
                     "You successfully uploaded '" + file.getOriginalFilename() + "'");*/
             redirectAttributes.addFlashAttribute("message",
                     "You successfully uploaded '" + buffer.toString() + "'");
+            redirectAttributes.addFlashAttribute("codigos", codigos);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "redirect:/uploadStatus";
+        //return "redirect:/uploadStatus";
+        //return "redirect:/ventanaModalCodigos";
+        return "redirect:/tablaCodigos";
     }
 
     @GetMapping("/uploadStatus")
     public String uploadStatus() {
         return "uploadStatus";
     }
+    
+    @GetMapping("/ventanaModalCodigos")
+    public String ventanaModalCodigos() {
+        return "ventanaModalCodigos";
+    }
+    
+    @GetMapping("/tablaCodigos")
+    public String tablaCodigos() {
+        return "tablaCodigos";
+    }
+    
 
 }

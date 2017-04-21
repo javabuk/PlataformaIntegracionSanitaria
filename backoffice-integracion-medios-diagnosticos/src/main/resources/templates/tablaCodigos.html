@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"></link>   
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></link>
+	<script type="text/javascript"  src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script >
+  $(document).ready(function(){
+	    $('#myTable').dataTable();
+	});
+  </script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Codigos</h2>
+  <div class="table-responsive">
+	<table id="myTable" class="display table" width="100%" >		
+        <thead>  
+          <tr>  
+            <th>Codigo</th>  
+            <th>Descripcion</th>  
+            <th>Sistema</th>  
+            <th>Tipo</th>  
+          </tr>  
+        </thead>  
+        <tbody>  
+          <tr th:each="codigo : ${codigos}">
+                <td th:text="${codigo.codigo}">codigo</td>
+                <td th:text="${codigo.descripcion}">descripcion</td>
+                <td th:text="${codigo.sistema}">sistema</td>                
+                <td th:text="${codigo.tipo}">tipo</td>
+            </tr>  
+        </tbody>  
+	</table>
+	</div>
+</div>
+
+</body>
+</html>
