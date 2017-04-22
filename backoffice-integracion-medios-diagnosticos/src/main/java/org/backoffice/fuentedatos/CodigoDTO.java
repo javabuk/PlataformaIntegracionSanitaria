@@ -48,4 +48,21 @@ public class CodigoDTO {
 	public String toString() {
 		return "Codigo [codigo=" + codigo + ", descripcion=" + descripcion + ", sistema=" + sistema + ", tipo= "+tipo+"]";
 	}
+	
+	 @Override
+	 public int hashCode() {
+	    final int prime = 31;
+	    int result = 1;
+	    result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+	    return result;
+	 }
+
+	 @Override
+	 public boolean equals(Object obj) {
+		 if (!(obj instanceof CodigoDTO))
+			 return false;
+
+	     CodigoDTO codigoComparador = (CodigoDTO) obj;
+	     return codigoComparador.codigo.equals(codigo) ;
+	 }
 }

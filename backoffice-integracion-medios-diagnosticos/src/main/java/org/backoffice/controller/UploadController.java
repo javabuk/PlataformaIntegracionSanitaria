@@ -24,6 +24,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.backoffice.fuentedatos.CodigoDTO;
+import org.backoffice.fuentedatos.DetectorDuplicados;
 import org.backoffice.fuentedatos.FicheroHojaCalculo;
 
 @Controller
@@ -55,8 +56,21 @@ public class UploadController {
             
             
             FicheroHojaCalculo ficheroHojaCalculo = new FicheroHojaCalculo(fichero);
+            DetectorDuplicados detectorDuplicados = new DetectorDuplicados();
+            
             List<CodigoDTO> codigos = ficheroHojaCalculo.recuperarCodigos("INFO33", "LAB");
+           
+            List<CodigoDTO> codigosSinDuplicados = detectorDuplicados.eliminarDuplicados(codigos);
+            System.out.println("Total sin duplicados: " + codigosSinDuplicados.size() );
+            System.out.println("Total con duplicados: " + codigos.size() );
             StringBuffer buffer = new StringBuffer();
+            
+            //Calculamos  los duplicados
+            List<CodigoDTO> codigosDuplicados = detectorDuplicados.buscarDuplicados(codigos);
+            System.out.println("Total duplicados: " + codigosDuplicados.size() );
+            //codigosDuplicados.removeAll(codigosSinDuplicados);
+            System.out.println("Total duplicados: " + codigosDuplicados.size() );
+            
             for (Iterator iterator = codigos.iterator(); iterator.hasNext();) {
 				CodigoDTO codigoDTO = (CodigoDTO) iterator.next();
 				buffer.append(codigoDTO.toString() + "-");
@@ -88,7 +102,9 @@ public class UploadController {
                     "You successfully uploaded '" + file.getOriginalFilename() + "'");*/
             redirectAttributes.addFlashAttribute("message",
                     "You successfully uploaded '" + buffer.toString() + "'");
-            redirectAttributes.addFlashAttribute("codigos", codigos);
+            redirectAttributes.addFlashAttribute("codigos", codigosSinDuplicados);
+            redirectAttributes.addFlashAttribute("codigosSinDuplicados", codigosSinDuplicados);
+            redirectAttributes.addFlashAttribute("codigosDuplicados", codigosDuplicados);
 
         } catch (IOException e) {
             e.printStackTrace();

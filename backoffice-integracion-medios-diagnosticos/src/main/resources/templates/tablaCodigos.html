@@ -11,8 +11,27 @@
 	<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   <script >
   $(document).ready(function(){
-	    $('#myTable').dataTable();
+	    $('#myTable').dataTable(
+	    		{
+	    			  "createdRow": function( row, data, dataIndex ) {	    				 
+	    			    if ( data[0] == "No valido" ) {
+	    			      //$(row).addClass( 'odd' );
+	    			      $(row).css("background-color","#EC7063");
+	    			    }
+	    			  }
+	    			} 		
+	    );
 	});
+  
+  /*
+  $('#example').dataTable( {
+  "createdRow": function( row, data, dataIndex ) {
+    if ( data[4] == "A" ) {
+      $(row).addClass( 'important' );
+    }
+  }
+} );
+  */
   </script>
 </head>
 <body>

@@ -37,7 +37,7 @@ public class FicheroHojaCalculo {
         while (rowIterator.hasNext()) 
         {
             Row row = rowIterator.next();
-            if(contador > 0){
+            if(contador > 1){//OJO
             CodigoDTO codigo = new CodigoDTO();
             codigo.setSistema(sistema);
         	codigo.setTipo(tipo);
@@ -52,7 +52,7 @@ public class FicheroHojaCalculo {
             			if(cell.getCellType()== Cell.CELL_TYPE_STRING){
             				codigo.setCodigo(cell.getStringCellValue());
             			}else{
-            				codigo.setCodigo("No es de tipo string");
+            				codigo.setCodigo("No valido");
             			}
             		}else if(indiceColumna == 1){
             			if(cell.getCellType()== Cell.CELL_TYPE_STRING){
