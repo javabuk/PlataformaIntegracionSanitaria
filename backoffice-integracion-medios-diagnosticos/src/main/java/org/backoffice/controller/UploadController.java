@@ -61,6 +61,9 @@ public class UploadController {
             DetectorDuplicados detectorDuplicados = new DetectorDuplicados();
             
             List<CodigoDTO> codigos = ficheroHojaCalculo.recuperarCodigos("INFO33", "LAB");
+            
+            
+            
            
             List<CodigoDTO> codigosSinDuplicados = detectorDuplicados.eliminarDuplicados(codigos);
             System.out.println("Total sin duplicados: " + codigosSinDuplicados.size() );
@@ -72,6 +75,11 @@ public class UploadController {
             System.out.println("Total duplicados: " + codigosDuplicados.size() );
             //codigosDuplicados.removeAll(codigosSinDuplicados);
             
+            
+            List<CodigoDTO> codigosB = ficheroHojaCalculo.recuperarCodigosB("INFO33", "LAB");
+            List<CodigoDTO> codigosBSinDuplicados = detectorDuplicados.eliminarDuplicados(codigosB);
+            List<CodigoDTO> codigosBDuplicados = detectorDuplicados.buscarDuplicados(codigosB);
+            List<CodigoDTO> codigosBErroneos = codigosB.stream().filter(cod -> "No valido".equals(cod.getCodigo())).collect(Collectors.toList());
             
             for (Iterator iterator = codigos.iterator(); iterator.hasNext();) {
 				CodigoDTO codigoDTO = (CodigoDTO) iterator.next();
@@ -111,6 +119,11 @@ public class UploadController {
             redirectAttributes.addFlashAttribute("codigosSinDuplicados", codigosSinDuplicados);
             redirectAttributes.addFlashAttribute("codigosDuplicados", codigosDuplicados);
             redirectAttributes.addFlashAttribute("codigosErroneos", codigosErroneos);
+            
+            redirectAttributes.addFlashAttribute("codigosB", codigosB);
+            redirectAttributes.addFlashAttribute("codigosBSinDuplicados", codigosBSinDuplicados);
+            redirectAttributes.addFlashAttribute("codigosBDuplicados", codigosBDuplicados);
+            redirectAttributes.addFlashAttribute("codigosBErroneos", codigosBErroneos);
 
         } catch (IOException e) {
             e.printStackTrace();

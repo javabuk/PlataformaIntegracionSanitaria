@@ -111,4 +111,53 @@ public class FicheroHojaCalculo {
 		return resultados;
 	}
 	
+	
+public List<CodigoDTO> recuperarCodigosB(String sistema, String tipo){
+		
+		ArrayList<CodigoDTO> resultados = new ArrayList<CodigoDTO>();
+		
+		//Iterate through each rows one by one
+        Iterator<Row> rowIterator = sheet.iterator();
+        
+        int contador = 0;
+        while (rowIterator.hasNext()) 
+        {
+            Row row = rowIterator.next();
+            if(contador > 1){//OJO
+            CodigoDTO codigo = new CodigoDTO();
+            codigo.setSistema(sistema);
+        	codigo.setTipo(tipo);
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) 
+            {
+            	Cell cell = cellIterator.next();
+            	if(cell.getRowIndex()>1){
+            		int indiceColumna = cell.getColumnIndex();
+            		
+            		if (indiceColumna == 2){
+            			if(cell.getCellType()== Cell.CELL_TYPE_STRING){
+            				codigo.setCodigo(cell.getStringCellValue());
+            			}else{
+            				codigo.setCodigo("No valido");
+            			}
+            		}else if(indiceColumna == 3){
+            			if(cell.getCellType()== Cell.CELL_TYPE_STRING){
+            				codigo.setDescripcion(cell.getStringCellValue());
+            			}else{
+            				codigo.setDescripcion("No es de tipo string");
+            			}
+            		}
+            	}
+            }
+            
+            
+            resultados.add(codigo); 
+            }
+            contador++;
+        }
+		
+		return resultados;
+	}
+	
+	
 }
