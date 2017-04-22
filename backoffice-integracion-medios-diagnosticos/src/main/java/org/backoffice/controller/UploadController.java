@@ -5,6 +5,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -69,12 +71,15 @@ public class UploadController {
             List<CodigoDTO> codigosDuplicados = detectorDuplicados.buscarDuplicados(codigos);
             System.out.println("Total duplicados: " + codigosDuplicados.size() );
             //codigosDuplicados.removeAll(codigosSinDuplicados);
-            System.out.println("Total duplicados: " + codigosDuplicados.size() );
+            
             
             for (Iterator iterator = codigos.iterator(); iterator.hasNext();) {
 				CodigoDTO codigoDTO = (CodigoDTO) iterator.next();
 				buffer.append(codigoDTO.toString() + "-");
 			}
+            
+            List<CodigoDTO> codigosErroneos = codigos.stream().filter(cod -> "No valido".equals(cod.getCodigo())).collect(Collectors.toList());
+            System.out.println("Total erroneos: " + codigosErroneos.size() );
             
           /*  
           //Create Workbook instance holding reference to .xlsx file
@@ -105,6 +110,7 @@ public class UploadController {
             redirectAttributes.addFlashAttribute("codigos", codigosSinDuplicados);
             redirectAttributes.addFlashAttribute("codigosSinDuplicados", codigosSinDuplicados);
             redirectAttributes.addFlashAttribute("codigosDuplicados", codigosDuplicados);
+            redirectAttributes.addFlashAttribute("codigosErroneos", codigosErroneos);
 
         } catch (IOException e) {
             e.printStackTrace();
