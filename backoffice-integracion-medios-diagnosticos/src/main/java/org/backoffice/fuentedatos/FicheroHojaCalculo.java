@@ -159,5 +159,53 @@ public List<CodigoDTO> recuperarCodigosB(String sistema, String tipo){
 		return resultados;
 	}
 	
+public List<CorrelacionDTO> recuperarCorrelaciones(String sistemaA, String tipoA, String sistemaB, String tipoB ){
+	
+	ArrayList<CorrelacionDTO> resultados = new ArrayList<CorrelacionDTO>();
+	
+	//Iterate through each rows one by one
+    Iterator<Row> rowIterator = sheet.iterator();
+    
+    int contador = 0;
+    while (rowIterator.hasNext()) 
+    {
+        Row row = rowIterator.next();
+        if(contador > 1){//OJO
+        CorrelacionDTO correlacion = new CorrelacionDTO();
+        correlacion.setSistemaA(sistemaA);
+        correlacion.setTipoA(tipoA);
+        correlacion.setSistemaB(sistemaB);
+        correlacion.setTipoB(tipoB);
+        Iterator<Cell> cellIterator = row.cellIterator();
+        while (cellIterator.hasNext()) 
+        {
+        	Cell cell = cellIterator.next();
+        	if(cell.getRowIndex()>1){
+        		int indiceColumna = cell.getColumnIndex();
+        		
+        		if (indiceColumna == 0){
+        			if(cell.getCellType()== Cell.CELL_TYPE_STRING){
+        				correlacion.setCodigoA(cell.getStringCellValue());
+        			}else{
+        				correlacion.setCodigoA("No valido");
+        			}
+        		}else if(indiceColumna == 2){
+        			if(cell.getCellType()== Cell.CELL_TYPE_STRING){
+        				correlacion.setCodigoB(cell.getStringCellValue());
+        			}else{
+        				correlacion.setCodigoB("No valido");
+        			}
+        		}
+        	}
+        }
+        
+        
+        resultados.add(correlacion); 
+        }
+        contador++;
+    }
+	
+	return resultados;
+}
 	
 }

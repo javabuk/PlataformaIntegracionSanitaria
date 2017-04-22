@@ -26,6 +26,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.backoffice.fuentedatos.CodigoDTO;
+import org.backoffice.fuentedatos.CorrelacionDTO;
 import org.backoffice.fuentedatos.DetectorDuplicados;
 import org.backoffice.fuentedatos.FicheroHojaCalculo;
 
@@ -81,6 +82,8 @@ public class UploadController {
             List<CodigoDTO> codigosBDuplicados = detectorDuplicados.buscarDuplicados(codigosB);
             List<CodigoDTO> codigosBErroneos = codigosB.stream().filter(cod -> "No valido".equals(cod.getCodigo())).collect(Collectors.toList());
             
+            List<CorrelacionDTO> correlaciones = ficheroHojaCalculo.recuperarCorrelaciones("INFO33", "LAB", "MEDIKOSTA", "LAB");
+            
             for (Iterator iterator = codigos.iterator(); iterator.hasNext();) {
 				CodigoDTO codigoDTO = (CodigoDTO) iterator.next();
 				buffer.append(codigoDTO.toString() + "-");
@@ -124,6 +127,8 @@ public class UploadController {
             redirectAttributes.addFlashAttribute("codigosBSinDuplicados", codigosBSinDuplicados);
             redirectAttributes.addFlashAttribute("codigosBDuplicados", codigosBDuplicados);
             redirectAttributes.addFlashAttribute("codigosBErroneos", codigosBErroneos);
+            
+            redirectAttributes.addFlashAttribute("correlaciones", correlaciones);
 
         } catch (IOException e) {
             e.printStackTrace();

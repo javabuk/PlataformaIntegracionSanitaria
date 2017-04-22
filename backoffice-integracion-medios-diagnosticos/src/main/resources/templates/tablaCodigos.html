@@ -26,6 +26,7 @@
 	    $('#tablaCodigosB').dataTable();
 	    $('#tablaDuplicadosB').dataTable();
 	    $('#tablaErroneosB').dataTable();	
+	    $('#tablaCorrelaciones').dataTable();
 	});
   
   /*
@@ -246,7 +247,33 @@
 			</table>
     	</div>
     </div>
-    <div role="tabpanel" class="tab-pane" id="messages">...</div>
+    <div role="tabpanel" class="tab-pane" id="messages">
+    	<br></br>
+    	<div class="table-responsive">
+			<table id="tablaCorrelaciones" class="display table" width="100%" >		
+        		<thead>  
+          			<tr>  
+            			<th>CodigoA</th>  
+            			<th>SistemaA</th>              		
+            			<th>TipoA</th>
+            			<th>CodigoB</th>  
+            			<th>SistemaB</th>              		
+            			<th>TipoB</th>
+          			</tr>  
+        		</thead>  
+        		<tbody>  
+          			<tr th:each="correlacion : ${correlaciones}">
+                		<td th:text="${correlacion.codigoA}">codigo</td>
+                		<td th:text="${correlacion.sistemaA}">descripcion</td>                
+                		<td th:text="${correlacion.tipoA}">descripcion</td>
+                		<td th:text="${correlacion.codigoB}">codigo</td>
+                		<td th:text="${correlacion.sistemaB}">descripcion</td>                
+                		<td th:text="${correlacion.tipoB}">descripcion</td>
+            		</tr>  
+        		</tbody>  
+			</table>
+    	</div>
+    </div>
     <div role="tabpanel" class="tab-pane" id="info">...</div>
     <div role="tabpanel" class="tab-pane" id="ficheros">...</div>
     
