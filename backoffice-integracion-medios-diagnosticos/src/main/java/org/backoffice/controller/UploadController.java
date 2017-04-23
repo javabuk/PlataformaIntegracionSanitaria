@@ -123,10 +123,20 @@ public class UploadController {
             redirectAttributes.addFlashAttribute("codigosDuplicados", codigosDuplicados);
             redirectAttributes.addFlashAttribute("codigosErroneos", codigosErroneos);
             
+            redirectAttributes.addFlashAttribute("totalCodigos", codigosSinDuplicados.size());
+            redirectAttributes.addFlashAttribute("totalCodigosSinDuplicados", codigosSinDuplicados.size());
+            redirectAttributes.addFlashAttribute("totalCodigosDuplicados", codigosDuplicados.size());
+            redirectAttributes.addFlashAttribute("totalCodigosErroneos", codigosErroneos.size());
+            
             redirectAttributes.addFlashAttribute("codigosB", codigosB);
             redirectAttributes.addFlashAttribute("codigosBSinDuplicados", codigosBSinDuplicados);
             redirectAttributes.addFlashAttribute("codigosBDuplicados", codigosBDuplicados);
             redirectAttributes.addFlashAttribute("codigosBErroneos", codigosBErroneos);
+            
+            redirectAttributes.addFlashAttribute("totalCodigosB", codigosB.size());
+            redirectAttributes.addFlashAttribute("totalCodigosBSinDuplicados", codigosBSinDuplicados.size());
+            redirectAttributes.addFlashAttribute("totalCodigosBDuplicados", codigosBDuplicados.size());
+            redirectAttributes.addFlashAttribute("totalCodigosBErroneos", codigosBErroneos.size());
             
             redirectAttributes.addFlashAttribute("correlaciones", correlaciones);
 
