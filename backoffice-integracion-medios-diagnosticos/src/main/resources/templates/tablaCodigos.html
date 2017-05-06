@@ -30,7 +30,54 @@
 	    $('#tablaDuplicadosB').dataTable();
 	    $('#tablaErroneosB').dataTable();	
 	    $('#tablaCorrelaciones').dataTable();
+	    
+	 	// Funcion para la carga de las insert en el campo de texto
+	    $('#botonCargar').click(function() {	  		
+	   		$.ajax({
+	    			type: "POST",
+	    			url: "/recuperarSQL",
+	    			data: { 	    				 
+	    				sistema: $('#sistemaA').val(),
+	    				tipo: $('#tipoCodigo').val()
+	    			}
+	  		}).done(function( resp ) {	    			
+	    			$('#sentenciasCodigosA').append(resp);
+	  		});    
+	  	});
+	 	
+	 // Funcion para la carga de las insert en el campo de texto
+	    $('#botonCargarB').click(function() {	  		
+	   		$.ajax({
+	    			type: "POST",
+	    			url: "/recuperarSQLB",
+	    			data: { 	    				 
+	    				sistema: $('#sistemaB').val(),
+	    				tipo: $('#tipoCodigo').val(),	    				
+	    			}
+	  		}).done(function( resp ) {	    			
+	    			$('#sentenciasCodigosB').append(resp);
+	  		});    
+	  	});
+	 
+	 // Funcion para la carga de las insert en el campo de texto
+	    $('#botonCargarCorrelaciones').click(function() {	  		
+	   		$.ajax({
+	    			type: "POST",
+	    			url: "/recuperarSQLCorrelacion",
+	    			data: { 	    				 
+	    				sistemaA: $('#sistemaA').val(),
+	    				sistemaB: $('#sistemaB').val(),
+	    				tipo: $('#tipoCodigo').val(),	    				
+	    			}
+	  		}).done(function( resp ) {	    			
+	    			$('#sentenciasCorrelaciones').append(resp);
+	  		});    
+	  	});
+	 
 	});
+  
+  
+  
   
   /*
   $('#example').dataTable( {
@@ -331,12 +378,34 @@
         </div>
                     </div>
     </div>
-    <div role="tabpanel" class="tab-pane" id="ficheros">...</div>
-    
-  </div>
-
-
-  
+    <div role="tabpanel" class="tab-pane" id="ficheros">
+    	<span class="label label-default">Codigo A</span>
+    	<select id="sistemaA" class="selectpicker">
+  			<option>INFO33</option>
+  			<option>INDIGOHIS</option>  			
+		</select>
+		<span class="label label-default">Codigo B</span>
+    	<select id="sistemaB" class="selectpicker">
+  			<option>ESC_VIZ</option>
+  			<option>MEDIKOSTA</option>  			
+		</select>
+		<span class="label label-default">Tipo codigo</span>
+		<select id="tipoCodigo" class="selectpicker">
+  			<option>LAB</option>
+  			<option>RAD</option>  			
+		</select>
+		<br></br>
+    	<button type="button" class="btn btn-warning btn-xs" id="botonCargar">Cargar A</button>
+		<textarea rows="10" cols="100" id="sentenciasCodigosA"></textarea>
+		<hr></hr>		  
+		<button type="button" class="btn btn-warning btn-xs" id="botonCargarB">Cargar B</button>
+		<textarea rows="10" cols="100" id="sentenciasCodigosB"></textarea>
+		<hr></hr>	
+		<button type="button" class="btn btn-warning btn-xs" id="botonCargarCorrelaciones">Cargar Correlaciones</button>
+		<textarea rows="10" cols="100" id="sentenciasCorrelaciones"></textarea>
+		
+	</div>  
+  	</div>
 </div>
 
 </body>

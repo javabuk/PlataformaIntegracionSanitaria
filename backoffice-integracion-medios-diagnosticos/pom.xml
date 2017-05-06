@@ -40,44 +40,52 @@
 			<artifactId>ojdbc7</artifactId>
 			<version>12.1.0.1</version>
 		</dependency>
-		
+
 		<!-- hsqldb driver -->
-		 <dependency>
-      		<groupId>org.hsqldb</groupId>
-      		<artifactId>hsqldb</artifactId>
-      		<version>2.3.2</version>
-    	</dependency>
-		
-		<!-- HikariCP connection pool -->
-        <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-            <version>2.6.0</version>
-        </dependency>
-        
-        <!-- Aplicacion Web -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
-        </dependency> 
-        
-        <!-- Para leer ficheros excel -->
-        <dependency>
-    		<groupId>org.apache.poi</groupId>
-    		<artifactId>poi</artifactId>
-    		<version>3.15</version>
-		</dependency>
-		
 		<dependency>
-    		<groupId>org.apache.poi</groupId>
-    		<artifactId>poi-ooxml</artifactId>
-    		<version>3.15</version>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>2.3.2</version>
 		</dependency>
+
+		<!-- HikariCP connection pool -->
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>2.6.0</version>
+		</dependency>
+
+		<!-- Aplicacion Web -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- Para leer ficheros excel -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.15</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.15</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+		</dependency>
+
 
 	</dependencies>
 
