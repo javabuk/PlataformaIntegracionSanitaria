@@ -19,6 +19,10 @@
   function goCargaAutomatica() {
 	  document.getElementById("principal").src = "uploadFile";
 	}
+  
+  function goInforme() {
+	  document.getElementById("principal").src = "generarInforme";
+	}
   </script>
 </head>
 <body>
@@ -38,7 +42,11 @@
           <li><a href="#" onclick="goCargaAutomatica()">Carga automatica</a></li>
         </ul>
       </li>
-      <li><a href="#">Inactivo</a></li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Utilidades<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#" onclick="goInforme()">Generar informe a partir fichero hl7</a></li>
+        </ul>
+      </li>      
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
