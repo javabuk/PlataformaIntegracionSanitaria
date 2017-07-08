@@ -23,6 +23,11 @@
   function goInforme() {
 	  document.getElementById("principal").src = "generarInforme";
 	}
+  
+  function goMensajeOMLWizard() {
+	  document.getElementById("principal").src = "mensajeOMLWizard";
+	}
+  
   </script>
 </head>
 <body>
@@ -45,6 +50,7 @@
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Utilidades<span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="#" onclick="goInforme()">Generar informe a partir fichero hl7</a></li>
+          <li><a href="#" onclick="goMensajeOMLWizard()">Generar mensajes OML - Gestor de Peticiones</a></li>
         </ul>
       </li>      
     </ul>
