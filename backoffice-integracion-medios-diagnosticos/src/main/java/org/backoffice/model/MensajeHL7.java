@@ -38,6 +38,7 @@ public class MensajeHL7 {
 	private String codigoMedicoPeticion;
 	private String sistemaMedicoPeticion;
 	private String servicioPeticion;
+	private String descripcionServicioPeticion;
 	private String codigoCentroPeticion;
 	private String descripcionCentroPeticion;
 	private String sistemaCentroPeticion;
@@ -376,6 +377,14 @@ public class MensajeHL7 {
 
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
+	}
+
+	public String getDescripcionServicioPeticion() {
+		return descripcionServicioPeticion;
+	}
+
+	public void setDescripcionServicioPeticion(String descripcionServicioPeticion) {
+		this.descripcionServicioPeticion = descripcionServicioPeticion;
 	}
 
 }

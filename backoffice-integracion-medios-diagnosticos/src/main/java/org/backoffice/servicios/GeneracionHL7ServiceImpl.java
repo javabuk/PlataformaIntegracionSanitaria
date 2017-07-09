@@ -113,20 +113,25 @@ public class GeneracionHL7ServiceImpl implements GeneracionHL7Service {
 			pid.getPid8_AdministrativeSex().setValue(mensajeHL7.getGenero());
 			// Segmento PV1
 			PV1 pv1 = adt.getPATIENT().getPATIENT_VISIT().getPV1();
+			pv1.getSetIDPV1().setValue("1");
 			pv1.getPv12_PatientClass().setValue(mensajeHL7.getTipoIngreso());
 
 			pv1.getPv17_AttendingDoctor(0).getXcn1_IDNumber().setValue(mensajeHL7.getCodigoMedicoResponsable());
 			pv1.getPv17_AttendingDoctor(0).getXcn2_FamilyName().getFn1_Surname()
 					.setValue(mensajeHL7.getApellido1MedicoResponsable());
-			pv1.getPv17_AttendingDoctor(0).getXcn3_GivenName().setValue(mensajeHL7.getApellido2MedicoResponsable());
-			// pv1.getPv17_AttendingDoctor(0).getXcn9_AssigningAuthority().getHd1_NamespaceID().setValue(mensajeHL7.getSistemaMedicoResponsable());
+			pv1.getPv17_AttendingDoctor(0).getXcn3_GivenName().setValue(mensajeHL7.getNombreMedicoResponsable());
+			pv1.getPv17_AttendingDoctor(0).getXcn4_SecondAndFurtherGivenNamesOrInitialsThereof()
+					.setValue(mensajeHL7.getApellido2MedicoResponsable());
+			// pv1.getPv17_AttendingDoctor(0).getXcn9_AssigningAuthority().getHd1_NamespaceID().setValue(mensajeHL7.getSistemaOrigen());
 			pv1.getPv17_AttendingDoctor(0).getXcn9_AssigningAuthority().getHd1_NamespaceID()
 					.setValue(mensajeHL7.getSistemaOrigen());
 
 			pv1.getPv18_ReferringDoctor(0).getXcn1_IDNumber().setValue(mensajeHL7.getCodigoMedicoResponsable());
 			pv1.getPv18_ReferringDoctor(0).getXcn2_FamilyName().getFn1_Surname()
 					.setValue(mensajeHL7.getApellido1MedicoResponsable());
-			pv1.getPv18_ReferringDoctor(0).getXcn3_GivenName().setValue(mensajeHL7.getApellido2MedicoResponsable());
+			pv1.getPv18_ReferringDoctor(0).getXcn3_GivenName().setValue(mensajeHL7.getNombreMedicoResponsable());
+			pv1.getPv18_ReferringDoctor(0).getXcn4_SecondAndFurtherGivenNamesOrInitialsThereof()
+					.setValue(mensajeHL7.getApellido2MedicoResponsable());
 			// pv1.getPv18_ReferringDoctor(0).getXcn9_AssigningAuthority().getHd1_NamespaceID().setValue(mensajeHL7.getSistemaMedicoResponsable());
 			pv1.getPv18_ReferringDoctor(0).getXcn9_AssigningAuthority().getHd1_NamespaceID()
 					.setValue(mensajeHL7.getSistemaOrigen());
@@ -134,6 +139,7 @@ public class GeneracionHL7ServiceImpl implements GeneracionHL7Service {
 			pv1.getPv110_HospitalService().setValue(mensajeHL7.getServicio());
 			// Segmento GT1
 			GT1 gt1 = adt.getPATIENT().getGT1();
+			gt1.getGt11_SetIDGT1().setValue("1");
 			gt1.getGt12_GuarantorNumber(0).getCx1_IDNumber().setValue(mensajeHL7.getCodigoGarante());
 			// gt1.getGt12_GuarantorNumber(0).getCx4_AssigningAuthority().getHd1_NamespaceID().setValue(mensajeHL7.getSistemaGarante());
 			gt1.getGt12_GuarantorNumber(0).getCx4_AssigningAuthority().getHd1_NamespaceID()
@@ -153,11 +159,16 @@ public class GeneracionHL7ServiceImpl implements GeneracionHL7Service {
 			orc.getOrc12_OrderingProvider(0).getXcn1_IDNumber().setValue(mensajeHL7.getCodigoMedicoPeticion());
 			orc.getOrc12_OrderingProvider(0).getXcn2_FamilyName().getFn1_Surname()
 					.setValue(mensajeHL7.getApellido1MedicoPeticion());
-			orc.getOrc12_OrderingProvider(0).getXcn3_GivenName().setValue(mensajeHL7.getApellido2MedicoPeticion());
+			orc.getOrc12_OrderingProvider(0).getXcn3_GivenName().setValue(mensajeHL7.getNombreMedicoPeticion());
+			orc.getOrc12_OrderingProvider(0).getXcn4_SecondAndFurtherGivenNamesOrInitialsThereof()
+					.setValue(mensajeHL7.getApellido2MedicoPeticion());
 			// orc.getOrc12_OrderingProvider(0).getXcn9_AssigningAuthority().getHd1_NamespaceID().setValue(mensajeHL7.getSistemaMedicoPeticion());
 			orc.getOrc12_OrderingProvider(0).getXcn9_AssigningAuthority().getHd1_NamespaceID()
 					.setValue(mensajeHL7.getSistemaOrigen());
 			orc.getOrc17_EnteringOrganization().getCe1_Identifier().setValue(mensajeHL7.getServicioPeticion());
+			orc.getOrc17_EnteringOrganization().getCe2_Text().setValue(mensajeHL7.getDescripcionServicioPeticion());
+			orc.getOrc17_EnteringOrganization().getCe3_NameOfCodingSystem().setValue(mensajeHL7.getSistemaOrigen());
+
 			orc.getOrc21_OrderingFacilityName(0).getXon1_OrganizationName()
 					.setValue(mensajeHL7.getDescripcionCentroPeticion());
 			// orc.getOrc21_OrderingFacilityName(0).getXon6_AssigningAuthority().getHd1_NamespaceID().setValue(mensajeHL7.getSistemaCentroPeticion());
@@ -167,12 +178,14 @@ public class GeneracionHL7ServiceImpl implements GeneracionHL7Service {
 					.setValue(mensajeHL7.getCodigoCentroPeticion());
 			// Segmento TQ1
 			TQ1 tq1 = adt.getORDER(0).getTIMING(0).getTQ1();
+			tq1.getSetIDTQ1().setValue("1");
 			tq1.getTq19_Priority(0).getCwe1_Identifier().setValue(mensajeHL7.getCodigoPrioridadPeticion());
 			tq1.getTq19_Priority(0).getCwe2_Text().setValue(mensajeHL7.getDescripcionPrioridadPeticion());
 			// tq1.getTq19_Priority(0).getCwe3_NameOfCodingSystem().setValue(mensajeHL7.getSistemaPrioridadPeticion());
 			tq1.getTq19_Priority(0).getCwe3_NameOfCodingSystem().setValue(mensajeHL7.getSistemaOrigen());
 			// Segmento OBR
 			OBR obr = adt.getORDER(0).getOBSERVATION_REQUEST().getOBR();
+			obr.getSetIDOBR().setValue("1");
 			obr.getObr2_PlacerOrderNumber().getEi1_EntityIdentifier().setValue(mensajeHL7.getIdPeticionarioPrueba());
 			// obr.getObr2_PlacerOrderNumber().getEi2_NamespaceID().setValue(mensajeHL7.getSistemaPeticionarioPrueba());
 			obr.getObr2_PlacerOrderNumber().getEi2_NamespaceID().setValue(mensajeHL7.getSistemaOrigen());
@@ -180,6 +193,15 @@ public class GeneracionHL7ServiceImpl implements GeneracionHL7Service {
 			obr.getObr4_UniversalServiceIdentifier().getCe2_Text().setValue(mensajeHL7.getDescripcionPrueba());
 			// obr.getObr4_UniversalServiceIdentifier().getCe3_NameOfCodingSystem().setValue(mensajeHL7.getSistemaPrueba());
 			obr.getObr4_UniversalServiceIdentifier().getCe3_NameOfCodingSystem()
+					.setValue(mensajeHL7.getSistemaOrigen());
+
+			obr.getObr16_OrderingProvider(0).getXcn1_IDNumber().setValue(mensajeHL7.getCodigoMedicoPeticion());
+			obr.getObr16_OrderingProvider(0).getXcn2_FamilyName().getFn1_Surname()
+					.setValue(mensajeHL7.getApellido1MedicoPeticion());
+			obr.getObr16_OrderingProvider(0).getXcn3_GivenName().setValue(mensajeHL7.getNombreMedicoPeticion());
+			obr.getObr16_OrderingProvider(0).getXcn4_SecondAndFurtherGivenNamesOrInitialsThereof()
+					.setValue(mensajeHL7.getApellido2MedicoPeticion());
+			obr.getObr16_OrderingProvider(0).getXcn9_AssigningAuthority().getHd1_NamespaceID()
 					.setValue(mensajeHL7.getSistemaOrigen());
 
 			HapiContext context = new DefaultHapiContext();

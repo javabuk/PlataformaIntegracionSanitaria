@@ -8,7 +8,34 @@
 	<script src="/js/jquery.bootstrap.wizard.js"></script>
 	<script>
 	$(document).ready(function() {
-	  	$('#rootwizard').bootstrapWizard({onTabShow: function(tab, navigation, index) {
+	  	
+		var i=1;
+		/*$("#add_row").click(function(){
+			
+	     $('#addr'+i).html("<td>"+ (i+1) +"</td><td><input name='name"+i+"' type='text' placeholder='Name' class='form-control input-md'  ></input> </td><td><input  name='mail"+i+"' type='text' placeholder='Mail'  class='form-control input-md'></input> </td><td><input  name='mobile"+i+"' type='text' placeholder='Mobile'  class='form-control input-md'></input></td>");
+	    
+	     //var texto = "<td>"+ (i+1) +"</td><td><input name='name"+i+"' type='text' placeholder='Name' class='form-control input-md'  ></input> </td><td><input  name='mail"+i+"' type='text' placeholder='Mail'  class='form-control input-md'></input> </td><td><input  name='mobile"+i+"' type='text' placeholder='Mobile'  class='form-control input-md'></input></td>";
+	     $('#addr'+i).html("<td>"+ (i+1) +"</td>");
+	      $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
+	      i++;
+			
+	  });
+	     
+		$("#add_row").click(function(){
+		      $('#addr'+i).html("<td>"+ (i+1) +"</td><td><input name='name"+i+"' type='text' placeholder='Name' class='form-control input-md'  /> </td><td><input  name='mail"+i+"' type='text' placeholder='Mail'  class='form-control input-md'/></td><td><input  name='mobile"+i+"' type='text' placeholder='Mobile'  class='form-control input-md'/></td>");
+		      $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
+		      i++;
+				
+		  }); */
+		
+		 $("#delete_row").click(function(){
+	    	 if(i>1){
+			 $("#addr"+(i-1)).html('');
+			 i--;
+			 }
+		 });
+		
+		$('#rootwizard').bootstrapWizard({onTabShow: function(tab, navigation, index) {
 			var $total = navigation.find('li').length;
 			var $current = index+1;
 			var $percent = ($current/$total) * 100;
@@ -17,6 +44,9 @@
 		$('#rootwizard .finish').click(function() {			
 			$('#rootwizard').find("a[href*='tab1']").trigger('click');
 		});
+		
+
+		
 	});
 	</script>
 </head>
@@ -217,6 +247,12 @@
     		</div>
   		</div>
   		<div class="form-group">
+    		<label for="descripcionServicioPeticion" class="col-sm-2 control-label">Descripcion del servicio de la peticion:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="descripcionServicioPeticion" placeholder="Descripcion del servicio de la peticion" th:field="*{descripcionServicioPeticion}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
     		<label for="codigoCentroPeticion" class="col-sm-2 control-label">Centro de la peticion:</label>
     		<div class="col-sm-4">
     			<input type="text" class="form-control" id="codigoCentroPeticion" placeholder="Centro de la peticion" th:field="*{codigoCentroPeticion}"/>
@@ -254,6 +290,48 @@
     			<input type="text" class="form-control" id="descripcionPrueba" placeholder="Descripcion de la prueba" th:field="*{descripcionPrueba}"/>
     		</div>
   		</div>
+  		
+  		<!-- <div class="row clearfix">
+		<div class="col-md-12 column">
+			<table class="table table-bordered table-hover" id="tab_logic">
+				<thead>
+					<tr >
+						<th class="text-center">
+							#
+						</th>
+						<th class="text-center">
+							Name
+						</th>
+						<th class="text-center">
+							Mail
+						</th>
+						<th class="text-center">
+							Mobile
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr id='addr0'>
+						<td>
+						1
+						</td>
+						<td>
+						<input type="text" name='name0'  placeholder='Name' class="form-control"></input>
+						</td>
+						<td>
+						<input type="text" name='mail0' placeholder='Mail' class="form-control"></input>
+						</td>
+						<td>
+						<input type="text" name='mobile0' placeholder='Mobile' class="form-control"></input>
+						</td>
+					</tr>
+                    <tr id='addr1'></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<a id="add_row" class="btn btn-default pull-left">Add Row</a><a id='delete_row' class="pull-right btn btn-default">Delete Row</a> -->
+  	<br/>
 			</div>
 			<div class="tab-pane" id="tab7">7</div>
 			<div class="tab-pane" id="tab7">8</div>
