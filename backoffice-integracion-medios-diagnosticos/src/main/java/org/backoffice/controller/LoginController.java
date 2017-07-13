@@ -19,11 +19,13 @@ import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.backoffice.dao.CodigoRepository;
 import org.backoffice.dao.ConfiguracionRepository;
+import org.backoffice.dao.TrazaRepository;
 import org.backoffice.model.Codigo;
 import org.backoffice.model.Configuracion;
 import org.backoffice.model.DatosSituacionActual;
 import org.backoffice.model.MensajeConfirmacion;
 import org.backoffice.model.MensajeHL7;
+import org.backoffice.model.Traza;
 import org.backoffice.servicios.GeneracionHL7Service;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTHeight;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTShd;
@@ -62,6 +64,9 @@ public class LoginController {
 	@Autowired
 	CodigoRepository codigoRepository;
 
+	@Autowired
+	TrazaRepository trazaRepository;
+
 	@RequestMapping("/login")
 	public String greeting(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
 			Model model) {
@@ -96,6 +101,10 @@ public class LoginController {
 
 		for (Codigo codigoAll : codigoRepository.findAll()) {
 			System.out.println(codigoAll);
+		}
+
+		for (Traza trazaAll : trazaRepository.findAll()) {
+			System.out.println(trazaAll);
 		}
 
 		return "menuprincipal";

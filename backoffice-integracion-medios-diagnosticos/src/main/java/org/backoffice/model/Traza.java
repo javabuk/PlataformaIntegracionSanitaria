@@ -1,0 +1,111 @@
+package org.backoffice.model;
+
+import java.sql.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity(name = "PSI_TRAZAS")
+public class Traza {
+
+	@Id
+	@Column(name = "ID")
+	private Integer id;
+
+	@Column(name = "ID_MENSAJE")
+	private String idMensaje;
+
+	@Column(name = "MENSAJE")
+	private String mensaje;
+
+	@Column(name = "FECHA")
+	private Date fecha;
+
+	@Column(name = "MODULO")
+	private String modulo;
+
+	@Column(name = "DESTINO")
+	private String destino;
+
+	@Column(name = "ERROR")
+	private String error;
+
+	public Traza() {
+	}
+
+	public Traza(Integer id, String idMensaje, String mensaje, Date fecha, String modulo, String destino,
+			String error) {
+		super();
+		this.id = id;
+		this.idMensaje = idMensaje;
+		this.mensaje = mensaje;
+		this.fecha = fecha;
+		this.modulo = modulo;
+		this.destino = destino;
+		this.error = error;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getIdMensaje() {
+		return idMensaje;
+	}
+
+	public void setIdMensaje(String idMensaje) {
+		this.idMensaje = idMensaje;
+	}
+
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public String getModulo() {
+		return modulo;
+	}
+
+	public void setModulo(String modulo) {
+		this.modulo = modulo;
+	}
+
+	public String getDestino() {
+		return destino;
+	}
+
+	public void setDestino(String destino) {
+		this.destino = destino;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
+	}
+
+	@Override
+	public String toString() {
+		return "Traza [id=" + id + ", idMensaje=" + idMensaje + ", mensaje=" + mensaje + ", fecha=" + fecha
+				+ ", modulo=" + modulo + ", destino=" + destino + ", error=" + error + "]";
+	}
+
+}
