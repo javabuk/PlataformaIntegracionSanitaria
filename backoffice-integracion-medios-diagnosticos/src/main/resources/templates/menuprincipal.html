@@ -28,6 +28,10 @@
 	  document.getElementById("principal").src = "mensajeOMLWizard";
 	}
   
+  function goTablaTrazas() {
+	  document.getElementById("principal").src = "tablaTrazas";
+	}
+  
   </script>
 </head>
 <body>
@@ -47,6 +51,7 @@
           <li><a href="#" onclick="goCargaAutomatica()">Carga automatica</a></li>
         </ul>
       </li>
+      <li class="active"><a href="#" onclick="goTablaTrazas()">Trazas</a></li>
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Utilidades<span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="#" onclick="goInforme()">Generar informe a partir fichero hl7</a></li>

@@ -16,6 +16,9 @@ public class Traza {
 	@Column(name = "ID_MENSAJE")
 	private String idMensaje;
 
+	@Column(name = "SIST_MENSAJE")
+	private String sistMensaje;
+
 	@Column(name = "MENSAJE")
 	private String mensaje;
 
@@ -34,11 +37,12 @@ public class Traza {
 	public Traza() {
 	}
 
-	public Traza(Integer id, String idMensaje, String mensaje, Date fecha, String modulo, String destino,
-			String error) {
+	public Traza(Integer id, String idMensaje, String sistMensaje, String mensaje, Date fecha, String modulo,
+			String destino, String error) {
 		super();
 		this.id = id;
 		this.idMensaje = idMensaje;
+		this.sistMensaje = sistMensaje;
 		this.mensaje = mensaje;
 		this.fecha = fecha;
 		this.modulo = modulo;
@@ -100,6 +104,14 @@ public class Traza {
 
 	public void setError(String error) {
 		this.error = error;
+	}
+
+	public String getSistMensaje() {
+		return sistMensaje;
+	}
+
+	public void setSistMensaje(String sistMensaje) {
+		this.sistMensaje = sistMensaje;
 	}
 
 	@Override

@@ -377,4 +377,11 @@ public class LoginController {
 		return "situacionActual";
 	}
 
+	@RequestMapping("/tablaTrazas")
+	public String tablaTrazas(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
+			Model model) {
+		model.addAttribute("datosTrazas", trazaRepository.findAll());
+		return "tablaTrazas";
+	}
+
 }

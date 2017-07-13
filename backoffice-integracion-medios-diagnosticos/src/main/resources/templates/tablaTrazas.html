@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"></link>   
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></link>
+	<script type="text/javascript"  src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	
+	
+	
+  <script >
+  $(document).ready(function(){
+	    $('#myTable').dataTable(
+	    		{
+	    			  "createdRow": function( row, data, dataIndex ) {	    				 
+	    			    if ( data[0] == "No valido" ) {
+	    			      //$(row).addClass( 'odd' );
+	    			      $(row).css("background-color","#EC7063");
+	    			    }
+	    			  }
+	    			} 		
+	    );
+	    /*$('#tablaDuplicados').dataTable();
+	    $('#tablaErroneos').dataTable();	
+	    $('#tablaCodigosB').dataTable();
+	    $('#tablaDuplicadosB').dataTable();
+	    $('#tablaErroneosB').dataTable();	
+	    $('#tablaCorrelaciones').dataTable();*/
+	    
+	 	// Funcion para la carga de las insert en el campo de texto
+	    $('#botonCargar').click(function() {	  		
+	   		$.ajax({
+	    			type: "POST",
+	    			url: "/recuperarSQL",
+	    			data: { 	    				 
+	    				sistema: $('#sistemaA').val(),
+	    				tipo: $('#tipoCodigo').val()
+	    			}
+	  		}).done(function( resp ) {	    			
+	    			$('#sentenciasCodigosA').append(resp);
+	  		});    
+	  	});
+	 	
+	 // Funcion para la carga de las insert en el campo de texto
+	    $('#botonCargarB').click(function() {	  		
+	   		$.ajax({
+	    			type: "POST",
+	    			url: "/recuperarSQLB",
+	    			data: { 	    				 
+	    				sistema: $('#sistemaB').val(),
+	    				tipo: $('#tipoCodigo').val(),	    				
+	    			}
+	  		}).done(function( resp ) {	    			
+	    			$('#sentenciasCodigosB').append(resp);
+	  		});    
+	  	});
+	 
+	 // Funcion para la carga de las insert en el campo de texto
+	    $('#botonCargarCorrelaciones').click(function() {	  		
+	   		$.ajax({
+	    			type: "POST",
+	    			url: "/recuperarSQLCorrelacion",
+	    			data: { 	    				 
+	    				sistemaA: $('#sistemaA').val(),
+	    				sistemaB: $('#sistemaB').val(),
+	    				tipo: $('#tipoCodigo').val(),	    				
+	    			}
+	  		}).done(function( resp ) {	    			
+	    			$('#sentenciasCorrelaciones').append(resp);
+	  		});    
+	  	});
+	 
+	});
+  
+  
+  
+  </script>
+</head>
+<body>
+
+<div class="container">
+
+	<!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Trazas Completas</a></li>    
+  </ul>
+
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="home">
+  
+  <br></br>
+  <div class="table-responsive">
+	<table id="myTable" class="display table" width="100%" >		
+        <thead>  
+          <tr>  
+            <th>Id</th>  
+            <th>IdMensaje</th>  
+            <th>Sistema</th>  
+            <th>Mensaje</th>  
+            <th>fecha</th>
+          </tr>  
+        </thead>  
+        <tbody>  
+          <tr th:each="traza : ${datosTrazas}">
+                <td th:text="${traza.id}">codigo</td>
+                <td th:text="${traza.idMensaje}">descripcion</td>
+                <td th:text="${traza.sistMensaje}">sistema</td>                
+                <td th:text="${traza.mensaje}">tipo</td>
+                <td th:text="${traza.fecha}">tipo</td>
+            </tr>  
+        </tbody>  
+	</table>
+	</div>
+    
+    </div>
+    </div>
+</div>
+
+</body>
+</html>
