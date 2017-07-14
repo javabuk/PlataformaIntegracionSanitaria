@@ -27,6 +27,7 @@ import org.backoffice.model.DatosSituacionActual;
 import org.backoffice.model.MensajeConfirmacion;
 import org.backoffice.model.MensajeHL7;
 import org.backoffice.model.Sistema;
+import org.backoffice.model.SistemaOculto;
 import org.backoffice.model.Traza;
 import org.backoffice.servicios.GeneracionHL7Service;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTHeight;
@@ -416,6 +417,17 @@ public class LoginController {
 
 		model.addAttribute("mensaje", mensajeConfirmacion);
 		return "resultadoCodigo";
+	}
+
+	@RequestMapping(value = "/eliminarSistema", method = RequestMethod.POST)
+	public String eliminarSistema(Model model, SistemaOculto datosSistema) {
+
+		try {
+			sistemaRepository.delete(datosSistema.getIdSistemaOculto());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "sistemas";
 	}
 
 	@RequestMapping("/situacionActual")
