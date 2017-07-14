@@ -19,12 +19,14 @@ import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.backoffice.dao.CodigoRepository;
 import org.backoffice.dao.ConfiguracionRepository;
+import org.backoffice.dao.SistemaRepository;
 import org.backoffice.dao.TrazaRepository;
 import org.backoffice.model.Codigo;
 import org.backoffice.model.Configuracion;
 import org.backoffice.model.DatosSituacionActual;
 import org.backoffice.model.MensajeConfirmacion;
 import org.backoffice.model.MensajeHL7;
+import org.backoffice.model.Sistema;
 import org.backoffice.model.Traza;
 import org.backoffice.servicios.GeneracionHL7Service;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTHeight;
@@ -66,6 +68,9 @@ public class LoginController {
 
 	@Autowired
 	TrazaRepository trazaRepository;
+
+	@Autowired
+	SistemaRepository sistemaRepository;
 
 	@RequestMapping("/login")
 	public String greeting(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
@@ -347,6 +352,26 @@ public class LoginController {
 		return "codigos";
 	}
 
+	@RequestMapping("/sistemas")
+	public String sistemas(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
+			Model model) {
+		model.addAttribute("sistemasExistentes", sistemaRepository.findAll());
+		return "sistemas";
+	}
+
+	@RequestMapping("/modificarSistema")
+	public String modificarSistema(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
+			Model model, Sistema datosSistema) {
+
+		try {
+			sistemaRepository.save(datosSistema);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "sistemas";
+	}
+
 	@RequestMapping("/formulariocodigo")
 	public String formulariocodigo(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
 			Model model, Codigo datosCodigo) {
@@ -354,11 +379,34 @@ public class LoginController {
 		return "formulariocodigo";
 	}
 
+	@RequestMapping("/formularioSistemas")
+	public String formularioSistema(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
+			Model model, Sistema datosSistema) {
+		model.addAttribute("datosSistema", datosSistema);
+		return "formularioSistemas";
+	}
+
 	@RequestMapping(value = "/GrabarCodigo", method = RequestMethod.POST)
 	public String grabarExamen(Model model, Codigo datosCodigo, MensajeConfirmacion mensajeConfirmacion) {
 
 		try {
 			codigoRepository.save(datosCodigo);
+			mensajeConfirmacion.setMensaje("Insercion correcta");
+		} catch (Exception e) {
+			mensajeConfirmacion.setMensaje(e.getMessage());
+			mensajeConfirmacion.setExcepcion(e);
+			e.printStackTrace();
+		}
+
+		model.addAttribute("mensaje", mensajeConfirmacion);
+		return "resultadoCodigo";
+	}
+
+	@RequestMapping(value = "/GrabarSistema", method = RequestMethod.POST)
+	public String grabarSistema(Model model, Sistema datosSistema, MensajeConfirmacion mensajeConfirmacion) {
+
+		try {
+			sistemaRepository.save(datosSistema);
 			mensajeConfirmacion.setMensaje("Insercion correcta");
 		} catch (Exception e) {
 			mensajeConfirmacion.setMensaje(e.getMessage());

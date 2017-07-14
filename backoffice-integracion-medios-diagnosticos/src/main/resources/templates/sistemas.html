@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>BackOffice Integracion Medios Diagnosticos</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+  <!-- 
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   -->
+   	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+  <script >
+  $(document).ready(function(){
+	  $("#mytable #checkall").click(function () {
+	          if ($("#mytable #checkall").is(':checked')) {
+	              $("#mytable input[type=checkbox]").each(function () {
+	                  $(this).prop("checked", true);
+	              });
+
+	          } else {
+	              $("#mytable input[type=checkbox]").each(function () {
+	                  $(this).prop("checked", false);
+	              });
+	          }
+	      });
+	      
+	      $("[data-toggle=tooltip]").tooltip();
+	      
+	      $('#modificar-sistema-form').on('submit', function(e){
+	            e.preventDefault();
+	            $.ajax({
+	                url: 'modificarSistema/',
+	                type: 'POST',
+	                data: $('#modificar-sistema-form').serialize(),
+	                success: function(data){
+	                	 // Forzamos el click del boton que cierra la modal.
+	                     $('#btnCerrarModificacion').trigger("click");
+	                	 // Recarga la pagina para que actualice los cambios
+	                     location.reload();	                     
+	                }
+	            });
+	        });
+	      
+	      
+	      	$('#btnEditFilaSistema').on('click', function() {
+	      		$('#idSistema').val($(this.parentNode.parentNode.parentNode).children()[1].innerHTML);
+	      		$('#descripcion').val($(this.parentNode.parentNode.parentNode).children()[2].innerHTML);	      		
+    		});
+	      	
+	      	$('#btnDeleteFilaSistema').on('click', function() {
+	      		//$('#idSistema').val($(this.parentNode.parentNode.parentNode).children()[1].innerHTML);
+	      		//$('#descripcion').val($(this.parentNode.parentNode.parentNode).children()[2].innerHTML);	      		
+    		});
+	      
+	  });
+  </script>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+        <div class="col-md-12">
+        <h4>Listado de sistemas registrados:</h4>
+        <div class="table-responsive">
+              <table id="mytable" class="table table-bordred table-striped">
+                   <thead>
+                   		<th width="10"><input type="checkbox" id="checkall" ></input></th>
+                   		<th width="40">Id Sistema</th>
+                    	<th width="200">Descripcion</th>                     	
+                      	<th width="20">Edit</th>
+                       <th width="20">Delete</th>
+                   </thead>
+    				<tbody>
+    					<tr th:each="sistema : ${sistemasExistentes}">
+    						<td><input type="checkbox" class="checkthis" ></input></td>
+							<td id="idSistemaFila" th:text="${sistema.idSistema}">1</td>
+							<td id="descripcionFila" th:text="${sistema.descripcion}">Mark</td>
+							<td><p data-placement="top" data-toggle="tooltip" title="Edit"><button id="btnEditFilaSistema" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+    						<td><p data-placement="top" data-toggle="tooltip" title="Delete"><button id="btnDeleteFilaSistema" class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+						</tr>
+    				</tbody>
+				</table>
+<div class="clearfix"></div>
+<ul class="pagination pull-right">
+  <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+  <li class="active"><a href="#">1</a></li>
+  <li><a href="#">2</a></li>
+  <li><a href="#">3</a></li>
+  <li><a href="#">4</a></li>
+  <li><a href="#">5</a></li>
+  <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+</ul>
+                
+            </div>
+            
+        </div>
+	</div>
+</div>
+
+<!-- <form id="modificar-sistema-form" action="/modificarSistema/" method="post"> -->
+<form id="modificar-sistema-form">
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button id="btnCerrarModificacion" type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Modifica los datos del sistema</h4>
+      </div>
+          <div class="modal-body">
+          <div class="form-group">
+        <input class="form-control " type="text" id="idSistema" name ="idSistema" placeholder="idSistema"></input>
+        </div>
+        <div class="form-group">
+        
+        <input class="form-control " type="text" id="descripcion" name ="descripcion" placeholder="Descripcion"></input>
+        </div>        
+      </div>
+          <div class="modal-footer ">
+        <button id="btnUpdateSistema" type="submit" class="btn btn-warning btn-lg" style="width: 100%;"><span id="spnUpdateSistema" class="glyphicon glyphicon-ok-sign"></span> Update</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+    
+    
+    	<div id="subscription-confirm" class="modal hide fade in" aria-hidden="true">
+    		<div class="modal-header">
+        		<label id="responsestatus"></label>
+    		</div>
+		</div>
+  
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
+</form>    
+    
+    
+    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
+</body>
+</html>

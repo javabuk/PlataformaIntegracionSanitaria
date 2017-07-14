@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>BackOffice Integracion Medios Diagnosticos</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+	<script>
+	$(document).ready(function(){ 
+	    $('#characterLeft').text('140 characters left');
+	    $('#message').keydown(function () {
+	        var max = 140;
+	        var len = $(this).val().length;
+	        if (len >= max) {
+	            $('#characterLeft').text('You have reached the limit');
+	            $('#characterLeft').addClass('red');
+	            $('#btnSubmit').addClass('disabled');            
+	        } 
+	        else {
+	            var ch = max - len;
+	            $('#characterLeft').text(ch + ' characters left');
+	            $('#btnSubmit').removeClass('disabled');
+	            $('#characterLeft').removeClass('red');            
+	        }
+	    });    
+	});
+
+	</script>
+</head>
+<body>
+<div class="container">
+<div class="col-md-5">
+    <div class="form-area">  
+        <form role="form" method="post" th:object="${datosSistema}" th:action="@{/GrabarSistema}">
+        <br style="clear:both"></br>
+                    <h3 style="margin-bottom: 25px; text-align: center;">Nuevo codigo</h3>
+    				<div class="form-group">
+						<input type="text" class="form-control" id="idSistema" name="idSistema" placeholder="Codigo" ></input>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Descripcion" ></input>
+					</div>					
+        <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Guardar</button>
+        </form>
+    </div>
+</div>
+</div>
+</body>
+</html>
