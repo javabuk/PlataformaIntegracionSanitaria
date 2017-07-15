@@ -19,10 +19,12 @@ import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.backoffice.dao.CodigoRepository;
 import org.backoffice.dao.ConfiguracionRepository;
+import org.backoffice.dao.CorrelacionRepository;
 import org.backoffice.dao.SistemaRepository;
 import org.backoffice.dao.TrazaRepository;
 import org.backoffice.model.Codigo;
 import org.backoffice.model.Configuracion;
+import org.backoffice.model.Correlacion;
 import org.backoffice.model.DatosSituacionActual;
 import org.backoffice.model.MensajeConfirmacion;
 import org.backoffice.model.MensajeHL7;
@@ -72,6 +74,9 @@ public class LoginController {
 
 	@Autowired
 	SistemaRepository sistemaRepository;
+
+	@Autowired
+	CorrelacionRepository correlacionRepository;
 
 	@RequestMapping("/login")
 	public String greeting(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
@@ -428,6 +433,39 @@ public class LoginController {
 			e.printStackTrace();
 		}
 		return "sistemas";
+	}
+
+	@RequestMapping("/correlaciones")
+	public String correlaciones(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
+			Model model) {
+
+		model.addAttribute("correlacionesExistentes", correlacionRepository.findAll());
+		return "correlaciones";
+	}
+
+	@RequestMapping("/formularioCorrelacion")
+	public String formularioCorrelacion(
+			@RequestParam(value = "name", required = false, defaultValue = "World") String name, Model model,
+			Correlacion datosCorrelacion) {
+		model.addAttribute("datosCorrelacion", datosCorrelacion);
+		return "formularioCorrelacion";
+	}
+
+	@RequestMapping(value = "/GrabarCorrelacion", method = RequestMethod.POST)
+	public String grabarCorrelacion(Model model, Correlacion datosCorrelacion,
+			MensajeConfirmacion mensajeConfirmacion) {
+
+		try {
+			correlacionRepository.save(datosCorrelacion);
+			mensajeConfirmacion.setMensaje("Insercion correcta");
+		} catch (Exception e) {
+			mensajeConfirmacion.setMensaje(e.getMessage());
+			mensajeConfirmacion.setExcepcion(e);
+			e.printStackTrace();
+		}
+
+		model.addAttribute("mensaje", mensajeConfirmacion);
+		return "resultadoCodigo";
 	}
 
 	@RequestMapping("/situacionActual")

@@ -40,6 +40,14 @@
 	  document.getElementById("principal").src = "formularioSistemas";
 	}
   
+  function goCorrelaciones() {
+	  document.getElementById("principal").src = "correlaciones";
+	}
+  
+  function goFormularioCorrelaciones() {
+	  document.getElementById("principal").src = "formularioCorrelacion";
+	}
+  
   </script>
 </head>
 <body>
@@ -61,7 +69,8 @@
         <ul class="dropdown-menu">
           <li><a href="#" onclick="go()">Codigos</a></li>
           <li><a href="#" onclick="goFormularioCodigo()">Nuevo codigo</a></li>
-          <li><a href="#">Correlaciones</a></li>
+          <li><a href="#" onclick="goCorrelaciones()">Correlaciones</a></li>
+          <li><a href="#" onclick="goFormularioCorrelaciones()">Nueva correlacion</a></li>
           <li><a href="#" onclick="goCargaAutomatica()">Carga automatica</a></li>
         </ul>
       </li>
