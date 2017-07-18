@@ -110,7 +110,8 @@
                 <td th:text="${traza.idMensaje}">descripcion</td>
                 <td th:text="${traza.sistMensaje}">sistema</td>                
                 <td th:text="${traza.mensaje}">tipo</td>
-                <td th:text="${traza.fecha}">tipo</td>
+                <td th:text="${#dates.formatISO(traza.fecha)}">tipo</td>
+                <!-- <td th:text="${#dates.format(traza.fecha,'dd-MM-yyyy HH:MI:SS')}">tipo</td> -->
             </tr>  
         </tbody>  
 	</table>

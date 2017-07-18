@@ -1,6 +1,6 @@
 package org.backoffice.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +23,7 @@ public class Traza {
 	private String mensaje;
 
 	@Column(name = "FECHA")
-	private Date fecha;
+	private Timestamp fecha;
 
 	@Column(name = "MODULO")
 	private String modulo;
@@ -37,7 +37,7 @@ public class Traza {
 	public Traza() {
 	}
 
-	public Traza(Integer id, String idMensaje, String sistMensaje, String mensaje, Date fecha, String modulo,
+	public Traza(Integer id, String idMensaje, String sistMensaje, String mensaje, Timestamp fecha, String modulo,
 			String destino, String error) {
 		super();
 		this.id = id;
@@ -74,11 +74,11 @@ public class Traza {
 		this.mensaje = mensaje;
 	}
 
-	public Date getFecha() {
+	public Timestamp getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(Timestamp fecha) {
 		this.fecha = fecha;
 	}
 

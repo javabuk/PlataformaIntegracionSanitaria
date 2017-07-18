@@ -18,12 +18,10 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.backoffice.dao.CodigoRepository;
-import org.backoffice.dao.ConfiguracionRepository;
 import org.backoffice.dao.CorrelacionRepository;
 import org.backoffice.dao.SistemaRepository;
 import org.backoffice.dao.TrazaRepository;
 import org.backoffice.model.Codigo;
-import org.backoffice.model.Configuracion;
 import org.backoffice.model.Correlacion;
 import org.backoffice.model.DatosSituacionActual;
 import org.backoffice.model.MensajeConfirmacion;
@@ -63,8 +61,8 @@ public class LoginController {
 		this.hl7Service = hl7Service;
 	}
 
-	@Autowired
-	ConfiguracionRepository configuracionRepository;
+	// @Autowired
+	// ConfiguracionRepository configuracionRepository;
 
 	@Autowired
 	CodigoRepository codigoRepository;
@@ -83,13 +81,13 @@ public class LoginController {
 			Model model) {
 		model.addAttribute("name", name);
 
-		Configuracion nuevaConfiguracion = new Configuracion(new Long(500), "LOGIN", name);
-		configuracionRepository.save(nuevaConfiguracion);
-
-		for (Configuracion configuracion : configuracionRepository.findAll()) {
-			System.out.println(configuracion);
-		}
-
+		/*
+		 * Configuracion nuevaConfiguracion = new Configuracion(new Long(500),
+		 * "LOGIN", name); configuracionRepository.save(nuevaConfiguracion);
+		 * 
+		 * for (Configuracion configuracion : configuracionRepository.findAll())
+		 * { System.out.println(configuracion); }
+		 */
 		return "login";
 	}
 
@@ -437,9 +435,23 @@ public class LoginController {
 
 	@RequestMapping("/correlaciones")
 	public String correlaciones(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
-			Model model) {
+			Model model, HttpServletRequest request) {
 
-		model.addAttribute("correlacionesExistentes", correlacionRepository.findAll());
+		request.getSession().setAttribute("correlacionesExistentes", correlacionRepository.findAll());
+		// model.addAttribute("correlacionesExistentes",
+		// correlacionRepository.findAll());
+
+		// return "correlaciones";
+		return "redirect:correlacionesListado";
+	}
+
+	@RequestMapping("/correlacionesListado")
+	public String correlacionesListado(
+
+			@RequestParam(value = "name", required = false, defaultValue = "World") String name, Model model,
+			HttpServletRequest request) {
+
+		model.addAttribute("correlacionesExistentes", request.getSession().getAttribute("correlacionesExistentes"));
 		return "correlaciones";
 	}
 
@@ -466,6 +478,16 @@ public class LoginController {
 
 		model.addAttribute("mensaje", mensajeConfirmacion);
 		return "resultadoCodigo";
+	}
+
+	@RequestMapping("/buscarCorrelacion")
+	public String buscarCorrelacion(@RequestParam(value = "codigoABusqueda", required = false) String name, Model model,
+			HttpServletRequest request) {
+		// model.addAttribute("correlacionesExistentes",
+		// correlacionRepository.findByCodigoA(name));
+		request.getSession().setAttribute("correlacionesExistentes", correlacionRepository.findByCodigoA(name));
+
+		return "redirect:correlacionesListado";
 	}
 
 	@RequestMapping("/situacionActual")

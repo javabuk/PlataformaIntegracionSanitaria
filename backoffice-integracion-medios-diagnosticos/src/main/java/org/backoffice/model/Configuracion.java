@@ -1,25 +1,21 @@
 package org.backoffice.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-@Entity ( name = "CONFIGURACION_HIS")
+//@Entity ( name = "CONFIGURACION_HIS")
 public class Configuracion {
-	
-	@Id
-	@Column ( name = "ID") 
+
+	// @Id
+	// @Column ( name = "ID")
 	private Long id;
-	
-	@Column ( name = "CLAVE")
+
+	// @Column ( name = "CLAVE")
 	private String clave;
-	
-	@Column ( name = "VALOR")
+
+	// @Column ( name = "VALOR")
 	private String valor;
 
 	public Configuracion() {
-    }
-	
+	}
+
 	public Configuracion(Long id, String clave, String valor) {
 		super();
 		this.id = id;
