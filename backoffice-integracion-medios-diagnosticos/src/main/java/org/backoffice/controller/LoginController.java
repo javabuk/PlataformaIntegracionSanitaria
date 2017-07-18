@@ -6,6 +6,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -500,7 +506,25 @@ public class LoginController {
 	@RequestMapping("/tablaTrazas")
 	public String tablaTrazas(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
 			Model model) {
-		model.addAttribute("datosTrazas", trazaRepository.findAll());
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd"); // Time part
+																	// has
+																	// discarded
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, -7);
+		try {
+			Date yesterday = dateFormat.parse(dateFormat.format(cal.getTime()));
+
+			Timestamp ultimaSemana = new Timestamp(yesterday.getTime());
+			Timestamp hoy = new Timestamp(System.currentTimeMillis());
+
+			model.addAttribute("datosTrazas", trazaRepository.findTrazasEntreFechas(ultimaSemana, hoy));
+
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // get yesterday's Date without time part
+
 		return "tablaTrazas";
 	}
 

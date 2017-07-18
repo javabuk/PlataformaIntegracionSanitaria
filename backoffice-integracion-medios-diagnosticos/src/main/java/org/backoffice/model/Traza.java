@@ -7,7 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity(name = "PSI_TRAZAS")
-public class Traza {
+public class Traza implements java.io.Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "ID")
