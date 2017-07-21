@@ -504,9 +504,10 @@ public class LoginController {
 	}
 
 	@RequestMapping("/tablaTrazas")
-	public String tablaTrazas(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
+	public String tablaTrazas(@RequestParam(value = "listaSistemas", required = false) String sistemaOrigen,
 			Model model) {
 
+		System.out.println("Sistema Origen " + sistemaOrigen);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd"); // Time part
 																	// has
 																	// discarded
@@ -518,6 +519,7 @@ public class LoginController {
 			Timestamp ultimaSemana = new Timestamp(yesterday.getTime());
 			Timestamp hoy = new Timestamp(System.currentTimeMillis());
 
+			model.addAttribute("datosSistemas", sistemaRepository.findAll());
 			model.addAttribute("datosTrazas", trazaRepository.findTrazasEntreFechas(ultimaSemana, hoy));
 
 		} catch (ParseException e) {

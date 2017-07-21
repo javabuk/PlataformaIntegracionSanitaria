@@ -76,7 +76,18 @@
 	 
 	});
   
-  
+  $('#busqueda-form').on('submit', function(e){
+      e.preventDefault();
+      $.ajax({
+          url: 'tablaTrazas/',
+          type: 'POST',
+          data: $('#busqueda-form').serialize(),
+          success: function(data){	                	 
+          	 // Recarga la pagina para que actualice los cambios
+               location.reload();	                     
+          }
+      });
+  });
   
   </script>
 </head>
@@ -94,6 +105,21 @@
   
   <br></br>
   <div class="table-responsive">
+  	<form id="busqueda-form" class="form-horizontal"  th:action="@{/tablaTrazas}" method="post">
+  		<label for="sistemaOrigen" class="col-sm-1 control-label">Sistema:</label>
+  		<select id="listaSistemas" name="listaSistemas" class="col-sm-2 selectpicker" data-show-subtext="true">
+   			<option th:each="sistema : ${datosSistemas}" th:value="${sistema.idSistema}" th:text="${sistema.idSistema}" th:attr="data-subtext=${sistema.descripcion}"  ></option>
+   		</select>
+   		<label for="fechaDesde" class="col-sm-3 control-label">Fecha Desde:</label>
+   		<div class="col-sm-4">
+   			<input name="fechaDesde" type="text" class="form-control" id="fechaDesde" placeholder="Fecha Desde" />
+   		</div>
+   		<button id="btnBusqueda" type="submit" class="btn btn-warning btn-lg" style="width: 100%;"><span id="spnBusqueda" class="glyphicon glyphicon-ok-sign"></span> Buscar</button>
+   </form>
+   
+  	<br></br>
+  	<br></br>
+  	<br></br>
 	<table id="myTable" class="display table" width="100%" >		
         <thead>  
           <tr>  
