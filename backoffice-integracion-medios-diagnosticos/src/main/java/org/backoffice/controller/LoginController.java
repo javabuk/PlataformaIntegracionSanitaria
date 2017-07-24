@@ -503,6 +503,15 @@ public class LoginController {
 		return "situacionActual";
 	}
 
+	@RequestMapping("/resumen")
+	public String resumen(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
+			Model model, DatosSituacionActual datos) {
+		
+		model.addAttribute("totalCodigos", codigoRepository.count());
+		model.addAttribute("totalCorrelaciones", correlacionRepository.count());
+		return "resumen";
+	}
+	
 	@RequestMapping("/tablaTrazas")
 	public String tablaTrazas(@RequestParam(value = "listaSistemas", required = false) String sistemaOrigen,
 			Model model) {

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>BackOffice Integracion Medios Diagnosticos</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+  <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"></link>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+  
+  <script>
+	$(document).ready(function(){ 
+	        
+	});
+	</script>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                	<!-- <i class="fa fa-tags fa-3x"></i>  -->
+                                	<label>Códigos</label>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">
+                                    		<label th:text="${totalCodigos}"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+		<div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                	<!-- <i class="fa fa-tags fa-3x"></i>  -->
+                                	<label>Correlaciones</label>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">
+                                    		<label th:text="${totalCorrelaciones}"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+	</div>
+</div>
+</body>
+</html>
