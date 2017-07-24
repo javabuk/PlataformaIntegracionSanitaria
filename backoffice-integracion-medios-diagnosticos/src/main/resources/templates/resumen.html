@@ -6,12 +6,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
   <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"></link>
+  <link href="../vendor/morrisjs/morris.css" rel="stylesheet"></link>
+  
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+  <script src="../vendor/raphael/raphael.min.js"></script>
+  <script src="../vendor/morrisjs/morris.min.js"></script>
+  
+  
   
   <script>
+  
+  
 	$(document).ready(function(){ 
-	        
+		Morris.Bar({
+			  element: 'bar-example',
+			  data: [
+			    { y: '2006', a: 100, b: 90 },
+			    { y: '2007', a: 75,  b: 65 },
+			    { y: '2008', a: 50,  b: 40 },
+			    { y: '2009', a: 75,  b: 65 },
+			    { y: '2010', a: 50,  b: 40 },
+			    { y: '2011', a: 75,  b: 65 },
+			    { y: '2012', a: 100, b: 90 }
+			  ],
+			  xkey: 'y',
+			  ykeys: ['a', 'b'],
+			  labels: ['Series A', 'Series B']
+			});        
 	});
 	</script>
 </head>
@@ -44,7 +66,7 @@
                 </div>
                 
 		<div class="col-lg-3 col-md-6">
-                    <div class="panel panel-green">
+                    <div class="panel panel-red">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
@@ -67,6 +89,9 @@
                         </a>
                     </div>
                 </div>
+	</div>
+	<div class="row">
+		<div id="bar-example"></div>
 	</div>
 </div>
 </body>
