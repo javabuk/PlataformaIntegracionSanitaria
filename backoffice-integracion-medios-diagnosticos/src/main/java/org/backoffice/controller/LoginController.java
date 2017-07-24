@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +28,7 @@ import org.backoffice.dao.CodigoRepository;
 import org.backoffice.dao.CorrelacionRepository;
 import org.backoffice.dao.SistemaRepository;
 import org.backoffice.dao.TrazaRepository;
+import org.backoffice.fuentedatos.DatosCodigosDTO;
 import org.backoffice.model.Codigo;
 import org.backoffice.model.Correlacion;
 import org.backoffice.model.DatosSituacionActual;
@@ -507,6 +509,20 @@ public class LoginController {
 	public String resumen(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
 			Model model, DatosSituacionActual datos) {
 		
+		List<Object []> resultados = codigoRepository.findDatosCodigos();
+		
+		List<DatosCodigosDTO> datosCodigos  = new ArrayList<DatosCodigosDTO>();
+		
+		for (Object [] datosCodigosDTO : resultados) {
+			
+			DatosCodigosDTO datoCodigo = new DatosCodigosDTO();
+			datoCodigo.total = (Long)datosCodigosDTO[0];
+			datoCodigo.descripcion = (String)datosCodigosDTO[1];
+			
+			datosCodigos.add(datoCodigo);
+		}
+		
+		model.addAttribute("datosCodigos", datosCodigos);
 		model.addAttribute("totalCodigos", codigoRepository.count());
 		model.addAttribute("totalCorrelaciones", correlacionRepository.count());
 		return "resumen";
