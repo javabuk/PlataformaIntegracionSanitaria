@@ -27,8 +27,16 @@
 			  xkey: 'label',
 			  ykeys: ['value'],
 			  labels: ['Total códigos del sistema']
-			});        
+			});     
+		
+		Morris.Donut({
+			  element: 'donut-example',
+			  data: json
+			});
 	});
+	
+	
+	
   /*]]>*/
 	</script>
 </head>
@@ -88,6 +96,11 @@
 	<div class="row">
 		<div id="bar-example"></div>
 	</div>
+	
+	<div class="row">
+		<div id="donut-example"></div>
+	</div>
+	
 </div>
 </body>
 </html>
