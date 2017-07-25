@@ -60,7 +60,8 @@
                         </div>
                         <a href="#">
                             <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
+                                <!-- <span class="pull-left">View Details</span> -->
+                                <button type="button" class="fa fa-arrow-circle-right" data-toggle="modal" data-target="#modalGraficos">Grafico 1</button>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
@@ -97,9 +98,31 @@
 		<div id="bar-example"></div>
 	</div>
 	
-	<div class="row">
+	<!-- <div class="row">
 		<div id="donut-example"></div>
-	</div>
+	</div> -->
+	<!-- Ventana Modal para los graficos de los códigos -->
+  	<div class="modal fade" id="modalGraficos" role="dialog">
+    	<div class="modal-dialog">    
+      		<!-- Contenido de la ventana modal-->
+      		<div class="modal-content">
+        		<div class="modal-header">
+          			<button type="button" class="close" data-dismiss="modal">&times;</button>
+          			<h4 class="modal-title">Grafico códigos de los sistemas</h4>
+        		</div>
+        		<div class="modal-body">
+          			<div class="row">
+						<div id="donut-example"></div>
+					</div>
+        		</div>
+        		<div class="modal-footer">
+          			<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        		</div>
+      		</div>      
+    	</div>
+  	</div>
+	
+	
 	
 </div>
 </body>

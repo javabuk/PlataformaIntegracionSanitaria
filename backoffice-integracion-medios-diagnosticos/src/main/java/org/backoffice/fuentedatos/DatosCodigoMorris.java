@@ -6,6 +6,7 @@ public class DatosCodigoMorris {
 	public Long value;
 
 	public DatosCodigoMorris() {
+		// Hay que comentar el constuctor vacio para que no de error en Sonar.
 	}
 
 	public String getLabel() {
