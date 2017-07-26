@@ -518,22 +518,21 @@ public class LoginController {
 			datoTraza.setTotal((Long) datosListadoTrazasSistemaJSON[0]);
 			datoTraza.setLeyenda((String) datosListadoTrazasSistemaJSON[1]);
 			datoTraza.setSistema((String) datosListadoTrazasSistemaJSON[2]);
-			
+
 			datosTrazasSistemaListado.add(datoTraza);
 		}
-		
-		
-		List<Object[]> trazas = trazaRepository.findTrazasPorDia(); 
+
+		List<Object[]> trazas = trazaRepository.findTrazasPorDia();
 		List<DatosListadoTrazasJSON> datosTrazasListado = new ArrayList<DatosListadoTrazasJSON>();
-		
+
 		for (Object[] datosListadoTrazasJSON : trazas) {
 			DatosListadoTrazasJSON datoTraza = new DatosListadoTrazasJSON();
 			datoTraza.setTotal((Long) datosListadoTrazasJSON[0]);
 			datoTraza.setLeyenda((String) datosListadoTrazasJSON[1]);
-			
+
 			datosTrazasListado.add(datoTraza);
 		}
-		
+
 		List<Object[]> resultados = codigoRepository.findDatosCodigos();
 
 		List<DatosCodigoMorris> datosCodigos = new ArrayList<DatosCodigoMorris>();
@@ -547,7 +546,21 @@ public class LoginController {
 			datosCodigos.add(datoCodigo);
 		}
 
-		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, -7);
+		try {
+			Date yesterday = dateFormat.parse(dateFormat.format(cal.getTime()));
+
+			Timestamp ultimaSemana = new Timestamp(yesterday.getTime());
+			Timestamp hoy = new Timestamp(System.currentTimeMillis());
+
+			model.addAttribute("datosTrazas", trazaRepository.findTrazasEntreFechas(ultimaSemana, hoy));
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
 		model.addAttribute("datosTrazasSistemaListado", datosTrazasSistemaListado);
 		model.addAttribute("datosTrazasListado", datosTrazasListado);
 		model.addAttribute("datosCodigos", datosCodigos);
