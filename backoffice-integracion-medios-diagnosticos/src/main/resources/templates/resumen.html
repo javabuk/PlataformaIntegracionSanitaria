@@ -40,7 +40,16 @@
 			  data: datosArea,
 			  xkey: 'leyenda',
 			  ykeys: ['total'],
-			  labels: ['Total trazas el dia']
+			  labels: ['Total trazas el dia'],
+			  xLabelFormat: function (timestamp) {
+				    var date = new Date(timestamp);
+				    return date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear() ;
+				},
+				dateFormat: function (timestamp) {
+				    var date = new Date(timestamp);
+				    return date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear() ;
+				}
+				
 			});
 	});
 	
