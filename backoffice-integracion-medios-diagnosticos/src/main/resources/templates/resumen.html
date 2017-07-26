@@ -19,6 +19,7 @@
   /*<![CDATA[*/
   	
 	var json = [[${datosCodigos}]];
+  	var datosArea  = [[${datosTrazasListado}]];
     
 	$(document).ready(function(){ 
 		Morris.Bar({
@@ -32,6 +33,14 @@
 		Morris.Donut({
 			  element: 'donut-example',
 			  data: json
+			});
+		
+		Morris.Area({
+			  element: 'area-example',
+			  data: datosArea,
+			  xkey: 'leyenda',
+			  ykeys: ['total'],
+			  labels: ['Total trazas el dia']
 			});
 	});
 	
@@ -97,7 +106,9 @@
 	<div class="row">
 		<div id="bar-example"></div>
 	</div>
-	
+	<div class="row">
+		<div id="area-example"></div>
+	</div>
 	<!-- <div class="row">
 		<div id="donut-example"></div>
 	</div> -->
