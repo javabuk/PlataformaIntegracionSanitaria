@@ -20,6 +20,8 @@
   	
 	var json = [[${datosCodigos}]];
   	var datosArea  = [[${datosTrazasListado}]];
+  	var datosAreaSistema  = [[${datosTrazasSistemaListado}]];
+  	
     
 	$(document).ready(function(){ 
 		Morris.Bar({
@@ -41,6 +43,24 @@
 			  xkey: 'leyenda',
 			  ykeys: ['total'],
 			  labels: ['Total trazas el dia'],
+			  xLabelFormat: function (timestamp) {
+				    var date = new Date(timestamp);
+				    return date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear() ;
+				},
+				dateFormat: function (timestamp) {
+				    var date = new Date(timestamp);
+				    return date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear() ;
+				},
+				lineColors: ['#6094b2']
+				
+			});
+		
+		Morris.Area({
+			  element: 'area-sistema',
+			  data: datosArea,
+			  xkey: 'leyenda',
+			  ykeys: ['total','sistema'],
+			  labels: ['Total trazas el dia','Mezcla'],
 			  xLabelFormat: function (timestamp) {
 				    var date = new Date(timestamp);
 				    return date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear() ;
@@ -414,7 +434,7 @@
 					<span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
 				</div>
 				<div class="panel-body">
-					<!-- <div id="bar-example"></div> -->
+					<div id="area-sistema"></div>
 				</div>
 		</div>
 	</div>
@@ -442,7 +462,27 @@
                     <div class="tab-content">
                         <div class="tab-pane fade in active" id="tab1default"><div id="bar-example"></div></div>
                         <div class="tab-pane fade" id="tab2default"><div id="donut-example"></div></div>
-                        <div class="tab-pane fade" id="tab3default">Default 3</div>
+                        <div class="tab-pane fade" id="tab3default">
+							<div class="form-area">  
+        <form role="form" method="post" th:object="${datosCodigo}" th:action="@{/GrabarCodigo}">
+        <br style="clear:both"></br>
+                    <h3 style="margin-bottom: 25px; text-align: center;">Nuevo codigo</h3>
+    				<div class="form-group">
+						<input type="text" class="form-control" id="codigo" name="codigo" placeholder="Codigo" ></input>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Descripcion" ></input>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" id="idSistema" name="idSistema" placeholder="Id Sistema" ></input>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" id="tipo" name="tipo" placeholder="Tipo" ></input>
+					</div>
+        <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Guardar</button>
+        </form>
+    </div>
+						</div>
                         <div class="tab-pane fade" id="tab4default">Default 4</div>
                         <div class="tab-pane fade" id="tab5default">Default 5</div>
                     </div>

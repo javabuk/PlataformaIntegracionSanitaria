@@ -19,4 +19,6 @@ public interface TrazaRepository extends CrudRepository<Traza, Integer> {
 	@Query("SELECT count(t.id), FUNCTION ('TO_CHAR',t.fecha,'YYYY-MM-DD') FROM org.backoffice.model.Traza t group by FUNCTION ('TO_CHAR',t.fecha,'YYYY-MM-DD')")
 	List<Object []> findTrazasPorDia();
 	
+	@Query("SELECT count(t.id), FUNCTION ('TO_CHAR',t.fecha,'YYYY-MM-DD'), t.sistMensaje FROM org.backoffice.model.Traza t group by FUNCTION ('TO_CHAR',t.fecha,'YYYY-MM-DD'), t.sistMensaje")
+	List<Object []> findTrazasPorDiaPorSistema();
 }
