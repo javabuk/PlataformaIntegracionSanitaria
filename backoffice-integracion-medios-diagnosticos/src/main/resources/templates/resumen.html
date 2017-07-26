@@ -48,15 +48,42 @@
 				dateFormat: function (timestamp) {
 				    var date = new Date(timestamp);
 				    return date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear() ;
-				}
+				},
+				lineColors: ['#6094b2']
 				
 			});
 	});
 	
-	
+	$(document).on('click', '.panel-heading span.clickable', function(e){
+	    var $this = $(this);
+		if(!$this.hasClass('panel-collapsed')) {
+			$this.parents('.panel').find('.panel-body').slideUp();
+			$this.addClass('panel-collapsed');
+			$this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+		} else {
+			$this.parents('.panel').find('.panel-body').slideDown();
+			$this.removeClass('panel-collapsed');
+			$this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+		}
+	});
 	
   /*]]>*/
 	</script>
+	<style type="text/css">
+    	.row{
+    		margin-top:40px;
+    		padding: 0 10px;
+		}
+
+		.clickable{
+    		cursor: pointer;   
+		}
+
+		.panel-heading span {
+			margin-top: -20px;
+			font-size: 15px;
+		}
+    </style>
 </head>
 <body>
 <div class="container">
@@ -112,13 +139,38 @@
                     </div>
                 </div>
 	</div>
+	
+	<div class="row">
+		<div class="col-md-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading panel-collapsed">
+					<h3 class="panel-title">Panel 1</h3>
+					<span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+				</div>
+				<div class="panel-body">
+					<div id="area-example"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					<h3 class="panel-title">Panel 2</h3>
+					<span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+				</div>
+				<div class="panel-body"><div id="bar-example"></div></div>
+		</div>
+	</div>
+	</div>
+	<!--
 	<div class="row">
 		<div id="bar-example"></div>
 	</div>
+	
 	<div class="row">
 		<div id="area-example"></div>
 	</div>
-	<!-- <div class="row">
+	 <div class="row">
 		<div id="donut-example"></div>
 	</div> -->
 	<!-- Ventana Modal para los graficos de los códigos -->
