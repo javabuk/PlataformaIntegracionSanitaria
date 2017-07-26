@@ -29,6 +29,8 @@ import org.backoffice.dao.CorrelacionRepository;
 import org.backoffice.dao.SistemaRepository;
 import org.backoffice.dao.TrazaRepository;
 import org.backoffice.fuentedatos.DatosCodigoMorris;
+import org.backoffice.fuentedatos.DatosListadoTrazasJSON;
+import org.backoffice.fuentedatos.DatosListadoTrazasSistemaJSON;
 import org.backoffice.model.Codigo;
 import org.backoffice.model.Correlacion;
 import org.backoffice.model.DatosSituacionActual;
@@ -509,6 +511,29 @@ public class LoginController {
 	public String resumen(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
 			Model model, DatosSituacionActual datos) {
 
+		List<Object[]> trazasSistema = trazaRepository.findTrazasPorDiaPorSistema();
+		List<DatosListadoTrazasSistemaJSON> datosTrazasSistemaListado = new ArrayList<DatosListadoTrazasSistemaJSON>();
+		for (Object[] datosListadoTrazasSistemaJSON : trazasSistema) {
+			DatosListadoTrazasSistemaJSON datoTraza = new DatosListadoTrazasSistemaJSON();
+			datoTraza.setTotal((Long) datosListadoTrazasSistemaJSON[0]);
+			datoTraza.setLeyenda((String) datosListadoTrazasSistemaJSON[1]);
+			datoTraza.setSistema((String) datosListadoTrazasSistemaJSON[2]);
+			
+			datosTrazasSistemaListado.add(datoTraza);
+		}
+		
+		
+		List<Object[]> trazas = trazaRepository.findTrazasPorDia(); 
+		List<DatosListadoTrazasJSON> datosTrazasListado = new ArrayList<DatosListadoTrazasJSON>();
+		
+		for (Object[] datosListadoTrazasJSON : trazas) {
+			DatosListadoTrazasJSON datoTraza = new DatosListadoTrazasJSON();
+			datoTraza.setTotal((Long) datosListadoTrazasJSON[0]);
+			datoTraza.setLeyenda((String) datosListadoTrazasJSON[1]);
+			
+			datosTrazasListado.add(datoTraza);
+		}
+		
 		List<Object[]> resultados = codigoRepository.findDatosCodigos();
 
 		List<DatosCodigoMorris> datosCodigos = new ArrayList<DatosCodigoMorris>();
@@ -522,6 +547,9 @@ public class LoginController {
 			datosCodigos.add(datoCodigo);
 		}
 
+		
+		model.addAttribute("datosTrazasSistemaListado", datosTrazasSistemaListado);
+		model.addAttribute("datosTrazasListado", datosTrazasListado);
 		model.addAttribute("datosCodigos", datosCodigos);
 		model.addAttribute("totalCodigos", codigoRepository.count());
 		model.addAttribute("totalCorrelaciones", correlacionRepository.count());
