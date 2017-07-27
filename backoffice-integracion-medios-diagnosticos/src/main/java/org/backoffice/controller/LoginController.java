@@ -40,6 +40,7 @@ import org.backoffice.model.Sistema;
 import org.backoffice.model.SistemaOculto;
 import org.backoffice.model.Traza;
 import org.backoffice.servicios.GeneracionHL7Service;
+import org.backoffice.servicios.TrazasService;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTHeight;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTShd;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTString;
@@ -65,12 +66,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class LoginController {
 
 	private GeneracionHL7Service hl7Service;
+	private TrazasService trazasService;
 
 	@Autowired
 	public void setCService(GeneracionHL7Service hl7Service) {
 		this.hl7Service = hl7Service;
 	}
 
+	@Autowired
+	public void setTrazasService(TrazasService trazasService) {
+		this.trazasService = trazasService;
+	}
 	// @Autowired
 	// ConfiguracionRepository configuracionRepository;
 
@@ -116,7 +122,7 @@ public class LoginController {
 		 * nuevoCodigo.setIdSistema("INFO33"); nuevoCodigo.setTipo("LAB");
 		 * 
 		 * codigoRepository.save(nuevoCodigo);
-		 */
+		 
 
 		for (Codigo codigoAll : codigoRepository.findAll()) {
 			System.out.println(codigoAll);
@@ -125,7 +131,7 @@ public class LoginController {
 		for (Traza trazaAll : trazaRepository.findAll()) {
 			System.out.println(trazaAll);
 		}
-
+		*/
 		return "menuprincipal";
 	}
 
@@ -574,11 +580,11 @@ public class LoginController {
 			Model model) {
 
 		System.out.println("Sistema Origen " + sistemaOrigen);
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd"); // Time part
+		/*DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd"); // Time part
 																	// has
 																	// discarded
 		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, -7);
+		cal.add(Calendar.DATE, -1);
 		try {
 			Date yesterday = dateFormat.parse(dateFormat.format(cal.getTime()));
 
@@ -592,6 +598,11 @@ public class LoginController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} // get yesterday's Date without time part
+		*/
+		
+		
+		model.addAttribute("datosSistemas", sistemaRepository.findAll());
+		model.addAttribute("datosTrazas", trazasService.buscarTrazasPorSistemaYFechas(sistemaOrigen, null, null));
 
 		return "tablaTrazas";
 	}

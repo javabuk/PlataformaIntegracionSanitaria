@@ -16,6 +16,12 @@ public interface TrazaRepository extends CrudRepository<Traza, Integer> {
 	@Query("SELECT t FROM org.backoffice.model.Traza t WHERE t.fecha BETWEEN :from AND :to")
 	List<Traza> findTrazasEntreFechas(@Param("from") Timestamp startDay, @Param("to") Timestamp endDay);
 	
+	@Query("SELECT t FROM org.backoffice.model.Traza t WHERE t.sistMensaje = :sistema ")
+	List<Traza> findTrazasPorSistema(@Param("sistema") String sistema);
+	
+	@Query("SELECT t FROM org.backoffice.model.Traza t WHERE t.sistMensaje = :sistema AND t.fecha BETWEEN :from AND :to")
+	List<Traza> findTrazasPorSistemaEntreFechas(@Param("sistema") String sistema, @Param("from") Timestamp startDay, @Param("to") Timestamp endDay);
+	
 	@Query("SELECT count(t.id), FUNCTION ('TO_CHAR',t.fecha,'YYYY-MM-DD') FROM org.backoffice.model.Traza t group by FUNCTION ('TO_CHAR',t.fecha,'YYYY-MM-DD')")
 	List<Object []> findTrazasPorDia();
 	
