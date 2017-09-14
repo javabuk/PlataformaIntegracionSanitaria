@@ -7,6 +7,9 @@
   <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"></link>
   <link href="../vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet"></link>   
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<!-- Typeahead -->
+	<script type="text/javascript" src="//netsh.pp.ua/upwork-demo/1/js/typeahead.js"></script>
+	
 	<link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></link>
 	<script type="text/javascript"  src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -76,8 +79,16 @@
 	
 	
 	
-  <script >
+  <script th:inline="javascript">
+  /*<![CDATA[*/
   $(document).ready(function(){
+	  
+	  $('.typeahead').typeahead({
+          name: 'doctor',
+          source: [[${datosSistemas}]],
+	  		display: "idSistema"
+        });
+	  
 	    $('#myTable').dataTable(
 	    		{
 	    			  "createdRow": function( row, data, dataIndex ) {	    				 
@@ -159,6 +170,8 @@
       format: "dd/mm/yyyy"
   });
   
+  
+  /*]]>*/
   </script>
 </head>
 <body>
@@ -177,9 +190,18 @@
   <div class="table-responsive">
   	<form id="busqueda-form" class="form-horizontal"  th:action="@{/tablaTrazas}" method="post">
   		<label for="sistemaOrigen" class="col-sm-1 control-label">Sistema:</label>
-  		<select id="listaSistemas" name="listaSistemas" class="col-sm-2 selectpicker" data-show-subtext="true">
+  		<!-- <select id="listaSistemas" name="listaSistemas" class="col-sm-2 selectpicker" data-show-subtext="true">
    			<option th:each="sistema : ${datosSistemas}" th:value="${sistema.idSistema}" th:text="${sistema.idSistema}" th:attr="data-subtext=${sistema.descripcion}"  ></option>
-   		</select>
+   		</select> -->
+   		
+   		<input
+			id="listaSistemas" 
+			name="listaSistemas"
+			type="text"
+			class="col-sm-2 span3"
+			data-provide="typeahead"						
+		></input>
+   		
    		<label for="fechaDesde" class="col-sm-3 control-label">Fecha Desde:</label>
    		<div class="col-sm-4">
    			<input name="fechaDesde" type="text" class="form-control" id="fechaDesde2" placeholder="Fecha Desde" />

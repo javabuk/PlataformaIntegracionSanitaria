@@ -24,6 +24,8 @@
   	
     
 	$(document).ready(function(){ 
+		$('.typeahead').typeahead();
+		
 		Morris.Bar({
 			  element: 'bar-example',
 			  data: json,
@@ -86,6 +88,8 @@
 			$this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
 		}
 	});
+	
+	
 	
   /*]]>*/
 	</script>
