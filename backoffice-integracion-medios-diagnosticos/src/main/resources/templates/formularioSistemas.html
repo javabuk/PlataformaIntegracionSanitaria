@@ -5,6 +5,7 @@
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 	<script>
 	$(document).ready(function(){ 
 	    $('#characterLeft').text('140 characters left');
@@ -22,16 +23,60 @@
 	            $('#btnSubmit').removeClass('disabled');
 	            $('#characterLeft').removeClass('red');            
 	        }
-	    });    
+	    });  
+	    
+	    $('#FormularioSistema').on('submit', function(e){
+            e.preventDefault();
+            $.ajax({
+                url: 'GrabarSistema/',
+                type: 'POST',
+                data: $('#FormularioSistema').serialize(),
+                success: function(data){ 
+                	// Muestra el texto de confirmación 
+                	$("#mensajeConfirmacion").removeClass('hidden');                	
+                		                     
+                	$("#idSistema").val('');
+                	$("#descripcion").val('');
+                	
+                }
+            });
+        });
+	    
+	    /*$('#idSistema').on('focus', function() {	      		
+	    	$("#mensajeConfirmacion").addClass('show');	      		
+		});*/
+	    
+	    $('#idSistema').focus(function(event) {
+	        //event.preventDefault();
+	        //$("#mensajeConfirmacion").addClass('show');
+	        //$("#mensajeConfirmacion").removeClass('show');
+	        $("#mensajeConfirmacion").addClass('hidden');
+	        //$("#mensajeConfirmacion").css('display', 'block !important');
+	    });
+	    
 	});
 
 	</script>
+	<style type="text/css">
+		/* Estilos para mostrar, ocultar el div */
+		.show {
+  			display: block !important;
+		}
+		.hidden {
+  			display: none !important;
+  			visibility: hidden !important;
+		}
+		.invisible {
+  			visibility: hidden;
+		}
+	</style>
+	
 </head>
 <body>
 <div class="container">
 <div class="col-md-5">
     <div class="form-area">  
-        <form role="form" method="post" th:object="${datosSistema}" th:action="@{/GrabarSistema}">
+        <form role="form" method="post" id="FormularioSistema" th:object="${datosSistema}" th:action="@{/GrabarSistema}">
         <br style="clear:both"></br>
                     <h3 style="margin-bottom: 25px; text-align: center;">Nuevo Sistema</h3>
     				<div class="form-group">
@@ -43,6 +88,11 @@
         <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Guardar</button>
         </form>
     </div>
+    <br></br>
+    <br></br>
+    <div class="alert alert-success hidden" id="mensajeConfirmacion">
+  		El sistema se ha registrado correctamente.
+	</div>
 </div>
 </div>
 </body>
