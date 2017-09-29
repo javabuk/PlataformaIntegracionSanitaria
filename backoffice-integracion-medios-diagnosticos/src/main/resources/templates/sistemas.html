@@ -5,11 +5,11 @@
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
-  <!-- 
+   
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-   -->
+  
    	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
   <script >
@@ -27,7 +27,7 @@
 	          }
 	      });
 	      
-	      $("[data-toggle=tooltip]").tooltip();
+	      //$("[data-toggle=tooltip]").tooltip();
 	      
 	      $('#modificar-sistema-form').on('submit', function(e){
 	            e.preventDefault();
@@ -45,12 +45,12 @@
 	        });
 	      
 	      
-	      	$('#btnEditFilaSistema').on('click', function() {
+	      	$('#btnEditFilaSistema').on('click', function() {	      		
 	      		$('#idSistema').val($(this.parentNode.parentNode.parentNode).children()[1].innerHTML);
 	      		$('#descripcion').val($(this.parentNode.parentNode.parentNode).children()[2].innerHTML);	      		
     		});
 	      	
-	      	$('#btnDeleteFilaSistema').on('click', function() {
+	      	$('#btnDeleteFilaSistema').on('click', function() {	      		
 	      		$('#idSistemaOculto').val($(this.parentNode.parentNode.parentNode).children()[1].innerHTML);
 	      		//$('#descripcion').val($(this.parentNode.parentNode.parentNode).children()[2].innerHTML);	   
 	      		
@@ -58,6 +58,7 @@
 	      	
 	      	$('#eliminar-sistema-form').on('submit', function(e){
 	            e.preventDefault();
+	            
 	            $.ajax({
 	                url: 'eliminarSistema/',
 	                type: 'POST',
@@ -85,8 +86,8 @@
                    		<th width="10"><input type="checkbox" id="checkall" ></input></th>
                    		<th width="40">Id Sistema</th>
                     	<th width="200">Descripcion</th>                     	
-                      	<th width="20">Edit</th>
-                       <th width="20">Delete</th>
+                      	<th width="20">Modificar</th>
+                       <th width="20">Borrar</th>
                    </thead>
     				<tbody>
     					<tr th:each="sistema : ${sistemasExistentes}">
@@ -99,6 +100,7 @@
     				</tbody>
 				</table>
 <div class="clearfix"></div>
+<!-- Paginación  
 <ul class="pagination pull-right">
   <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
   <li class="active"><a href="#">1</a></li>
@@ -108,6 +110,7 @@
   <li><a href="#">5</a></li>
   <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
 </ul>
+-->
                 
             </div>
             
@@ -165,8 +168,8 @@
        <input type="hidden" id="idSistemaOculto" name ="idSistemaOculto" ></input>
       </div>
         <div class="modal-footer ">
-        <button type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> Si</button>
-        <button type="button" id="btnCerrarConfirmacionEliminar" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+        <button type="submit" id="btnCerrarConfirmacionEliminar" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> Si</button>
+        <button type="button"  class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
       </div>
         </div>
     <!-- /.modal-content --> 

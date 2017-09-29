@@ -38,7 +38,6 @@ import org.backoffice.model.MensajeConfirmacion;
 import org.backoffice.model.MensajeHL7;
 import org.backoffice.model.Sistema;
 import org.backoffice.model.SistemaOculto;
-import org.backoffice.model.Traza;
 import org.backoffice.servicios.GeneracionHL7Service;
 import org.backoffice.servicios.TrazasService;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTHeight;
@@ -122,16 +121,14 @@ public class LoginController {
 		 * nuevoCodigo.setIdSistema("INFO33"); nuevoCodigo.setTipo("LAB");
 		 * 
 		 * codigoRepository.save(nuevoCodigo);
-		 
-
-		for (Codigo codigoAll : codigoRepository.findAll()) {
-			System.out.println(codigoAll);
-		}
-
-		for (Traza trazaAll : trazaRepository.findAll()) {
-			System.out.println(trazaAll);
-		}
-		*/
+		 * 
+		 * 
+		 * for (Codigo codigoAll : codigoRepository.findAll()) {
+		 * System.out.println(codigoAll); }
+		 * 
+		 * for (Traza trazaAll : trazaRepository.findAll()) {
+		 * System.out.println(trazaAll); }
+		 */
 		return "menuprincipal";
 	}
 
@@ -513,6 +510,13 @@ public class LoginController {
 		return "situacionActual";
 	}
 
+	@RequestMapping("/pruebas")
+	public String pruebas(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
+			Model model) {
+		// model.addAttribute("datos", datosCodigo);
+		return "ejemploTabla";
+	}
+
 	@RequestMapping("/resumen")
 	public String resumen(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
 			Model model, DatosSituacionActual datos) {
@@ -580,27 +584,23 @@ public class LoginController {
 			Model model) {
 
 		System.out.println("Sistema Origen " + sistemaOrigen);
-		/*DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd"); // Time part
-																	// has
-																	// discarded
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, -1);
-		try {
-			Date yesterday = dateFormat.parse(dateFormat.format(cal.getTime()));
+		/*
+		 * DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd"); // Time
+		 * part // has // discarded Calendar cal = Calendar.getInstance();
+		 * cal.add(Calendar.DATE, -1); try { Date yesterday =
+		 * dateFormat.parse(dateFormat.format(cal.getTime()));
+		 * 
+		 * Timestamp ultimaSemana = new Timestamp(yesterday.getTime());
+		 * Timestamp hoy = new Timestamp(System.currentTimeMillis());
+		 * 
+		 * model.addAttribute("datosSistemas", sistemaRepository.findAll());
+		 * model.addAttribute("datosTrazas",
+		 * trazaRepository.findTrazasEntreFechas(ultimaSemana, hoy));
+		 * 
+		 * } catch (ParseException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); } // get yesterday's Date without time part
+		 */
 
-			Timestamp ultimaSemana = new Timestamp(yesterday.getTime());
-			Timestamp hoy = new Timestamp(System.currentTimeMillis());
-
-			model.addAttribute("datosSistemas", sistemaRepository.findAll());
-			model.addAttribute("datosTrazas", trazaRepository.findTrazasEntreFechas(ultimaSemana, hoy));
-
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} // get yesterday's Date without time part
-		*/
-		
-		
 		model.addAttribute("datosSistemas", sistemaRepository.findAll());
 		model.addAttribute("datosTrazas", trazasService.buscarTrazasPorSistemaYFechas(sistemaOrigen, null, null));
 
