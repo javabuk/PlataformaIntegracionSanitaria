@@ -37,29 +37,20 @@
 	                type: 'POST',
 	                data: $('#modificar-sistema-form').serialize(),
 	                success: function(data){
-	                	 // Forzamos el click del boton que cierra la modal.
-	                     $('#btnCerrarModificacion').trigger("click");
-	                	 // Recarga la pagina para que actualice los cambios
-	                     location.reload();	                     
+	                	// Eliminamos el botón de modificar y mostramos el mensaje de confirmación
+	                	$("#mensajeConfirmacion").removeClass('hidden');  
+	                	$("#btnUpdateSistema").addClass('hidden');
+                		// Ponemos un retardo para cerrar la ventana y el usuario pueda visionar el mensaje de confirmación
+	                	setTimeout(function() {
+	                		// Forzamos el click del boton que cierra la modal.
+	                     	$('#btnCerrarModificacion').trigger("click");	                     	
+	                	 	// Recarga la pagina para que actualice los cambios
+	                     	location.reload();	     
+	                	}, 1500); // milliseconds
 	                }
 	            });
 	        });
 	      
-	      	/*
-	      	$('#btnEditFilaSistema').on('click', function() {	      		
-	      		$('#idSistema').val($(this.parentNode.parentNode.parentNode).children()[1].innerHTML);
-	      		$('#descripcion').val($(this.parentNode.parentNode.parentNode).children()[2].innerHTML);	      		
-    		});
-	      	
-	      	$('#btnDeleteFilaSistema').on('click', function() {	      		
-	      		$('#idSistemaOculto').val($(this.parentNode.parentNode.parentNode).children()[1].innerHTML);
-	      		//$('#descripcion').val($(this.parentNode.parentNode.parentNode).children()[2].innerHTML);	   
-	      		
-    		});
-	      	*/
-	      	
-	      	
-	      	
 	      	$('#eliminar-sistema-form').on('submit', function(e){
 	            e.preventDefault();
 	            
@@ -68,10 +59,17 @@
 	                type: 'POST',
 	                data: $('#eliminar-sistema-form').serialize(),
 	                success: function(data){
-	                	 // Forzamos el click del boton que cierra la modal.
-	                     $('#btnCerrarConfirmacionEliminar').trigger("click");
-	                	 // Recarga la pagina para que actualice los cambios
-	                     location.reload();	                     
+	                	$("#borradoConfirmacion").removeClass('hidden');
+	                	$("#btnCerrarConfirmacionEliminar").addClass('hidden');
+	                	$("#btnCerrarNoConfirmacionEliminar").addClass('hidden');
+	                	setTimeout(function() {
+	                		// Forzamos el click del boton que cierra la modal.
+		                     $('#btnCerrarConfirmacionEliminar').trigger("click");
+		                	 // Recarga la pagina para que actualice los cambios
+		                     location.reload();    
+	                        
+	                    }, 1500); // milliseconds
+	                		                     
 	                }
 	            });
 	        });
@@ -86,10 +84,22 @@
 	      	
 	      	function borrarSistema(objeto){	  			
 	  			$('#idSistemaOculto').val(objeto.getAttribute('idSistema'));
-	      		//$('#descripcion').val(objeto.getAttribute('descripcion'));
 	  		}
   		
   </script>
+  <style type="text/css">
+		/* Estilos para mostrar, ocultar el div */
+		.show {
+  			display: block !important;
+		}
+		.hidden {
+  			display: none !important;
+  			visibility: hidden !important;
+		}
+		.invisible {
+  			visibility: hidden;
+		}
+	</style>
 </head>
 <body>
 <div class="container">
@@ -158,7 +168,6 @@
 -->
                 
             </div>
-            
         </div>
 	</div>
 </div>
@@ -180,9 +189,13 @@
         
         <input class="form-control " type="text" id="descripcion" name ="descripcion" placeholder="Descripcion"></input>
         </div>        
-      </div>
+    	</div>           
+      	<div class="alert alert-success hidden" id="mensajeConfirmacion">
+  			El sistema se ha registrado correctamente.
+		</div>
+      
           <div class="modal-footer ">
-        <button id="btnUpdateSistema" type="submit" class="btn btn-warning btn-lg" style="width: 100%;"><span id="spnUpdateSistema" class="glyphicon glyphicon-ok-sign"></span> Update</button>
+        <button id="btnUpdateSistema" type="submit" class="btn btn-warning btn-lg" style="width: 100%;"><span id="spnUpdateSistema" class="glyphicon glyphicon-ok-sign"></span> Modificar</button>
       </div>
         </div>
     <!-- /.modal-content --> 
@@ -197,30 +210,45 @@
   </div>
       <!-- /.modal-dialog --> 
     </div>
-</form>    
-    
-<form id="eliminar-sistema-form">   
-    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Borrar el sistema</h4>
-      </div>
-          <div class="modal-body">
-       
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> ¿Desea eliminar este sistema?</div>
-       <input type="hidden" id="idSistemaOculto" name ="idSistemaOculto" ></input>
-      </div>
-        <div class="modal-footer ">
-        <button type="submit" id="btnCerrarConfirmacionEliminar" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> Si</button>
-        <button type="button"  class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
-      </div>
-        </div>
-    <!-- /.modal-content --> 
-  </div>
-      <!-- /.modal-dialog --> 
-    </div>
-</form>    
+</form>
+
+	<form id="eliminar-sistema-form">
+		<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+			aria-labelledby="edit" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+						<h4 class="modal-title custom_align" id="Heading">Borrar el
+							sistema</h4>
+					</div>
+					<div class="modal-body">
+
+						<div class="alert alert-danger">
+							<span class="glyphicon glyphicon-warning-sign"></span> ¿Desea
+							eliminar este sistema?
+						</div>
+						<input type="hidden" id="idSistemaOculto" name="idSistemaOculto"></input>
+					</div>
+					<div class="alert alert-success hidden" id="borradoConfirmacion">
+						El sistema se ha borrado correctamente.</div>
+					<div class="modal-footer ">
+						<button type="submit" id="btnCerrarConfirmacionEliminar"
+							class="btn btn-success">
+							<span class="glyphicon glyphicon-ok-sign"></span> Si
+						</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal" id="btnCerrarNoConfirmacionEliminar">
+							<span class="glyphicon glyphicon-remove"></span> No
+						</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+	</form>
 </body>
 </html>
