@@ -376,6 +376,21 @@ public class LoginController {
 		return "sistemas";
 	}
 
+	@RequestMapping("/buscarSistemas")
+	public List<Sistema> sistemas(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
+			Model model, Sistema datosSistema) {
+		List<Sistema> resultados = null;
+		if (datosSistema.getIdSistema() == null) {
+			resultados = sistemaRepository.findByDescripcion(datosSistema.getDescripcion());
+		} else if (datosSistema.getDescripcion() == null) {
+			resultados = sistemaRepository.findByIdSistema(new Integer(datosSistema.getIdSistema()));
+		} else {
+			resultados = sistemaRepository.findSistemas(datosSistema.getIdSistema(), datosSistema.getDescripcion());
+		}
+
+		return resultados;
+	}
+
 	@RequestMapping("/modificarSistema")
 	public String modificarSistema(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
 			Model model, Sistema datosSistema) {

@@ -12,7 +12,8 @@
   
    	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script> -->
-	<script src="https://unpkg.com/popper.js"></script>		
+	<script src="https://unpkg.com/popper.js"></script>	
+	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>	
   <script >
   $(document).ready(function(){
 	  $("#mytable #checkall").click(function () {
@@ -74,6 +75,19 @@
 	            });
 	        });
 	      	
+	      	
+	      	$('#formBusquedaSistemas').on('submit', function(e){
+	            e.preventDefault();
+	            $.ajax({
+	                url: 'parque/',
+	                type: 'POST',
+	                data: $('#formBusquedaSistemas').serialize(),
+	                success: function(data){
+	                	alert(data);
+	                	$('#mytable').bootstrapTable('load', data);
+	                }
+	            });
+	        });
 	      
 	  });
   
@@ -103,21 +117,38 @@
 </head>
 <body>
 <div class="container">
+	
+	<!-- Panel que incluye los parámetros de búsqueda -->
+	<div class="panel panel-default">
+  		<div class="panel-heading"><strong>Sistemas</strong></div>
+  		<div class="panel-body">
+			<form id="formBusquedaSistemas" class="form-horizontal">
+				<div class="col-sm-2">
+					<input class="form-control " type="text" id="idSistemaBusqueda" name ="idSistemaBusqueda" placeholder="idSistema"></input>
+				</div>
+				<div class="col-sm-4">
+					<input class="form-control " type="text" id="descripcionBusqueda" name ="descripcionBusqueda" placeholder="descripcion"></input>
+				</div>
+				<div class="col-sm-2">
+					<button type="submit" class="btn btn-primary">Buscar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	
 	<div class="row">
         <div class="col-md-12">
-        <h4>Listado de sistemas registrados:</h4>
+        <!-- <h4>Listado de sistemas registrados:</h4> -->
         <div class="table-responsive">
-              <table id="mytable" class="table table-bordred table-striped">
+              <table id="mytable" class="table table-bordred table-striped" data-toggle="table">
                    <thead>
-                   		<th width="10"><input type="checkbox" id="checkall" ></input></th>
-                   		<th width="40">Id Sistema</th>
-                    	<th width="200">Descripcion</th>                     	
+                   		<th data-field="idSistema" width="40">Id Sistema</th>
+                    	<th data-field="descripcion" width="200">Descripcion</th>                     	
                       	<th width="20">Modificar</th>
                        <th width="20">Borrar</th>
                    </thead>
     				<tbody>
     					<tr th:each="sistema : ${sistemasExistentes}">
-    						<td><input type="checkbox" class="checkthis" ></input></td>
 							<td id="idSistemaFila" th:text="${sistema.idSistema}">1</td>
 							<td id="descripcionFila" th:text="${sistema.descripcion}">Mark</td>
 							<td>
