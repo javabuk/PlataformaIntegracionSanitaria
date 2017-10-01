@@ -31,6 +31,7 @@ import org.backoffice.dao.TrazaRepository;
 import org.backoffice.fuentedatos.DatosCodigoMorris;
 import org.backoffice.fuentedatos.DatosListadoTrazasJSON;
 import org.backoffice.fuentedatos.DatosListadoTrazasSistemaJSON;
+import org.backoffice.model.BusquedaSistemas;
 import org.backoffice.model.Codigo;
 import org.backoffice.model.Correlacion;
 import org.backoffice.model.DatosSituacionActual;
@@ -371,24 +372,42 @@ public class LoginController {
 
 	@RequestMapping("/sistemas")
 	public String sistemas(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
-			Model model) {
-		model.addAttribute("sistemasExistentes", sistemaRepository.findAll());
+			Model model, HttpServletRequest request) {
+		// if (!model.containsAttribute("sistemasExistentes")) {
+		if (request.getSession().getAttribute("sistemasExistentes") != null) {
+			model.addAttribute("sistemasExistentes", request.getSession().getAttribute("sistemasExistentes"));
+		} else {
+			model.addAttribute("sistemasExistentes", sistemaRepository.findAll());
+		}
+		if (request.getSession().getAttribute("busquedaSistemasExistentes") != null) {
+			model.addAttribute("busquedaSistemasExistentes",
+					request.getSession().getAttribute("busquedaSistemasExistentes"));
+		} else {
+			model.addAttribute("busquedaSistemasExistentes", new BusquedaSistemas("", ""));
+		}
+
 		return "sistemas";
 	}
 
 	@RequestMapping("/buscarSistemas")
-	public List<Sistema> sistemas(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
-			Model model, Sistema datosSistema) {
+	public String sistemas(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
+			Model model, BusquedaSistemas datosSistema, HttpServletRequest request) {
 		List<Sistema> resultados = null;
-		if (datosSistema.getIdSistema() == null) {
-			resultados = sistemaRepository.findByDescripcion(datosSistema.getDescripcion());
-		} else if (datosSistema.getDescripcion() == null) {
-			resultados = sistemaRepository.findByIdSistema(new Integer(datosSistema.getIdSistema()));
+		if (datosSistema.getIdSistemaBusq() == null
+				|| (datosSistema.getIdSistemaBusq() != null && datosSistema.getIdSistemaBusq().length() == 0)) {
+			resultados = sistemaRepository.findByDescripcion(datosSistema.getDescripcionBusq());
+		} else if (datosSistema.getDescripcionBusq() == null
+				|| (datosSistema.getDescripcionBusq() != null && datosSistema.getDescripcionBusq().length() == 0)) {
+			resultados = sistemaRepository.findByIdSistema(datosSistema.getIdSistemaBusq());
 		} else {
-			resultados = sistemaRepository.findSistemas(datosSistema.getIdSistema(), datosSistema.getDescripcion());
+			resultados = sistemaRepository.findSistemas(datosSistema.getIdSistemaBusq(),
+					datosSistema.getDescripcionBusq());
 		}
 
-		return resultados;
+		// model.addAttribute("sistemasExistentes", resultados);
+		request.getSession().setAttribute("sistemasExistentes", resultados);
+		request.getSession().setAttribute("busquedaSistemasExistentes", datosSistema);
+		return "sistemas";
 	}
 
 	@RequestMapping("/modificarSistema")

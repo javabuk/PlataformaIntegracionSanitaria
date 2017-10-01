@@ -79,12 +79,12 @@
 	      	$('#formBusquedaSistemas').on('submit', function(e){
 	            e.preventDefault();
 	            $.ajax({
-	                url: 'parque/',
+	                url: 'buscarSistemas/',
 	                type: 'POST',
 	                data: $('#formBusquedaSistemas').serialize(),
 	                success: function(data){
-	                	alert(data);
-	                	$('#mytable').bootstrapTable('load', data);
+	                	alert('antes de reload');
+	                	location.reload();
 	                }
 	            });
 	        });
@@ -124,10 +124,10 @@
   		<div class="panel-body">
 			<form id="formBusquedaSistemas" class="form-horizontal">
 				<div class="col-sm-2">
-					<input class="form-control " type="text" id="idSistemaBusqueda" name ="idSistemaBusqueda" placeholder="idSistema"></input>
+					<input class="form-control " type="text" id="idSistemaBusq" name ="idSistemaBusq" th:value="${busquedaSistemasExistentes.idSistemaBusq}" placeholder="idSistemaBusq"></input>
 				</div>
 				<div class="col-sm-4">
-					<input class="form-control " type="text" id="descripcionBusqueda" name ="descripcionBusqueda" placeholder="descripcion"></input>
+					<input class="form-control " type="text" id="descripcionBusq" name ="descripcionBusq" th:value="${busquedaSistemasExistentes.descripcionBusq}" placeholder="descripcionBusq"></input>
 				</div>
 				<div class="col-sm-2">
 					<button type="submit" class="btn btn-primary">Buscar</button>
@@ -140,7 +140,7 @@
         <div class="col-md-12">
         <!-- <h4>Listado de sistemas registrados:</h4> -->
         <div class="table-responsive">
-              <table id="mytable" class="table table-bordred table-striped" data-toggle="table">
+              <table id="mytable" class="table table-bordred table-striped" >
                    <thead>
                    		<th data-field="idSistema" width="40">Id Sistema</th>
                     	<th data-field="descripcion" width="200">Descripcion</th>                     	

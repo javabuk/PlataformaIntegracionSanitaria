@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface SistemaRepository extends CrudRepository<Sistema, String> {
 
-	List<Sistema> findByIdSistema(Integer id);
+	List<Sistema> findByIdSistema(String id);
 
 	List<Sistema> findByDescripcion(String descripcion);
 
