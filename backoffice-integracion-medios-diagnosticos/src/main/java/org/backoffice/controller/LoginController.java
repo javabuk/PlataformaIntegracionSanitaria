@@ -374,7 +374,7 @@ public class LoginController {
 	public String sistemas(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
 			Model model, HttpServletRequest request) {
 		// if (!model.containsAttribute("sistemasExistentes")) {
-		if (request.getSession().getAttribute("sistemasExistentes") != null) {
+		/*if (request.getSession().getAttribute("sistemasExistentes") != null) {
 			model.addAttribute("sistemasExistentes", request.getSession().getAttribute("sistemasExistentes"));
 		} else {
 			model.addAttribute("sistemasExistentes", sistemaRepository.findAll());
@@ -384,13 +384,13 @@ public class LoginController {
 					request.getSession().getAttribute("busquedaSistemasExistentes"));
 		} else {
 			model.addAttribute("busquedaSistemasExistentes", new BusquedaSistemas("", ""));
-		}
-
+		}*/
+		request.getSession().setAttribute("sistemasExistentes", sistemaRepository.findAll());
 		return "sistemas";
 	}
 
 	@RequestMapping("/buscarSistemas")
-	public String sistemas(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
+	public String buscarSistemas(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
 			Model model, BusquedaSistemas datosSistema, HttpServletRequest request) {
 		List<Sistema> resultados = null;
 		if (datosSistema.getIdSistemaBusq() == null
@@ -404,10 +404,23 @@ public class LoginController {
 					datosSistema.getDescripcionBusq());
 		}
 
-		// model.addAttribute("sistemasExistentes", resultados);
+		model.addAttribute("sistemasExistentes", resultados);
+		model.addAttribute("busquedaSistemasExistentes", datosSistema);
 		request.getSession().setAttribute("sistemasExistentes", resultados);
 		request.getSession().setAttribute("busquedaSistemasExistentes", datosSistema);
-		return "sistemas";
+		return "busquedaSistemas";
+	}
+
+	@RequestMapping("/busquedaSistemas")
+	public String busquedaSistemas(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
+			Model model, BusquedaSistemas datosSistema, HttpServletRequest request) {
+
+		if (request.getSession().getAttribute("sistemasExistentes") != null) {
+			model.addAttribute("sistemasExistentes", request.getSession().getAttribute("sistemasExistentes"));
+		} else {
+			model.addAttribute("sistemasExistentes", sistemaRepository.findAll());
+		}
+		return "busquedaSistemas";
 	}
 
 	@RequestMapping("/modificarSistema")

@@ -4,16 +4,11 @@
   <title>BackOffice Integracion Medios Diagnosticos</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
-   
-  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
-   	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script> -->
-	<script src="https://unpkg.com/popper.js"></script>	
-	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>	
+  <script src="https://unpkg.com/popper.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>	
   <script >
   $(document).ready(function(){
 	  $("#mytable #checkall").click(function () {
@@ -28,77 +23,63 @@
 	              });
 	          }
 	      });
-	      
-	      //$("[data-toggle=tooltip]").tooltip();
-	      
-	      $('#modificar-sistema-form').on('submit', function(e){
-	            e.preventDefault();
-	            $.ajax({
-	                url: 'modificarSistema/',
-	                type: 'POST',
-	                data: $('#modificar-sistema-form').serialize(),
-	                success: function(data){
-	                	// Eliminamos el botón de modificar y mostramos el mensaje de confirmación
-	                	$("#mensajeConfirmacion").removeClass('hidden');  
-	                	$("#btnUpdateSistema").addClass('hidden');
-                		// Ponemos un retardo para cerrar la ventana y el usuario pueda visionar el mensaje de confirmación
-	                	setTimeout(function() {
-	                		// Forzamos el click del boton que cierra la modal.
-	                     	$('#btnCerrarModificacion').trigger("click");	                     	
-	                	 	// Recarga la pagina para que actualice los cambios
-	                     	location.reload();	     
-	                	}, 1500); // milliseconds
-	                }
-	            });
-	        });
-	      
-	      	$('#eliminar-sistema-form').on('submit', function(e){
-	            e.preventDefault();
-	            
-	            $.ajax({
-	                url: 'eliminarSistema/',
-	                type: 'POST',
-	                data: $('#eliminar-sistema-form').serialize(),
-	                success: function(data){
-	                	$("#borradoConfirmacion").removeClass('hidden');
-	                	$("#btnCerrarConfirmacionEliminar").addClass('hidden');
-	                	$("#btnCerrarNoConfirmacionEliminar").addClass('hidden');
-	                	setTimeout(function() {
-	                		// Forzamos el click del boton que cierra la modal.
-		                     $('#btnCerrarConfirmacionEliminar').trigger("click");
-		                	 // Recarga la pagina para que actualice los cambios
-		                     location.reload();    
-	                        
-	                    }, 1500); // milliseconds
-	                		                     
-	                }
-	            });
-	        });
-	      	
-	      	
-	      	$('#formBusquedaSistemas').on('submit', function(e){
-	            e.preventDefault();
-	            $.ajax({
-	                url: 'buscarSistemas/',
-	                type: 'POST',
-	                data: $('#formBusquedaSistemas').serialize(),
-	                success: function(data){	                	
-	                	document.getElementById("resultadosBusqueda").src = "busquedaSistemas";
-	                	//location.reload();
-	                }
-	            });
-	        });
+	  
+	  $('#modificar-sistema-form').on('submit', function(e){
+          e.preventDefault();
+          $.ajax({
+              url: 'modificarSistema/',
+              type: 'POST',
+              data: $('#modificar-sistema-form').serialize(),
+              success: function(data){
+              	// Eliminamos el botón de modificar y mostramos el mensaje de confirmación
+              	$("#mensajeConfirmacion").removeClass('hidden');  
+              	$("#btnUpdateSistema").addClass('hidden');
+          		// Ponemos un retardo para cerrar la ventana y el usuario pueda visionar el mensaje de confirmación
+              	setTimeout(function() {
+              		// Forzamos el click del boton que cierra la modal.
+                   	$('#btnCerrarModificacion').trigger("click");	                     	
+              	 	// Recarga la pagina para que actualice los cambios
+                   	alert('antes de recargar');
+              	 	window.location.href = "busquedaSistemas";
+              	 	//location.reload();	     
+              	}, 1500); // milliseconds
+              }
+          });
+      });
+    
+    	$('#eliminar-sistema-form').on('submit', function(e){
+          e.preventDefault();
+          
+          $.ajax({
+              url: 'eliminarSistema/',
+              type: 'POST',
+              data: $('#eliminar-sistema-form').serialize(),
+              success: function(data){
+              	$("#borradoConfirmacion").removeClass('hidden');
+              	$("#btnCerrarConfirmacionEliminar").addClass('hidden');
+              	$("#btnCerrarNoConfirmacionEliminar").addClass('hidden');
+              	setTimeout(function() {
+              		// Forzamos el click del boton que cierra la modal.
+	                     $('#btnCerrarConfirmacionEliminar').trigger("click");
+	                	 // Recarga la pagina para que actualice los cambios
+	                     location.reload();    
+                      
+                  }, 1500); // milliseconds
+              		                     
+              }
+          });
+      });
 	      
 	  });
-  
-	      	function modificarSistema(objeto){	  			
-	  			$('#idSistema').val(objeto.getAttribute('idSistema'));
-	      		$('#descripcion').val(objeto.getAttribute('descripcion'));
-	  		}
-	      	
-	      	function borrarSistema(objeto){	  			
-	  			$('#idSistemaOculto').val(objeto.getAttribute('idSistema'));
-	  		}
+  	      	
+  	function modificarSistema(objeto){	  			
+		$('#idSistema').val(objeto.getAttribute('idSistema'));
+		$('#descripcion').val(objeto.getAttribute('descripcion'));
+	}
+	
+	function borrarSistema(objeto){	  			
+		$('#idSistemaOculto').val(objeto.getAttribute('idSistema'));
+	}
   		
   </script>
   <style type="text/css">
@@ -126,29 +107,9 @@
 <body>
 <div class="container">
 	
-	<!-- Panel que incluye los parámetros de búsqueda -->
-	<div class="panel panel-default">
-  		<div class="panel-heading"><strong>Sistemas</strong></div>
-  		<div class="panel-body">
-			<form id="formBusquedaSistemas" class="form-horizontal" target="resultadosBusqueda" >
-				<div class="col-sm-2">
-					<!-- <input class="form-control " type="text" id="idSistemaBusq" name ="idSistemaBusq" th:value="${busquedaSistemasExistentes.IdSistemaBusq}" placeholder="idSistemaBusq"></input> -->
-					<input class="form-control " type="text" id="idSistemaBusq" name ="idSistemaBusq"  placeholder="idSistemaBusq"></input>
-				</div>
-				<div class="col-sm-4">
-					<!-- <input class="form-control " type="text" id="descripcionBusq" name ="descripcionBusq" th:value="${busquedaSistemasExistentes.DescripcionBusq}" placeholder="descripcionBusq"></input> -->
-					<input class="form-control " type="text" id="descripcionBusq" name ="descripcionBusq" placeholder="descripcionBusq"></input>
-				</div>
-				<div class="col-sm-2">
-					<button type="submit" class="btn btn-primary">Buscar</button>
-				</div>
-			</form>
-		</div>
-	</div>
-	
-	<!-- <div class="row">
+	<div class="row">
         <div class="col-md-12">
-        <h4>Listado de sistemas registrados:</h4>
+        <!-- <h4>Listado de sistemas registrados:</h4> -->
         <div class="table-responsive">
               <table id="mytable" class="table table-bordred table-striped" >
                    <thead>
@@ -163,7 +124,7 @@
 							<td id="descripcionFila" th:text="${sistema.descripcion}">Mark</td>
 							<td>
 								<p data-placement="top"	data-toggle="tooltip" title="Edit">
-									Incluimos los atributos personalizados idSistema y descripcion, para poder utlizarlos después en la modidficación
+									<!-- Incluimos los atributos personalizados idSistema y descripcion, para poder utlizarlos después en la modidficación -->
 									<button 
 										id="btnEditFilaSistema" 
 										class="btn btn-primary btn-xs" 
@@ -200,16 +161,9 @@
                 
             </div>
         </div>
-	</div> -->
-	<iframe 
-		id="resultadosBusqueda" 
-		style="position:absolute;"
-		src = "busquedaSistemas"
-		> 
-	</iframe>  
+	</div>
+	
 </div>
-
-<!-- <form id="modificar-sistema-form" action="/modificarSistema/" method="post"> -->
 <form id="modificar-sistema-form">
 <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
       <div class="modal-dialog">
