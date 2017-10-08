@@ -173,7 +173,7 @@ public class LoginController {
 		// mensaje.getSistemaDestino(), mensaje.getMensaje()));
 		mensaje.setMensaje(hl7Service.convertirMensajeOML(mensaje));
 		model.addAttribute("mensaje", mensaje);
-		return "ResultadoMensajesHL7";
+		return "MensajesOML";
 	}
 
 	@PostMapping("/confirmacionInforme") // //new annotation since 4.3
@@ -374,17 +374,18 @@ public class LoginController {
 	public String sistemas(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
 			Model model, HttpServletRequest request) {
 		// if (!model.containsAttribute("sistemasExistentes")) {
-		/*if (request.getSession().getAttribute("sistemasExistentes") != null) {
-			model.addAttribute("sistemasExistentes", request.getSession().getAttribute("sistemasExistentes"));
-		} else {
-			model.addAttribute("sistemasExistentes", sistemaRepository.findAll());
-		}
-		if (request.getSession().getAttribute("busquedaSistemasExistentes") != null) {
-			model.addAttribute("busquedaSistemasExistentes",
-					request.getSession().getAttribute("busquedaSistemasExistentes"));
-		} else {
-			model.addAttribute("busquedaSistemasExistentes", new BusquedaSistemas("", ""));
-		}*/
+		/*
+		 * if (request.getSession().getAttribute("sistemasExistentes") != null)
+		 * { model.addAttribute("sistemasExistentes",
+		 * request.getSession().getAttribute("sistemasExistentes")); } else {
+		 * model.addAttribute("sistemasExistentes",
+		 * sistemaRepository.findAll()); } if
+		 * (request.getSession().getAttribute("busquedaSistemasExistentes") !=
+		 * null) { model.addAttribute("busquedaSistemasExistentes",
+		 * request.getSession().getAttribute("busquedaSistemasExistentes")); }
+		 * else { model.addAttribute("busquedaSistemasExistentes", new
+		 * BusquedaSistemas("", "")); }
+		 */
 		request.getSession().setAttribute("sistemasExistentes", sistemaRepository.findAll());
 		return "sistemas";
 	}
