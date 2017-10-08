@@ -1,5 +1,7 @@
 package org.backoffice.servicios;
 
+import java.io.IOException;
+
 import org.backoffice.model.MensajeHL7;
 import org.backoffice.util.Util;
 import org.slf4j.Logger;
@@ -7,16 +9,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import ca.uhn.hl7v2.DefaultHapiContext;
+import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.HapiContext;
+import ca.uhn.hl7v2.model.DataTypeException;
+import ca.uhn.hl7v2.model.v25.datatype.ST;
 import ca.uhn.hl7v2.model.v25.message.ADT_A01;
 import ca.uhn.hl7v2.model.v25.message.OMG_O19;
 import ca.uhn.hl7v2.model.v25.message.OML_O21;
+import ca.uhn.hl7v2.model.v25.message.QBP_Q11;
 import ca.uhn.hl7v2.model.v25.segment.GT1;
 import ca.uhn.hl7v2.model.v25.segment.MSH;
 import ca.uhn.hl7v2.model.v25.segment.OBR;
 import ca.uhn.hl7v2.model.v25.segment.ORC;
 import ca.uhn.hl7v2.model.v25.segment.PID;
 import ca.uhn.hl7v2.model.v25.segment.PV1;
+import ca.uhn.hl7v2.model.v25.segment.QPD;
 import ca.uhn.hl7v2.model.v25.segment.TQ1;
 import ca.uhn.hl7v2.parser.Escaping;
 import ca.uhn.hl7v2.parser.Parser;
@@ -350,4 +357,51 @@ public class GeneracionHL7ServiceImpl implements GeneracionHL7Service {
 
 		return texto;
 	}
+
+	public String generarConsultaPorDNI(MensajeHL7 mensajeHL7) {
+		String texto = "";
+
+		try {
+			QBP_Q11 mensajeConsulta = new QBP_Q11();
+			mensajeConsulta.initQuickstart("OML", "O21", "P");
+
+			MSH mshSegment = mensajeConsulta.getMSH();
+			mshSegment.getMsh3_SendingApplication().getHd1_NamespaceID().setValue(mensajeHL7.getSistemaDestino());
+			mshSegment.getMsh7_DateTimeOfMessage().getTs1_Time().setValue(Util.obtenerFechaActual());
+			mshSegment.getMsh10_MessageControlID().setValue(Util.obtenerCorrelativo());
+			mshSegment.getMsh11_ProcessingID().getPt1_ProcessingID().setValue("P");
+			mshSegment.getMsh12_VersionID().getVid1_VersionID().setValue("2.5");
+
+			QPD segmentoQPD = mensajeConsulta.getQPD();
+			segmentoQPD.getQpd1_MessageQueryName().getCe1_Identifier().setValue("Z21");
+			segmentoQPD.getQpd2_QueryTag().setValue("QP2");
+			ST tipoST = new ST(mensajeConsulta);
+			tipoST.setValue(String.format("%s\\S\\DNI||||%s", mensajeHL7.getDni(), mensajeHL7.getFechaNacimiento()));
+			segmentoQPD.getQpd3_UserParametersInsuccessivefields().setData(tipoST);
+
+			HapiContext context = new DefaultHapiContext();
+			// ParserConfiguration config = new ParserConfiguration();
+			ParserConfiguration config = context.getParserConfiguration();
+			Escaping escape = config.getEscaping();
+			Parser parser = context.getPipeParser();
+			String encodedMessage = parser.encode(mensajeConsulta);
+			texto = encodedMessage;
+
+			texto.replace("\\E", "\\");
+			texto.replace("\\F", "\\");
+
+		} catch (DataTypeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (HL7Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return texto;
+	}
+
 }

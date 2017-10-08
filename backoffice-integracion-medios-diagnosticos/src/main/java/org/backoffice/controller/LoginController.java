@@ -168,11 +168,14 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/ResultadoMensajesHL7", method = RequestMethod.POST)
-	public String ResultadoMensajesHL7(Model model, MensajeHL7 mensaje) {
+	public String ResultadoMensajesHL7(Model model, MensajeHL7 mensaje,
+			@RequestParam(value = "busquedaPorDNI", required = false) String mensajeBusquedaPorDni) {
 		// mensaje.setMensaje(hl7Service.convertirMensajeOML(mensaje.getSistemaOrigen(),
 		// mensaje.getSistemaDestino(), mensaje.getMensaje()));
 		mensaje.setMensaje(hl7Service.convertirMensajeOML(mensaje));
+		mensajeBusquedaPorDni = hl7Service.generarConsultaPorDNI(mensaje);
 		model.addAttribute("mensaje", mensaje);
+		model.addAttribute("busquedaPorDNI", mensajeBusquedaPorDni);
 		return "MensajesOML";
 	}
 

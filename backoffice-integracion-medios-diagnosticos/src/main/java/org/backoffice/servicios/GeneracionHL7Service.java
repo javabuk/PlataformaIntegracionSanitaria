@@ -9,4 +9,6 @@ public interface GeneracionHL7Service {
 	public String convertirMensajeOML(MensajeHL7 mensajeHL7);
 
 	public String convertirMensajeOMG(MensajeHL7 mensajeHL7);
+
+	public String generarConsultaPorDNI(MensajeHL7 mensajeHL7);
 }
