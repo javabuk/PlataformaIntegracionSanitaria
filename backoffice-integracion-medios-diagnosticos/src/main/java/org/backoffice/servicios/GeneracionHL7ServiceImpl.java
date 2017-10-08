@@ -385,10 +385,10 @@ public class GeneracionHL7ServiceImpl implements GeneracionHL7Service {
 			Escaping escape = config.getEscaping();
 			Parser parser = context.getPipeParser();
 			String encodedMessage = parser.encode(mensajeConsulta);
-			texto = encodedMessage;
+			String textoProcesado = encodedMessage;
 
-			texto.replace("\\E", "\\");
-			texto.replace("\\F", "\\");
+			String textoReprocesado = textoProcesado.replace("\\E", "");
+			texto = textoReprocesado.replace("\\F", "");
 
 		} catch (DataTypeException e) {
 			// TODO Auto-generated catch block
