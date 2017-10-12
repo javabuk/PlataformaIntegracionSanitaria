@@ -148,6 +148,8 @@ public class UploadController {
 					correlacionesService.generarSentenciasSQLCodigos(codigosSinDuplicados));
 			redirectAttributes.addFlashAttribute("CodigosBSQL",
 					correlacionesService.generarSentenciasSQLCodigos(codigosBSinDuplicados));
+			redirectAttributes.addFlashAttribute("CorrelacionesSQL",
+					correlacionesService.generarSentenciasSQLCorrelaciones(correlaciones));
 
 			request.getSession().setAttribute("correl", correlaciones);
 			request.getSession().setAttribute("sesionCodigosA", codigosSinDuplicados);
