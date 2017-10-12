@@ -13,6 +13,10 @@ import org.backoffice.fuentedatos.CodigoDTO;
 import org.backoffice.fuentedatos.CorrelacionDTO;
 import org.backoffice.fuentedatos.DetectorDuplicados;
 import org.backoffice.fuentedatos.FicheroHojaCalculo;
+import org.backoffice.servicios.CorrelacionesService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +29,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class UploadController {
 
+	Logger logger = LoggerFactory.getLogger(UploadController.class);
+
 	// Save the uploaded file to this folder
 	private static String UPLOADED_FOLDER = "D://temp//";
+
+	private CorrelacionesService correlacionesService;
+
+	@Autowired
+	public void setCorrelacionesService(CorrelacionesService correlacionesService) {
+		this.correlacionesService = correlacionesService;
+	}
 
 	@RequestMapping("/uploadFile")
 	public String tabla(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
@@ -131,12 +144,17 @@ public class UploadController {
 
 			redirectAttributes.addFlashAttribute("correlaciones", correlaciones);
 
+			redirectAttributes.addFlashAttribute("CodigosASQL",
+					correlacionesService.generarSentenciasSQLCodigos(codigosSinDuplicados));
+			redirectAttributes.addFlashAttribute("CodigosBSQL",
+					correlacionesService.generarSentenciasSQLCodigos(codigosBSinDuplicados));
+
 			request.getSession().setAttribute("correl", correlaciones);
 			request.getSession().setAttribute("sesionCodigosA", codigosSinDuplicados);
 			request.getSession().setAttribute("sesionCodigosB", codigosBSinDuplicados);
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		// return "redirect:/uploadStatus";
 		// return "redirect:/ventanaModalCodigos";

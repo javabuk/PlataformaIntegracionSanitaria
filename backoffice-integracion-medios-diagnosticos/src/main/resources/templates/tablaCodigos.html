@@ -396,10 +396,10 @@
 		</select>
 		<br></br>
     	<button type="button" class="btn btn-warning btn-xs" id="botonCargar">Cargar A</button>
-		<textarea rows="10" cols="100" id="sentenciasCodigosA"></textarea>
+		<textarea rows="10" cols="100" id="sentenciasCodigosA" th:text="${CodigosASQL}"></textarea>
 		<hr></hr>		  
 		<button type="button" class="btn btn-warning btn-xs" id="botonCargarB">Cargar B</button>
-		<textarea rows="10" cols="100" id="sentenciasCodigosB"></textarea>
+		<textarea rows="10" cols="100" id="sentenciasCodigosB" th:text="${CodigosBSQL}"></textarea>
 		<hr></hr>	
 		<button type="button" class="btn btn-warning btn-xs" id="botonCargarCorrelaciones">Cargar Correlaciones</button>
 		<textarea rows="10" cols="100" id="sentenciasCorrelaciones"></textarea>
