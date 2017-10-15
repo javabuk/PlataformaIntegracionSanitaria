@@ -160,6 +160,12 @@ public class LoginController {
 		return "generarInforme";
 	}
 
+	@RequestMapping("/busquedaGeneral")
+	public String busquedaGeneral(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
+			Model model) {
+		return "busquedaGeneral";
+	}
+
 	@RequestMapping("/mensajeOMLWizard")
 	public String mensajeOMLWizard(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
 			Model model) {

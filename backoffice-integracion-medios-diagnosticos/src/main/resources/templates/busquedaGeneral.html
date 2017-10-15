@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>BackOffice Integracion Medios Diagnosticos</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link> 
+  <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/popper.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>	
+  <script >
+  	$(document).ready(function () {
+	    //Hover Menu in Header
+	    $('ul.nav li.dropdown').hover(function () {
+	        $(this).find('.mega-dropdown-menu').stop(true, true).delay(200).fadeIn(200);
+	    }, function () {
+	        $(this).find('.mega-dropdown-menu').stop(true, true).delay(200).fadeOut(200);
+	    });
+	    
+	    
+	    
+	    
+	    
+	    //Open Search    
+	    $('.form-search').click(function (event) {	    		    		    	
+	    	
+	    	$.ajax({
+	              url: 'parque/',
+	              type: 'POST',
+	              data: $('#busqueda').serialize(),
+	              success: function(data){
+	            	  
+	            	  $('#listaResultados').empty();
+	            	  
+	            	  var items = [];
+
+	            	   $.each(data, function(i, item) {
+
+	            	          items.push('<li><a href="yourlink?id=' + item.idSistema + '">' + item.descripcion + '</a></li>');
+
+	            	   });  // close each()
+
+	            	   $('#listaResultados').append( items.join('') );
+					  
+	            	   //$('#listaResultados').listview('refresh');
+	            	  
+	            	  $(".instant-results").fadeIn('slow').css('height', 'auto');
+	            	  event.stopPropagation();
+	              }
+	          });
+	    	
+	    	//$(".instant-results").fadeIn('slow').css('height', 'auto');
+	        //event.stopPropagation();
+	    });
+
+	    $('body').click(function () {
+	        $(".instant-results").fadeOut('500');
+	    });
+	});
+  	      	  	
+  		
+  </script>
+  <style type="text/css">
+		/* Estilos para mostrar, ocultar el div */
+		.site-header {
+    height:450px; /* Remove affer */
+    width:800px;/* Remove affer */
+    margin: 50px auto;
+}
+#MainMenu {
+    padding:0;
+}
+.navbar-brand {
+    padding-left:0;
+    padding-right:0;
+}
+
+/*---------- Search ----------*/
+.result-bucket li {
+    padding: 7px 15px;
+}
+.instant-results {
+    background: #fff;
+    width: 100%;
+    color: gray;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, .175);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .175);
+    display: none;
+    z-index: 9;
+}
+.form-search {
+    transition: all 200ms ease-out;
+    -webkit-transition: all 200ms ease-out;
+    -ms-transition: all 200ms ease-out;
+}
+.search-form {
+    position: relative;
+    max-width: 100%;
+}
+.result-link {
+    color: #4f7593;
+}
+.result-link .media-body {
+    font-size: 13px;
+    color: gray;
+}
+.result-link .media-heading {
+    font-size: 15px;
+    font-weight: 400;
+    color: #4f7593;
+}
+.result-link:hover,
+.result-link:hover .media-heading,
+.result-link:hover .media-body {
+    text-decoration: none;
+    color: #4f7593
+}
+.result-link .media-object {
+    width: 50px;
+    padding: 3px;
+    border: 1px solid #c1c1c1;
+    border-radius: 3px;
+}
+.result-entry + .result-entry {
+    border-top:1px solid #ddd;
+}
+.top-keyword {
+    margin: 3px 0 0;
+    font-size: 12px;
+    font-family: Arial;
+}
+.top-keyword a {
+    font-size: 12px;
+    font-family: Arial;
+}
+.top-keyword a:hover {
+    color: rgba(0, 0, 0, 0.7);
+}
+	</style>
+</head>
+<body>
+<div class="container">
+	
+	<header class="site-header">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#MainMenu">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a id="logo" class="navbar-brand" href="#link" title="">
+            Búsqueda General
+        </a>
+        <nav class="site-nav" role="navigation">
+            <div class="collapse navbar-collapse" id="MainMenu">
+            </div>
+        </nav>
+        <div id="search-form" class="search-form js-search-form">
+            <form id="busqueda" class="form-search" role="search" action="/search.php" method="get">
+                <div class="input-group">
+                    <input id="name" name="name" type="text" class="form-control" placeholder="Busqueda en codigos, correlaciones y sistemas" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-info" type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>                
+            </form>
+            <div class="instant-results">
+                <ul class="list-unstyled result-bucket" id="listaResultados" name="listaResultados">
+                    <li class="result-entry" data-suggestion="Target 1" data-position="1" data-type="type" data-analytics-type="merchant">
+                        <a href="#" class="result-link">
+                            <div class="media">
+                                <div class="media-left">
+                                    <img src="http://mellon.co.tz/wp-content/uploads/2016/05/noimage.gif" class="media-object"></img>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">Heading 1</h4>
+                                    <p>0 offers available</p>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="result-entry" data-suggestion="Target 2" data-position="1" data-type="type" data-analytics-type="merchant">
+                        <a href="#" class="result-link">
+                            <div class="media">
+                                <div class="media-left">
+                                    <img src="http://mellon.co.tz/wp-content/uploads/2016/05/noimage.gif" class="media-object"></img>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">Heading 2</h4>
+                                    <p>3 offers available</p>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="result-entry" data-suggestion="Target 3" data-position="2" data-type="type" data-analytics-type="merchant">
+                        <a href="#" class="result-link">
+                            <div class="media">
+                                <div class="media-left">
+                                    <img src="http://mellon.co.tz/wp-content/uploads/2016/05/noimage.gif" class="media-object"></img>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">Heading 3</h4>
+                                    <p>17 offers available</p>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+</header>
+	
+</div>
+</body>
+</html>
