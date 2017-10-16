@@ -3,26 +3,29 @@ package org.backoffice.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 
-@Entity ( name = "PSI_CODIGOS")
+@Entity(name = "PSI_CODIGOS")
+@IdClass(PkCodigo.class)
 public class Codigo {
 
 	@Id
-	@Column ( name = "CODIGO")
+	@Column(name = "CODIGO")
 	private String codigo;
-	
-	@Column ( name = "DESCRIPCION")
+
+	@Column(name = "DESCRIPCION")
 	private String descripcion;
-	
-	@Column ( name = "IDSISTEMA")
+
+	@Id
+	@Column(name = "IDSISTEMA")
 	private String idSistema;
-	
-	@Column ( name = "TIPO")
+
+	@Id
+	@Column(name = "TIPO")
 	private String tipo;
-	
-	public Codigo(){}
-	
-	
+
+	public Codigo() {
+	}
 
 	public Codigo(String codigo, String descripcion, String idSistema, String tipo) {
 		super();
@@ -31,8 +34,6 @@ public class Codigo {
 		this.idSistema = idSistema;
 		this.tipo = tipo;
 	}
-
-
 
 	public String getCodigo() {
 		return codigo;
@@ -65,10 +66,10 @@ public class Codigo {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Codigo [codigo=" + codigo + ", descripcion=" + descripcion + ", idSistema=" + idSistema + "]";
 	}
-	
+
 }

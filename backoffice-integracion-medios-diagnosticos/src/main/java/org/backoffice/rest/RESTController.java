@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 import org.backoffice.dao.CodigoRepository;
 import org.backoffice.dao.SistemaRepository;
@@ -26,48 +27,59 @@ public class RESTController {
 
 	@Autowired
 	CodigoRepository codigoRepository;
-	
+
 	@RequestMapping("/parque")
 	public List<BusquedaGeneralDTO> greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
 
 		List<BusquedaGeneralDTO> resultados = new ArrayList<BusquedaGeneralDTO>();
-		
+
 		List<Sistema> sistemas = sistemaRepository.findByIdSistema(name);
 		for (Iterator iterator = sistemas.iterator(); iterator.hasNext();) {
 			Sistema sistema = (Sistema) iterator.next();
-			
+
 			BusquedaGeneralDTO resultado = new BusquedaGeneralDTO();
 			resultado.setTipo("SISTEMA");
 			resultado.setCodigo(sistema.getIdSistema());
 			resultado.setDescripcion(sistema.getDescripcion());
-			
-			resultados.add(resultado);
-		}
-		
-		List<Codigo> codigos = codigoRepository.findByCodigo(name);
-		for (Iterator iterator = codigos.iterator(); iterator.hasNext();) {
-			Codigo codigo = (Codigo) iterator.next();
-			
-			BusquedaGeneralDTO resultado = new BusquedaGeneralDTO();
-			resultado.setTipo("CODIGO");
-			resultado.setCodigo(codigo.getCodigo());
-			resultado.setDescripcion(codigo.getDescripcion());
-			
-			resultados.add(resultado);
-		}
-		
-		List<Codigo> codigoD = codigoRepository.findByDescripcion(name);
-		for (Iterator iterator = codigos.iterator(); iterator.hasNext();) {
-			Codigo codigo = (Codigo) iterator.next();
-			
-			BusquedaGeneralDTO resultado = new BusquedaGeneralDTO();
-			resultado.setTipo("CODIGO");
-			resultado.setCodigo(codigo.getCodigo());
-			resultado.setDescripcion(codigo.getDescripcion());
-			
+
 			resultados.add(resultado);
 		}
 
-		return resultados; 
+		List<Codigo> codigos = codigoRepository.findByCodigo(name);
+		for (Iterator iterator = codigos.iterator(); iterator.hasNext();) {
+			Codigo codigo = (Codigo) iterator.next();
+
+			BusquedaGeneralDTO resultado = new BusquedaGeneralDTO();
+			resultado.setTipo("CODIGO");
+			resultado.setCodigo(codigo.getCodigo());
+			resultado.setDescripcion(codigo.getDescripcion());
+			resultado.setTipoCodigo(codigo.getTipo());
+			resultado.setSistema(codigo.getIdSistema());
+			resultados.add(resultado);
+		}
+
+		// Buscamos duplicados solo en los resultados de tipo codigo
+		List<BusquedaGeneralDTO> resultadosFiltrados = resultados.stream().filter(c -> c.getTipo().equals("CODIGO"))
+				.collect(Collectors.toList());
+
+		List<Codigo> codigoD = codigoRepository.findCodigosPorDescripcion(name);
+		for (Iterator iterator = codigoD.iterator(); iterator.hasNext();) {
+			Codigo codigo = (Codigo) iterator.next();
+
+			BusquedaGeneralDTO resultado = new BusquedaGeneralDTO();
+			resultado.setTipo("CODIGO");
+			resultado.setCodigo(codigo.getCodigo());
+			resultado.setDescripcion(codigo.getDescripcion());
+			resultado.setTipoCodigo(codigo.getTipo());
+			resultado.setSistema(codigo.getIdSistema());
+
+			boolean idExists = resultadosFiltrados.stream().anyMatch(t -> (t.getCodigo().equals(codigo.getCodigo())
+					&& t.getSistema().equals(codigo.getIdSistema()) && t.getTipoCodigo().equals(codigo.getTipo())));
+			if (!idExists) {
+				resultados.add(resultado);
+			}
+		}
+
+		return resultados;
 	}
 }
