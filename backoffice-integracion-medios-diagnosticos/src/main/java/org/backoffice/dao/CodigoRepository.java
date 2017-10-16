@@ -11,6 +11,8 @@ public interface CodigoRepository extends CrudRepository <Codigo, String> {
 
 	List <Codigo> findByCodigo (String codigo);
 	
+	List <Codigo> findByDescripcion (String descripcion);
+	
 	List <Codigo> findByIdSistema (String idSistema);
 	
 	@Query("SELECT count(c.codigo), c.idSistema  FROM org.backoffice.model.Codigo c group by c.idSistema")

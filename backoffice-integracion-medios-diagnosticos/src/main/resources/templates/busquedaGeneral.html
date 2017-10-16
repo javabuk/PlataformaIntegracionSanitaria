@@ -38,7 +38,7 @@
 
 	            	   $.each(data, function(i, item) {
 
-	            	          items.push('<li><a href="yourlink?id=' + item.idSistema + '">' + item.descripcion + '</a></li>');
+	            	          items.push('<li><a href="yourlink?id=' + item.codigo + '">  <div class="media"> <div class="media-left"> <h3>'+item.tipo+'</h3> </div> <div class="media-body">'+item.codigo+'-' + item.descripcion + '</div> </div> </a></li>');
 
 	            	   });  // close each()
 
