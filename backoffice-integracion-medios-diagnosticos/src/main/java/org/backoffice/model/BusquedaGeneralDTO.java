@@ -11,6 +11,9 @@ public class BusquedaGeneralDTO implements Serializable {
 	private String descripcion;
 	private String tipoCodigo;
 	private String sistema;
+	private String codigoB;
+	private String tipoCodigoB;
+	private String sistemaB;
 
 	public BusquedaGeneralDTO() {
 
@@ -54,6 +57,30 @@ public class BusquedaGeneralDTO implements Serializable {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public String getCodigoB() {
+		return codigoB;
+	}
+
+	public void setCodigoB(String codigoB) {
+		this.codigoB = codigoB;
+	}
+
+	public String getTipoCodigoB() {
+		return tipoCodigoB;
+	}
+
+	public void setTipoCodigoB(String tipoCodigoB) {
+		this.tipoCodigoB = tipoCodigoB;
+	}
+
+	public String getSistemaB() {
+		return sistemaB;
+	}
+
+	public void setSistemaB(String sistemaB) {
+		this.sistemaB = sistemaB;
 	}
 
 }

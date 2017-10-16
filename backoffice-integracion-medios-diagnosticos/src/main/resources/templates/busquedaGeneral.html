@@ -43,6 +43,7 @@
 	            	    	   texto= item.codigo +' - ' + item.descripcion;
 	            	       }else if(item.tipo=='CORRELACION'){
 	            	    	   imagen = '<i class="glyphicon glyphicon-random"></i>';
+	            	    	   texto= '<div class="media-left"><h5>  '+item.codigo +' - ' + item.sistema + ' - '+item.tipoCodigo +' --------  '+item.codigoB +' - ' + item.sistemaB + ' - '+item.tipoCodigoB +'</h5></div>';
 	            	       } 
 	            		   
 	            		   items.push('<li><div class="media"> <div class="media-left"> '+imagen+' </div> <div class="media-body">'+texto+'</div> </div></li>');

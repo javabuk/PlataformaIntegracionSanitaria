@@ -7,9 +7,11 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 import org.backoffice.dao.CodigoRepository;
+import org.backoffice.dao.CorrelacionRepository;
 import org.backoffice.dao.SistemaRepository;
 import org.backoffice.model.BusquedaGeneralDTO;
 import org.backoffice.model.Codigo;
+import org.backoffice.model.Correlacion;
 import org.backoffice.model.Sistema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +29,9 @@ public class RESTController {
 
 	@Autowired
 	CodigoRepository codigoRepository;
+
+	@Autowired
+	CorrelacionRepository correlacionRepository;
 
 	@RequestMapping("/parque")
 	public List<BusquedaGeneralDTO> greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
@@ -78,6 +83,36 @@ public class RESTController {
 			if (!idExists) {
 				resultados.add(resultado);
 			}
+		}
+
+		List<Correlacion> correlacionesA = correlacionRepository.findByCodigoA(name);
+		for (Iterator iterator = correlacionesA.iterator(); iterator.hasNext();) {
+			Correlacion correlacion = (Correlacion) iterator.next();
+			BusquedaGeneralDTO resultado = new BusquedaGeneralDTO();
+			resultado.setTipo("CORRELACION");
+			resultado.setCodigo(correlacion.getCodigoA());
+			resultado.setTipoCodigo(correlacion.getTipoA());
+			resultado.setSistema(correlacion.getSistemaA());
+			resultado.setCodigoB(correlacion.getCodigoB());
+			resultado.setTipoCodigoB(correlacion.getTipoB());
+			resultado.setSistemaB(correlacion.getSistemaB());
+
+			resultados.add(resultado);
+		}
+
+		List<Correlacion> correlacionesB = correlacionRepository.findByCodigoB(name);
+		for (Iterator iterator = correlacionesB.iterator(); iterator.hasNext();) {
+			Correlacion correlacion = (Correlacion) iterator.next();
+			BusquedaGeneralDTO resultado = new BusquedaGeneralDTO();
+			resultado.setTipo("CORRELACION");
+			resultado.setCodigo(correlacion.getCodigoA());
+			resultado.setTipoCodigo(correlacion.getTipoA());
+			resultado.setSistema(correlacion.getSistemaA());
+			resultado.setCodigoB(correlacion.getCodigoB());
+			resultado.setTipoCodigoB(correlacion.getTipoB());
+			resultado.setSistemaB(correlacion.getSistemaB());
+
+			resultados.add(resultado);
 		}
 
 		return resultados;
