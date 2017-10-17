@@ -101,19 +101,23 @@
   	/* ]]> */
   </script>
   <style type="text/css">
-		/* Estilos para mostrar, ocultar el div */
-		.site-header {
-    height:450px; /* Remove affer */
-    width:800px;/* Remove affer */
-    margin: 50px auto;
-}
-#MainMenu {
-    padding:0;
-}
-.navbar-brand {
-    padding-left:0;
-    padding-right:0;
-}
+	/* Estilos para mostrar, ocultar el div */
+	.site-header {
+    	height:450px; /* Remove affer */
+    	width:800px;/* Remove affer */
+    	margin: 50px auto;
+	}
+	#MainMenu {
+    	padding:0;
+	}
+	
+	#opciones {
+    	margin:10px 5px 15px 20px;
+	}
+	.navbar-brand {
+    	padding-left:0;
+    	padding-right:0;
+	}
 
 /*---------- Search ----------*/
 .result-bucket li {
@@ -228,20 +232,21 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-       	<a id="logo" class="navbar-brand" href="#link" title="">
-            Búsqueda General
-        </a>
-        
+       	<p align="center" >   
+            <h2 align="center">Búsqueda General</h2>
+        </p>
         <nav class="site-nav" role="navigation">
             <div class="collapse navbar-collapse" id="MainMenu">
             </div>
         </nav>
+        
         <div id="search-form" class="search-form js-search-form">
             <form id="busqueda" class="form-search" role="search" action="/search.php" method="get">
                 <label for="sistemas" class="btn btn-primary">Sistemas <input type="checkbox" checked="checked" id="sistemas" name="sistemas" class="badgebox"></input><span class="badge">&check;</span></label>
                 <label for="codigos" class="btn btn-primary">Codigos <input type="checkbox" checked="checked" id="codigos" name="codigos" class="badgebox"></input><span class="badge">&check;</span></label>
                 <label for="correlaciones" class="btn btn-primary">Correlaciones <input type="checkbox" checked="checked" id="correlaciones" name="correlaciones" class="badgebox"></input><span class="badge">&check;</span></label>
-                <div class="input-group">
+                <br></br>
+                <div class="input-group" style="margin:5px 0px;">
                     <input id="name" name="name" type="text" class="form-control" placeholder="Busqueda en codigos, correlaciones y sistemas" />
                     <span class="input-group-btn">
                         <button class="btn btn-info" type="button" id="botonBuscar" name="botonBuscar">
