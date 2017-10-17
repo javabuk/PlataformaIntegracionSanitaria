@@ -34,11 +34,14 @@ public class RESTController {
 	CorrelacionRepository correlacionRepository;
 
 	@RequestMapping("/parque")
-	public List<BusquedaGeneralDTO> greeting(@RequestParam(value = "name") String name, @RequestParam(value = "sistemas") boolean checkSistemas) {
+	public List<BusquedaGeneralDTO> greeting(@RequestParam(value = "name") String name,
+			@RequestParam(value = "sistemas") String checkSistemas,
+			@RequestParam(value = "codigos") String checkCodigos,
+			@RequestParam(value = "correlaciones") String checkCorrelaciones) {
 
 		List<BusquedaGeneralDTO> resultados = new ArrayList<BusquedaGeneralDTO>();
 
-		if(checkSistemas){
+		if (checkSistemas != null && checkSistemas.equalsIgnoreCase("on")) {
 			List<Sistema> sistemas = sistemaRepository.findByIdSistema(name);
 			for (Iterator iterator = sistemas.iterator(); iterator.hasNext();) {
 				Sistema sistema = (Sistema) iterator.next();
@@ -51,71 +54,73 @@ public class RESTController {
 				resultados.add(resultado);
 			}
 		}
-		List<Codigo> codigos = codigoRepository.findByCodigo(name);
-		for (Iterator iterator = codigos.iterator(); iterator.hasNext();) {
-			Codigo codigo = (Codigo) iterator.next();
+		if (checkCodigos != null && checkCodigos.equalsIgnoreCase("on")) {
+			List<Codigo> codigos = codigoRepository.findByCodigo(name);
+			for (Iterator iterator = codigos.iterator(); iterator.hasNext();) {
+				Codigo codigo = (Codigo) iterator.next();
 
-			BusquedaGeneralDTO resultado = new BusquedaGeneralDTO();
-			resultado.setTipo("CODIGO");
-			resultado.setCodigo(codigo.getCodigo());
-			resultado.setDescripcion(codigo.getDescripcion());
-			resultado.setTipoCodigo(codigo.getTipo());
-			resultado.setSistema(codigo.getIdSistema());
-			resultados.add(resultado);
+				BusquedaGeneralDTO resultado = new BusquedaGeneralDTO();
+				resultado.setTipo("CODIGO");
+				resultado.setCodigo(codigo.getCodigo());
+				resultado.setDescripcion(codigo.getDescripcion());
+				resultado.setTipoCodigo(codigo.getTipo());
+				resultado.setSistema(codigo.getIdSistema());
+				resultados.add(resultado);
+			}
+
+			// Buscamos duplicados solo en los resultados de tipo codigo
+			List<BusquedaGeneralDTO> resultadosFiltrados = resultados.stream().filter(c -> c.getTipo().equals("CODIGO"))
+					.collect(Collectors.toList());
+
+			List<Codigo> codigoD = codigoRepository.findCodigosPorDescripcion(name);
+			for (Iterator iterator = codigoD.iterator(); iterator.hasNext();) {
+				Codigo codigo = (Codigo) iterator.next();
+
+				BusquedaGeneralDTO resultado = new BusquedaGeneralDTO();
+				resultado.setTipo("CODIGO");
+				resultado.setCodigo(codigo.getCodigo());
+				resultado.setDescripcion(codigo.getDescripcion());
+				resultado.setTipoCodigo(codigo.getTipo());
+				resultado.setSistema(codigo.getIdSistema());
+
+				boolean idExists = resultadosFiltrados.stream().anyMatch(t -> (t.getCodigo().equals(codigo.getCodigo())
+						&& t.getSistema().equals(codigo.getIdSistema()) && t.getTipoCodigo().equals(codigo.getTipo())));
+				if (!idExists) {
+					resultados.add(resultado);
+				}
+			}
 		}
+		if (checkCorrelaciones != null && checkCorrelaciones.equalsIgnoreCase("on")) {
+			List<Correlacion> correlacionesA = correlacionRepository.findByCodigoA(name);
+			for (Iterator iterator = correlacionesA.iterator(); iterator.hasNext();) {
+				Correlacion correlacion = (Correlacion) iterator.next();
+				BusquedaGeneralDTO resultado = new BusquedaGeneralDTO();
+				resultado.setTipo("CORRELACION");
+				resultado.setCodigo(correlacion.getCodigoA());
+				resultado.setTipoCodigo(correlacion.getTipoA());
+				resultado.setSistema(correlacion.getSistemaA());
+				resultado.setCodigoB(correlacion.getCodigoB());
+				resultado.setTipoCodigoB(correlacion.getTipoB());
+				resultado.setSistemaB(correlacion.getSistemaB());
 
-		// Buscamos duplicados solo en los resultados de tipo codigo
-		List<BusquedaGeneralDTO> resultadosFiltrados = resultados.stream().filter(c -> c.getTipo().equals("CODIGO"))
-				.collect(Collectors.toList());
+				resultados.add(resultado);
+			}
 
-		List<Codigo> codigoD = codigoRepository.findCodigosPorDescripcion(name);
-		for (Iterator iterator = codigoD.iterator(); iterator.hasNext();) {
-			Codigo codigo = (Codigo) iterator.next();
+			List<Correlacion> correlacionesB = correlacionRepository.findByCodigoB(name);
+			for (Iterator iterator = correlacionesB.iterator(); iterator.hasNext();) {
+				Correlacion correlacion = (Correlacion) iterator.next();
+				BusquedaGeneralDTO resultado = new BusquedaGeneralDTO();
+				resultado.setTipo("CORRELACION");
+				resultado.setCodigo(correlacion.getCodigoA());
+				resultado.setTipoCodigo(correlacion.getTipoA());
+				resultado.setSistema(correlacion.getSistemaA());
+				resultado.setCodigoB(correlacion.getCodigoB());
+				resultado.setTipoCodigoB(correlacion.getTipoB());
+				resultado.setSistemaB(correlacion.getSistemaB());
 
-			BusquedaGeneralDTO resultado = new BusquedaGeneralDTO();
-			resultado.setTipo("CODIGO");
-			resultado.setCodigo(codigo.getCodigo());
-			resultado.setDescripcion(codigo.getDescripcion());
-			resultado.setTipoCodigo(codigo.getTipo());
-			resultado.setSistema(codigo.getIdSistema());
-
-			boolean idExists = resultadosFiltrados.stream().anyMatch(t -> (t.getCodigo().equals(codigo.getCodigo())
-					&& t.getSistema().equals(codigo.getIdSistema()) && t.getTipoCodigo().equals(codigo.getTipo())));
-			if (!idExists) {
 				resultados.add(resultado);
 			}
 		}
-
-		List<Correlacion> correlacionesA = correlacionRepository.findByCodigoA(name);
-		for (Iterator iterator = correlacionesA.iterator(); iterator.hasNext();) {
-			Correlacion correlacion = (Correlacion) iterator.next();
-			BusquedaGeneralDTO resultado = new BusquedaGeneralDTO();
-			resultado.setTipo("CORRELACION");
-			resultado.setCodigo(correlacion.getCodigoA());
-			resultado.setTipoCodigo(correlacion.getTipoA());
-			resultado.setSistema(correlacion.getSistemaA());
-			resultado.setCodigoB(correlacion.getCodigoB());
-			resultado.setTipoCodigoB(correlacion.getTipoB());
-			resultado.setSistemaB(correlacion.getSistemaB());
-
-			resultados.add(resultado);
-		}
-
-		List<Correlacion> correlacionesB = correlacionRepository.findByCodigoB(name);
-		for (Iterator iterator = correlacionesB.iterator(); iterator.hasNext();) {
-			Correlacion correlacion = (Correlacion) iterator.next();
-			BusquedaGeneralDTO resultado = new BusquedaGeneralDTO();
-			resultado.setTipo("CORRELACION");
-			resultado.setCodigo(correlacion.getCodigoA());
-			resultado.setTipoCodigo(correlacion.getTipoA());
-			resultado.setSistema(correlacion.getSistemaA());
-			resultado.setCodigoB(correlacion.getCodigoB());
-			resultado.setTipoCodigoB(correlacion.getTipoB());
-			resultado.setSistemaB(correlacion.getSistemaB());
-
-			resultados.add(resultado);
-		}
-
 		return resultados;
 	}
 }

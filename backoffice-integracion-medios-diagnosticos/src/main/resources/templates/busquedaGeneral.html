@@ -11,6 +11,7 @@
   <script src="https://unpkg.com/popper.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>	
   <script >
+  /* <![CDATA[ */
   	$(document).ready(function () {
 	    //Hover Menu in Header
 	    $('ul.nav li.dropdown').hover(function () {
@@ -20,12 +21,37 @@
 	    });
 	    
 	    //Open Search    
-	    $('.form-search').click(function (event) {	    		    		    	
+	    $('#botonBuscar').click(function (event) {	    		    		    	
+	    	
+	    	var checkSistemas;
+	    	var checkCorrelaciones;
+	    	var checkCodigos;
+	    	if ($('#sistemas').is(":checked"))
+	    	{	    	
+	    		checkSistemas='on';
+	    	}else{
+	    		checkSistemas='off';
+	    	}
+	    	if ($('#codigos').is(":checked"))
+	    	{	    	
+	    		checkCodigos='on';
+	    	}else{
+	    		checkCodigos='off';
+	    	}
+	    	if ($('#correlaciones').is(":checked"))
+	    	{	    	
+	    		checkCorrelaciones='on';
+	    	}else{
+	    		checkCorrelaciones='off';
+	    	}
+	    	
+	    	var datosJSON = "name=" + $('#name').val()+ "&sistemas=" + checkSistemas+ "&codigos=" + checkCodigos+ "&correlaciones=" + checkCorrelaciones;
+	    	
 	    	
 	    	$.ajax({
 	              url: 'parque/',
 	              type: 'POST',
-	              data: $('#busqueda').serialize(),
+	              data: datosJSON,
 	              success: function(data){
 	            	  
 	            	  $('#listaResultados').empty();
@@ -72,7 +98,7 @@
 	    });*/
 	});
   	      	  	
-  		
+  	/* ]]> */
   </script>
   <style type="text/css">
 		/* Estilos para mostrar, ocultar el div */
@@ -213,10 +239,12 @@
         <div id="search-form" class="search-form js-search-form">
             <form id="busqueda" class="form-search" role="search" action="/search.php" method="get">
                 <label for="sistemas" class="btn btn-primary">Sistemas <input type="checkbox" checked="checked" id="sistemas" name="sistemas" class="badgebox"></input><span class="badge">&check;</span></label>
+                <label for="codigos" class="btn btn-primary">Codigos <input type="checkbox" checked="checked" id="codigos" name="codigos" class="badgebox"></input><span class="badge">&check;</span></label>
+                <label for="correlaciones" class="btn btn-primary">Correlaciones <input type="checkbox" checked="checked" id="correlaciones" name="correlaciones" class="badgebox"></input><span class="badge">&check;</span></label>
                 <div class="input-group">
                     <input id="name" name="name" type="text" class="form-control" placeholder="Busqueda en codigos, correlaciones y sistemas" />
                     <span class="input-group-btn">
-                        <button class="btn btn-info" type="button">
+                        <button class="btn btn-info" type="button" id="botonBuscar" name="botonBuscar">
                             <i class="fa fa-search"></i>
                         </button>
                     </span>
