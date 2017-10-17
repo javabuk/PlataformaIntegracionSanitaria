@@ -160,6 +160,35 @@
 	.glyphicon {
     	font-size: 40px;
 	}
+	/* Hiding the checkbox, but allowing it to be focused */
+	.badgebox
+	{
+    	opacity: 0;
+	}
+
+	.badgebox + .badge
+	{
+    	/* Move the check mark away when unchecked */
+    	text-indent: -999999px;
+    	/* Makes the badge's width stay the same checked and unchecked */
+		width: 27px;
+	}
+
+	.badgebox:focus + .badge
+	{
+    	/* Set something to make the badge looks focused */
+    	/* This really depends on the application, in my case it was: */
+    
+    	/* Adding a light border */
+    	box-shadow: inset 0px 0px 5px;
+    	/* Taking the difference out of the padding */
+	}
+
+	.badgebox:checked + .badge
+	{
+    	/* Move the check mark back when checked */
+		text-indent: 0;
+	}
 	</style>
 </head>
 <body>
@@ -173,15 +202,17 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a id="logo" class="navbar-brand" href="#link" title="">
+       	<a id="logo" class="navbar-brand" href="#link" title="">
             Búsqueda General
         </a>
+        
         <nav class="site-nav" role="navigation">
             <div class="collapse navbar-collapse" id="MainMenu">
             </div>
         </nav>
         <div id="search-form" class="search-form js-search-form">
             <form id="busqueda" class="form-search" role="search" action="/search.php" method="get">
+                <label for="sistemas" class="btn btn-primary">Sistemas <input type="checkbox" checked="checked" id="sistemas" name="sistemas" class="badgebox"></input><span class="badge">&check;</span></label>
                 <div class="input-group">
                     <input id="name" name="name" type="text" class="form-control" placeholder="Busqueda en codigos, correlaciones y sistemas" />
                     <span class="input-group-btn">

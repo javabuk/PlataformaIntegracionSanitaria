@@ -34,22 +34,23 @@ public class RESTController {
 	CorrelacionRepository correlacionRepository;
 
 	@RequestMapping("/parque")
-	public List<BusquedaGeneralDTO> greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
+	public List<BusquedaGeneralDTO> greeting(@RequestParam(value = "name") String name, @RequestParam(value = "sistemas") boolean checkSistemas) {
 
 		List<BusquedaGeneralDTO> resultados = new ArrayList<BusquedaGeneralDTO>();
 
-		List<Sistema> sistemas = sistemaRepository.findByIdSistema(name);
-		for (Iterator iterator = sistemas.iterator(); iterator.hasNext();) {
-			Sistema sistema = (Sistema) iterator.next();
+		if(checkSistemas){
+			List<Sistema> sistemas = sistemaRepository.findByIdSistema(name);
+			for (Iterator iterator = sistemas.iterator(); iterator.hasNext();) {
+				Sistema sistema = (Sistema) iterator.next();
 
-			BusquedaGeneralDTO resultado = new BusquedaGeneralDTO();
-			resultado.setTipo("SISTEMA");
-			resultado.setCodigo(sistema.getIdSistema());
-			resultado.setDescripcion(sistema.getDescripcion());
+				BusquedaGeneralDTO resultado = new BusquedaGeneralDTO();
+				resultado.setTipo("SISTEMA");
+				resultado.setCodigo(sistema.getIdSistema());
+				resultado.setDescripcion(sistema.getDescripcion());
 
-			resultados.add(resultado);
+				resultados.add(resultado);
+			}
 		}
-
 		List<Codigo> codigos = codigoRepository.findByCodigo(name);
 		for (Iterator iterator = codigos.iterator(); iterator.hasNext();) {
 			Codigo codigo = (Codigo) iterator.next();
