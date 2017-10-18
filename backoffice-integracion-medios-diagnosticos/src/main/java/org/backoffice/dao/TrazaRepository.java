@@ -15,16 +15,24 @@ public interface TrazaRepository extends CrudRepository<Traza, Integer> {
 
 	@Query("SELECT t FROM org.backoffice.model.Traza t WHERE t.fecha BETWEEN :from AND :to")
 	List<Traza> findTrazasEntreFechas(@Param("from") Timestamp startDay, @Param("to") Timestamp endDay);
-	
+
 	@Query("SELECT t FROM org.backoffice.model.Traza t WHERE t.sistMensaje = :sistema ")
 	List<Traza> findTrazasPorSistema(@Param("sistema") String sistema);
-	
+
 	@Query("SELECT t FROM org.backoffice.model.Traza t WHERE t.sistMensaje = :sistema AND t.fecha BETWEEN :from AND :to")
-	List<Traza> findTrazasPorSistemaEntreFechas(@Param("sistema") String sistema, @Param("from") Timestamp startDay, @Param("to") Timestamp endDay);
-	
+	List<Traza> findTrazasPorSistemaEntreFechas(@Param("sistema") String sistema, @Param("from") Timestamp startDay,
+			@Param("to") Timestamp endDay);
+
 	@Query("SELECT count(t.id), FUNCTION ('TO_CHAR',t.fecha,'YYYY-MM-DD') FROM org.backoffice.model.Traza t group by FUNCTION ('TO_CHAR',t.fecha,'YYYY-MM-DD')")
-	List<Object []> findTrazasPorDia();
-	
+	List<Object[]> findTrazasPorDia();
+
 	@Query("SELECT count(t.id), FUNCTION ('TO_CHAR',t.fecha,'YYYY-MM-DD'), t.sistMensaje FROM org.backoffice.model.Traza t group by FUNCTION ('TO_CHAR',t.fecha,'YYYY-MM-DD'), t.sistMensaje")
-	List<Object []> findTrazasPorDiaPorSistema();
+	List<Object[]> findTrazasPorDiaPorSistema();
+
+	@Query("SELECT t FROM org.backoffice.model.Traza t WHERE t.sistMensaje = :sistema and UPPER(t.idMensaje) LIKE CONCAT('%',UPPER(:idMensaje),'%')")
+	List<Traza> findTrazasPorSistemaeIdMensaje(@Param("sistema") String sistema, @Param("idMensaje") String idMensaje);
+
+	@Query("SELECT t FROM org.backoffice.model.Traza t WHERE  UPPER(t.mensaje) LIKE CONCAT('%',UPPER(:descripcion),'%')")
+	List<Traza> findTrazasPorDescripcionLike(@Param("descripcion") String descripcion);
+
 }

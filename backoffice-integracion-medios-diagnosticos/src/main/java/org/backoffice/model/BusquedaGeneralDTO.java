@@ -15,6 +15,11 @@ public class BusquedaGeneralDTO implements Serializable {
 	private String tipoCodigoB;
 	private String sistemaB;
 
+	private String idMensaje;
+	private String mensaje;
+	private String fechaTraza;
+	private String errorTraza;
+
 	public BusquedaGeneralDTO() {
 
 	}
@@ -81,6 +86,38 @@ public class BusquedaGeneralDTO implements Serializable {
 
 	public void setSistemaB(String sistemaB) {
 		this.sistemaB = sistemaB;
+	}
+
+	public String getIdMensaje() {
+		return idMensaje;
+	}
+
+	public void setIdMensaje(String idMensaje) {
+		this.idMensaje = idMensaje;
+	}
+
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+
+	public String getFechaTraza() {
+		return fechaTraza;
+	}
+
+	public void setFechaTraza(String fechaTraza) {
+		this.fechaTraza = fechaTraza;
+	}
+
+	public String getErrorTraza() {
+		return errorTraza;
+	}
+
+	public void setErrorTraza(String errorTraza) {
+		this.errorTraza = errorTraza;
 	}
 
 }

@@ -26,6 +26,8 @@
 	    	var checkSistemas;
 	    	var checkCorrelaciones;
 	    	var checkCodigos;
+	    	var checkTrazas;
+	    	
 	    	if ($('#sistemas').is(":checked"))
 	    	{	    	
 	    		checkSistemas='on';
@@ -44,8 +46,14 @@
 	    	}else{
 	    		checkCorrelaciones='off';
 	    	}
+	    	if ($('#trazas').is(":checked"))
+	    	{	    	
+	    		checkTrazas='on';
+	    	}else{
+	    		checkTrazas='off';
+	    	}
 	    	
-	    	var datosJSON = "name=" + $('#name').val()+ "&sistemas=" + checkSistemas+ "&codigos=" + checkCodigos+ "&correlaciones=" + checkCorrelaciones;
+	    	var datosJSON = "name=" + $('#name').val()+ "&sistemas=" + checkSistemas+ "&codigos=" + checkCodigos+ "&correlaciones=" + checkCorrelaciones+ "&trazas=" + checkTrazas;
 	    	
 	    	
 	    	$.ajax({
@@ -70,7 +78,12 @@
 	            	       }else if(item.tipo=='CORRELACION'){
 	            	    	   imagen = '<i class="glyphicon glyphicon-random"></i>';
 	            	    	   texto= '<div class="media-left"><h5>  '+item.codigo +' - ' + item.sistema + ' - '+item.tipoCodigo +' --------  '+item.codigoB +' - ' + item.sistemaB + ' - '+item.tipoCodigoB +'</h5></div>';
+	            	       }else if(item.tipo=='TRAZA'){
+	            	    	   imagen = '<i class="glyphicon glyphicon-file"></i>';
+	            	    	   texto= '<h4 class="media-heading">'+item.idMensaje +' - ' + item.sistema+'</h4><p>'+item.mensaje +' - ' + item.fechaTraza+'</p><p th:text="${#dates.formatISO(' + item.fechaTraza+')}"></p>';
 	            	       } 
+	            	       
+	            	       
 	            		   
 	            		   items.push('<li><div class="media"> <div class="media-left"> '+imagen+' </div> <div class="media-body">'+texto+'</div> </div></li>');
 
@@ -245,6 +258,7 @@
                 <label for="sistemas" class="btn btn-primary">Sistemas <input type="checkbox" checked="checked" id="sistemas" name="sistemas" class="badgebox"></input><span class="badge">&check;</span></label>
                 <label for="codigos" class="btn btn-warning">Codigos <input type="checkbox" checked="checked" id="codigos" name="codigos" class="badgebox"></input><span class="badge">&check;</span></label>
                 <label for="correlaciones" class="btn btn-danger">Correlaciones <input type="checkbox" checked="checked" id="correlaciones" name="correlaciones" class="badgebox"></input><span class="badge">&check;</span></label>
+                <label for="trazas" class="btn btn-primary">Trazas <input type="checkbox" id="trazas" name="trazas" class="badgebox"></input><span class="badge">&check;</span></label>
                 <br></br>
                 <div class="input-group" style="margin:5px 0px;">
                     <input id="name" name="name" type="text" class="form-control" placeholder="Busqueda en codigos, correlaciones y sistemas" />
