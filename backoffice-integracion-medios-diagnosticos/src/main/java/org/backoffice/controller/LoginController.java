@@ -53,6 +53,7 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.STShd;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STTblWidth;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STVerticalJc;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -67,6 +68,10 @@ public class LoginController {
 
 	private GeneracionHL7Service hl7Service;
 	private TrazasService trazasService;
+
+	/* Recuperamos informacion del fichero de propiedades */
+	@Value("${spring.profiles.active}")
+	private String perfil;
 
 	@Autowired
 	public void setCService(GeneracionHL7Service hl7Service) {

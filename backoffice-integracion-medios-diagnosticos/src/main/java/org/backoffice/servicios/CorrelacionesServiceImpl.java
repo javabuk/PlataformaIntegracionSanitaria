@@ -4,10 +4,18 @@ import java.util.List;
 
 import org.backoffice.fuentedatos.CodigoDTO;
 import org.backoffice.fuentedatos.CorrelacionDTO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CorrelacionesServiceImpl implements CorrelacionesService {
+
+	/* Recuperamos informacion del fichero de propiedades */
+	@Value("${prop.sql.insertCodigos}")
+	private String insertCodigosSQL;
+
+	@Value("${prop.sql.insertCorrelaciones}")
+	private String insertCorrelacionesSQL;
 
 	@Override
 	public String generarSentenciasSQLCodigos(List<CodigoDTO> codigos) {
@@ -17,10 +25,8 @@ public class CorrelacionesServiceImpl implements CorrelacionesService {
 		if (codigos != null) {
 
 			for (int x = 0; x < codigos.size(); x++) {
-				sentenciaSQL = String.format(
-						"INSERT INTO PSI_CODIGOS (CODIGO, DESCRIPCION, SISTEMA, TIPO) VALUES ( '%s', '%s', '%s', '%s' );%n",
-						codigos.get(x).getCodigo(), codigos.get(x).getDescripcion(), codigos.get(x).getSistema(),
-						codigos.get(x).getTipo());
+				sentenciaSQL = String.format(insertCodigosSQL, codigos.get(x).getCodigo(),
+						codigos.get(x).getDescripcion(), codigos.get(x).getSistema(), codigos.get(x).getTipo());
 
 				sentencia.append(sentenciaSQL);
 			}
@@ -36,11 +42,10 @@ public class CorrelacionesServiceImpl implements CorrelacionesService {
 		if (correlaciones != null) {
 
 			for (int x = 0; x < correlaciones.size(); x++) {
-				sentenciaSQL = String.format(
-						"INSERT INTO PSI_CORRELACIONES ( CODIGOA, SISTEMAA, TIPOA, CODIGOB, SISTEMAB, TIPOB) VALUES ( '%s', '%s', '%s', '%s', '%s', '%s' );%n",
-						correlaciones.get(x).getCodigoA(), correlaciones.get(x).getSistemaA(),
-						correlaciones.get(x).getTipoA(), correlaciones.get(x).getCodigoB(),
-						correlaciones.get(x).getSistemaB(), correlaciones.get(x).getTipoB());
+				sentenciaSQL = String.format(insertCorrelacionesSQL, correlaciones.get(x).getCodigoA(),
+						correlaciones.get(x).getSistemaA(), correlaciones.get(x).getTipoA(),
+						correlaciones.get(x).getCodigoB(), correlaciones.get(x).getSistemaB(),
+						correlaciones.get(x).getTipoB());
 
 				sentencia.append(sentenciaSQL);
 			}
