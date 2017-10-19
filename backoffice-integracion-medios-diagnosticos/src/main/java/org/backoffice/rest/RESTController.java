@@ -61,7 +61,8 @@ public class RESTController {
 				resultado.setFechaTraza(traza.getFecha().toGMTString());
 				resultado.setMensaje(traza.getMensaje());
 				resultado.setErrorTraza(traza.getError());
-
+				resultado.setSistemaB(traza.getModulo());
+				resultado.setTipoCodigo(traza.getId().toString());
 				resultados.add(resultado);
 
 			}

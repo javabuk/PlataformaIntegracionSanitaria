@@ -69,6 +69,8 @@
 	            	   $.each(data, function(i, item) {
 							var imagen = '';
 							var texto= '';
+							var modulo = '';
+							
 	            	       if(item.tipo=='CODIGO'){
 	            	    	   imagen = '<i class="glyphicon glyphicon-th-list"></i>';
 	            	    	   texto= '<h4 class="media-heading">'+item.codigo +' - ' + item.descripcion+'</h4><p>'+item.sistema +' - ' + item.tipoCodigo+'</p>';
@@ -79,8 +81,20 @@
 	            	    	   imagen = '<i class="glyphicon glyphicon-random"></i>';
 	            	    	   texto= '<div class="media-left"><h5>  '+item.codigo +' - ' + item.sistema + ' - '+item.tipoCodigo +' --------  '+item.codigoB +' - ' + item.sistemaB + ' - '+item.tipoCodigoB +'</h5></div>';
 	            	       }else if(item.tipo=='TRAZA'){
+	            	    	   if(item.sistemaB != null){
+	            	    		   if(item.sistemaB == "WAS"){
+	            	    			   modulo = '<span class="label label-success">'+item.sistemaB+'</span>';
+	            	    		   }else if(item.sistemaB == "OSB"){
+	            	    			   modulo = '<span class="label label-info">'+item.sistemaB+'</span>';
+	            	    		   }
+	            	    	   }
+	            	    	   var textoError = '';
+	            	    	   if(item.errorTraza != null){
+	            	    		   textoError = '<button class="btn btn-danger btn-sm" data-toggle="collapse" data-target="#' + item.sistema + '-'+item.idMensaje +'">Error</button><div id="' + item.sistema + '-'+item.idMensaje +'" class="collapse">'+item.errorTraza+'</div>';
+	            	    	   }
+	            	    	   
 	            	    	   imagen = '<i class="glyphicon glyphicon-file"></i>';
-	            	    	   texto= '<h4 class="media-heading">'+item.idMensaje +' - ' + item.sistema+'</h4><p>'+item.mensaje +' - ' + item.fechaTraza+'</p><p th:text="${#dates.formatISO(' + item.fechaTraza+')}"></p>';
+	            	    	   texto= '<h4 class="media-heading">'+modulo +' - ' + item.idMensaje +' - ' + item.sistema +' '+item.fechaTraza+'</h4><button class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#' + item.tipoCodigo +'">Mensaje</button><div id="' + item.tipoCodigo +'" class="collapse">'+item.mensaje+'</div>' + textoError;
 	            	       } 
 	            	       
 	            	       

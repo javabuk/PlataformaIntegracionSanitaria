@@ -32,7 +32,7 @@ public interface TrazaRepository extends CrudRepository<Traza, Integer> {
 	@Query("SELECT t FROM org.backoffice.model.Traza t WHERE t.sistMensaje = :sistema and UPPER(t.idMensaje) LIKE CONCAT('%',UPPER(:idMensaje),'%')")
 	List<Traza> findTrazasPorSistemaeIdMensaje(@Param("sistema") String sistema, @Param("idMensaje") String idMensaje);
 
-	@Query("SELECT t FROM org.backoffice.model.Traza t WHERE  UPPER(t.mensaje) LIKE CONCAT('%',UPPER(:descripcion),'%')")
+	@Query("SELECT t FROM org.backoffice.model.Traza t WHERE  UPPER(t.mensaje) LIKE CONCAT('%',UPPER(:descripcion),'%') ORDER BY t.fecha DESC ")
 	List<Traza> findTrazasPorDescripcionLike(@Param("descripcion") String descripcion);
 
 }
