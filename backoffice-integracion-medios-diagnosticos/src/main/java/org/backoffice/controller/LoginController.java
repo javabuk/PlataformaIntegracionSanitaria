@@ -82,8 +82,6 @@ public class LoginController {
 	public void setTrazasService(TrazasService trazasService) {
 		this.trazasService = trazasService;
 	}
-	// @Autowired
-	// ConfiguracionRepository configuracionRepository;
 
 	@Autowired
 	CodigoRepository codigoRepository;
