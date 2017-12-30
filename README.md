@@ -1,0 +1,1 @@
+Para almecenar proyectos relacionados con la Plataforma de Integración Sanitaria.

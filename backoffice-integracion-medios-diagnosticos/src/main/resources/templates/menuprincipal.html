@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title th:text="${@environment.getProperty('spring.profiles.active')}">BackOffice Integracion Medios Diagnositcos </title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script >
+  function go() {
+	  document.getElementById("principal").src = "codigos";
+	}
+  
+  function goFormularioCodigo() {
+	  document.getElementById("principal").src = "formulariocodigo";
+	}
+  
+  function goCargaAutomatica() {
+	  document.getElementById("principal").src = "uploadFile";
+	}
+  
+  function goInforme() {
+	  document.getElementById("principal").src = "generarInforme";
+	}
+  
+  function goMensajeOMLWizard() {
+	  document.getElementById("principal").src = "mensajeOMLWizard";
+	}
+  
+  function goTablaTrazas() {
+	  document.getElementById("principal").src = "tablaTrazas";
+	}
+  
+  function goSistemas() {
+	  document.getElementById("principal").src = "sistemas";
+	}
+  
+  function goFormularioSistemas() {
+	  document.getElementById("principal").src = "formularioSistemas";
+	}
+  
+  function goCorrelaciones() {
+	  document.getElementById("principal").src = "correlaciones";
+	}
+  
+  function goFormularioCorrelaciones() {
+	  document.getElementById("principal").src = "formularioCorrelacion";
+	}
+  
+  function goResumen() {
+	  document.getElementById("principal").src = "resumen";
+	}
+  
+  	function goPruebas() {
+	  document.getElementById("principal").src = "pruebas";
+	}
+  	
+  	function goBusquedaGeneral() {
+  	  document.getElementById("principal").src = "busquedaGeneral";
+  	}
+  
+  </script>
+  
+  	<style type="text/css">
+		/* Estilo para el ancho y alto del iframe, también lo aplicamos en el container */
+		iframe {
+    		position: absolute;
+    		width:100%;
+    		height:90%;    		
+    		left:0;  
+    		border: 0px;  		
+		}
+		
+
+	</style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">BackOffice - Integración Medios Diagnósticos</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#" onclick="goResumen()" >Estado</a></li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Sistemas<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#" onclick="goSistemas()">Listado sistemas</a></li>
+          <li><a href="#" onclick="goFormularioSistemas()">Nuevo Sistema</a></li>
+        </ul>
+      </li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Correlaciones <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#" onclick="go()">Codigos</a></li>
+          <li><a href="#" onclick="goFormularioCodigo()">Nuevo codigo</a></li>
+          <li><a href="#" onclick="goCorrelaciones()">Correlaciones</a></li>
+          <li><a href="#" onclick="goFormularioCorrelaciones()">Nueva correlacion</a></li>
+          <li><a href="#" onclick="goCargaAutomatica()">Carga automatica</a></li>
+          <li><a href="#" onclick="goBusquedaGeneral()">BusquedaGeneral</a></li>          
+        </ul>
+      </li>
+      <li class="active"><a href="#" onclick="goTablaTrazas()">Trazas</a></li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Utilidades<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#" onclick="goInforme()">Generar informe a partir fichero hl7</a></li>
+          <li><a href="#" onclick="goMensajeOMLWizard()">Generar mensajes OML - Gestor de Peticiones</a></li>
+        </ul>
+      </li>      
+    </ul>
+    <!-- <li class="active"><a href="#" onclick="goPruebas()">Pruebas</a></li> -->
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+  </div>
+</nav>
+  
+<div class="container iframe"  >
+ <iframe id="principal" style="position:absolute;"> 
+	<h3>Right Aligned Navbar</h3>
+  	<p>The .navbar-right class is used to right-align navigation bar buttons.</p>
+</iframe>  
+</div>
+
+</body>
+</html>

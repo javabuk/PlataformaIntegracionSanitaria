@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"></link>   
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></link>
+	<script type="text/javascript"  src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	
+	
+	
+  <script >
+  $(document).ready(function(){
+	    $('#myTable').dataTable(
+	    		{
+	    			  "createdRow": function( row, data, dataIndex ) {	    				 
+	    			    if ( data[0] == "No valido" ) {
+	    			      //$(row).addClass( 'odd' );
+	    			      $(row).css("background-color","#EC7063");
+	    			    }
+	    			  }
+	    			} 		
+	    );
+	    $('#tablaDuplicados').dataTable();
+	    $('#tablaErroneos').dataTable();	
+	    $('#tablaCodigosB').dataTable();
+	    $('#tablaDuplicadosB').dataTable();
+	    $('#tablaErroneosB').dataTable();	
+	    $('#tablaCorrelaciones').dataTable();
+	    
+	 	// Funcion para la carga de las insert en el campo de texto
+	    $('#botonCargar').click(function() {	  		
+	   		$.ajax({
+	    			type: "POST",
+	    			url: "/recuperarSQL",
+	    			data: { 	    				 
+	    				sistema: $('#sistemaA').val(),
+	    				tipo: $('#tipoCodigo').val()
+	    			}
+	  		}).done(function( resp ) {	    			
+	    			$('#sentenciasCodigosA').append(resp);
+	  		});    
+	  	});
+	 	
+	 // Funcion para la carga de las insert en el campo de texto
+	    $('#botonCargarB').click(function() {	  		
+	   		$.ajax({
+	    			type: "POST",
+	    			url: "/recuperarSQLB",
+	    			data: { 	    				 
+	    				sistema: $('#sistemaB').val(),
+	    				tipo: $('#tipoCodigo').val(),	    				
+	    			}
+	  		}).done(function( resp ) {	    			
+	    			$('#sentenciasCodigosB').append(resp);
+	  		});    
+	  	});
+	 
+	 // Funcion para la carga de las insert en el campo de texto
+	    $('#botonCargarCorrelaciones').click(function() {	  		
+	   		$.ajax({
+	    			type: "POST",
+	    			url: "/recuperarSQLCorrelacion",
+	    			data: { 	    				 
+	    				sistemaA: $('#sistemaA').val(),
+	    				sistemaB: $('#sistemaB').val(),
+	    				tipo: $('#tipoCodigo').val(),	    				
+	    			}
+	  		}).done(function( resp ) {	    			
+	    			$('#sentenciasCorrelaciones').append(resp);
+	  		});    
+	  	});
+	 
+	});
+  
+  
+  
+  
+  /*
+  $('#example').dataTable( {
+  "createdRow": function( row, data, dataIndex ) {
+    if ( data[4] == "A" ) {
+      $(row).addClass( 'important' );
+    }
+  }
+} );
+  */
+  </script>
+</head>
+<body>
+
+<div class="container">
+
+	<!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Codigos A</a></li>
+    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Codigos B</a></li>
+    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Correlaciones</a></li>
+    <li role="presentation"><a href="#info" aria-controls="messages" role="tab" data-toggle="tab">Informacion</a></li>
+    <li role="presentation"><a href="#ficheros" aria-controls="messages" role="tab" data-toggle="tab">Ficheros SQL</a></li>
+  </ul>
+
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="home">
+  <!-- //////////////////////// -->
+  			<br></br>
+  			<!-- Button trigger modal -->
+            <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-warning-sign"></i>
+              Codigos A Duplicados
+            </button>
+            <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modalError"><i class="glyphicon glyphicon-exclamation-sign"></i>
+              Codigos A Erroneos
+            </button>
+            <br></br>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Codigos duplicados</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="table-responsive">
+						<table id="tablaDuplicados" class="display table" width="100%" >		
+        					<thead>  
+          						<tr>  
+            						<th>Codigo</th>  
+            						<th>Descripcion</th>  
+          						</tr>  
+        					</thead>  
+        					<tbody>  
+          						<tr th:each="codigoDuplicado : ${codigosDuplicados}">
+                					<td th:text="${codigoDuplicado.codigo}">codigo</td>
+                					<td th:text="${codigoDuplicado.descripcion}">descripcion</td>
+            					</tr>  
+        					</tbody>  
+						</table>
+						</div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Codigos erroneos</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="table-responsive">
+						<table id="tablaErroneos" class="display table" width="100%" >		
+        					<thead>  
+          						<tr>  
+            						<th>Codigo</th>  
+            						<th>Descripcion</th>  
+          						</tr>  
+        					</thead>  
+        					<tbody>  
+          						<tr th:each="codigoErroneo : ${codigosErroneos}">
+                					<td th:text="${codigoErroneo.codigo}">codigo</td>
+                					<td th:text="${codigoErroneo.descripcion}">descripcion</td>
+            					</tr>  
+        					</tbody>  
+						</table>
+						</div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+  <!-- //////////////////////// -->
+  <br></br>
+  <div class="table-responsive">
+	<table id="myTable" class="display table" width="100%" >		
+        <thead>  
+          <tr>  
+            <th>Codigo</th>  
+            <th>Descripcion</th>  
+            <th>Sistema</th>  
+            <th>Tipo</th>  
+          </tr>  
+        </thead>  
+        <tbody>  
+          <tr th:each="codigo : ${codigos}">
+                <td th:text="${codigo.codigo}">codigo</td>
+                <td th:text="${codigo.descripcion}">descripcion</td>
+                <td th:text="${codigo.sistema}">sistema</td>                
+                <td th:text="${codigo.tipo}">tipo</td>
+            </tr>  
+        </tbody>  
+	</table>
+	</div>
+    
+    </div>
+    <div role="tabpanel" class="tab-pane" id="profile">
+    	<!-- //////////////////////// -->
+  		<br></br>
+  		<!-- Button trigger modal -->
+        <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modalDuplicadosB"><i class="glyphicon glyphicon-warning-sign"></i>
+              Codigos B Duplicados
+            </button>
+            <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modalErrorB"><i class="glyphicon glyphicon-exclamation-sign"></i>
+              Codigos B Erroneos
+            </button>
+            <br></br>
+            <!-- Modal -->
+            <div class="modal fade" id="modalDuplicadosB" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Codigos duplicados</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="table-responsive">
+						<table id="tablaDuplicadosB" class="display table" width="100%" >		
+        					<thead>  
+          						<tr>  
+            						<th>Codigo</th>  
+            						<th>Descripcion</th>  
+          						</tr>  
+        					</thead>  
+        					<tbody>  
+          						<tr th:each="codigoBDuplicado : ${codigosBDuplicados}">
+                					<td th:text="${codigoBDuplicado.codigo}">codigo</td>
+                					<td th:text="${codigoBDuplicado.descripcion}">descripcion</td>
+            					</tr>  
+        					</tbody>  
+						</table>
+						</div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="modal fade" id="modalErrorB" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Codigos erroneos</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="table-responsive">
+						<table id="tablaErroneosB" class="display table" width="100%" >		
+        					<thead>  
+          						<tr>  
+            						<th>Codigo</th>  
+            						<th>Descripcion</th>  
+          						</tr>  
+        					</thead>  
+        					<tbody>  
+          						<tr th:each="codigoBErroneo : ${codigosBErroneos}">
+                					<td th:text="${codigoBErroneo.codigo}">codigo</td>
+                					<td th:text="${codigoBErroneo.descripcion}">descripcion</td>
+            					</tr>  
+        					</tbody>  
+						</table>
+						</div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+  <!-- //////////////////////// -->
+  <br></br>
+    	<div class="table-responsive">
+			<table id="tablaCodigosB" class="display table" width="100%" >		
+        		<thead>  
+          			<tr>  
+            			<th>Codigo</th>  
+            			<th>Descripcion</th>              		
+          			</tr>  
+        		</thead>  
+        		<tbody>  
+          			<tr th:each="codigoB : ${codigosBSinDuplicados}">
+                		<td th:text="${codigoB.codigo}">codigo</td>
+                		<td th:text="${codigoB.descripcion}">descripcion</td>                
+            		</tr>  
+        		</tbody>  
+			</table>
+    	</div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="messages">
+    	<br></br>
+    	<div class="table-responsive">
+			<table id="tablaCorrelaciones" class="display table" width="100%" >		
+        		<thead>  
+          			<tr>  
+            			<th>CodigoA</th>  
+            			<th>SistemaA</th>              		
+            			<th>TipoA</th>
+            			<th>CodigoB</th>  
+            			<th>SistemaB</th>              		
+            			<th>TipoB</th>
+          			</tr>  
+        		</thead>  
+        		<tbody>  
+          			<tr th:each="correlacion : ${correlaciones}">
+                		<td th:text="${correlacion.codigoA}">codigo</td>
+                		<td th:text="${correlacion.sistemaA}">descripcion</td>                
+                		<td th:text="${correlacion.tipoA}">descripcion</td>
+                		<td th:text="${correlacion.codigoB}">codigo</td>
+                		<td th:text="${correlacion.sistemaB}">descripcion</td>                
+                		<td th:text="${correlacion.tipoB}">descripcion</td>
+            		</tr>  
+        		</tbody>  
+			</table>
+    	</div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="info">
+    	 <!-- <button type="button" class="btn btn-labeled btn-success" th:value="${totalCodigos}">
+                <span class="btn-label"><i class="glyphicon glyphicon-ok"></i></span>Total Codigos A</button> -->
+    	<div class="row">
+		<div class="span3">
+            <div class="well">
+        		<h2 class="muted">Silver</h2>
+        		<p><span class="label">POPULAR</span></p>
+        		<ul>
+        			<li>10 users</li>
+        			<li>Unlimited access</li>
+        			<li>3TB of space</li>
+        			<li>E-mail support</li>
+        		</ul>          
+        		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta.</p>
+        		<hr></hr>
+        		<h3>$15.99 / month</h3>
+        		<hr></hr>
+        		<p><a class="btn btn-large" href="#"><i class="icon-ok"></i> Select plan</a></p>
+        	</div>
+        </div>
+        <div class="span3">
+        	<div class="well">
+        		<h2 class="text-warning">Bronze</h2>
+        		<p><span class="label label-success">POPULAR</span></p>
+        		<ul>
+        			<li>20 users</li>
+        			<li>Unlimited access with no limits</li>
+        			<li>5TB of space</li>
+        		</ul>          
+        		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta.</p>
+        		<hr></hr>
+        		<h3>$10.99 / month</h3>
+        		<hr></hr>
+        		<p><a class="btn btn-success btn-large" href="#"><i class="icon-ok"></i> Select plan</a></p>
+        	</div>
+        </div>
+        <div class="span3">
+        	<div class="well">
+        		<h2 class="text-info">Economy</h2>
+        		<p><span class="label label-info">BUDGET</span></p>
+        		<ul>
+        			<li>10 users</li>
+        			<li>5TB of space</li>
+        		</ul>          
+        		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta.</p>
+        		<hr></hr>
+        		<h3>$8.99 / month</h3>
+        		<hr></hr>
+              <p><a class="btn btn-large" href="#"><i class="icon-ok"></i> Select plan</a></p>
+        	</div>
+        </div>
+                    </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="ficheros">
+    	<span class="label label-default">Codigo A</span>
+    	<select id="sistemaA" class="selectpicker">
+  			<option>INFO33</option>
+  			<option>INDIGOHIS</option>  			
+		</select>
+		<span class="label label-default">Codigo B</span>
+    	<select id="sistemaB" class="selectpicker">
+  			<option>ESC_VIZ</option>
+  			<option>MEDIKOSTA</option>  			
+		</select>
+		<span class="label label-default">Tipo codigo</span>
+		<select id="tipoCodigo" class="selectpicker">
+  			<option>LAB</option>
+  			<option>RAD</option>  			
+		</select>
+		<br></br>
+    	<button type="button" class="btn btn-warning btn-xs" id="botonCargar">Cargar A</button>
+		<textarea rows="10" cols="100" id="sentenciasCodigosA" th:text="${CodigosASQL}"></textarea>
+		<hr></hr>		  
+		<button type="button" class="btn btn-warning btn-xs" id="botonCargarB">Cargar B</button>
+		<textarea rows="10" cols="100" id="sentenciasCodigosB" th:text="${CodigosBSQL}"></textarea>
+		<hr></hr>	
+		<button type="button" class="btn btn-warning btn-xs" id="botonCargarCorrelaciones">Cargar Correlaciones</button>
+		<textarea rows="10" cols="100" id="sentenciasCorrelaciones" th:text="${CorrelacionesSQL}"></textarea>
+		
+	</div>  
+  	</div>
+</div>
+
+</body>
+</html>

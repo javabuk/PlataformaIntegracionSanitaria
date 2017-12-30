@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+ 
+    <title>Mensajes OML</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen" />
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+    <link href="../static/css/guru.css"
+          th:href="@{css/guru.css}" rel="stylesheet" media="screen"/>
+    <link href="../static/css/estilos.css"
+          th:href="@{css/estilos.css}" rel="stylesheet" media="screen"/>
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron">
+		<h2>Pagina para la generación de mensajes HL7 del tipo OML</h2>
+	</div>
+
+	<form class="form-horizontal" th:object="${mensajeHL7}" th:action="@{/ResultadoMensajesHL7}" method="post">
+		
+		<div class="row">
+			<div id="" style="background-color: #cfc; border-radius:8px; padding: 10px 10px 10px 10px;">
+				<div class="form-group jorge">
+    				<label for="sistemaOrigen" class="col-sm-3 control-label">Sistema Origen:</label>
+    				<div class="col-sm-4">
+    					<input type="text" class="form-control" id="sistemaOrigen" placeholder="sistemaOrigen" th:field="*{sistemaOrigen}"/>
+    				</div>
+    			</div>
+    			<div class="form-group">
+    				<label for="sistemaDestino" class="col-sm-3 control-label">Sistema Destino:</label>
+    				<div class="col-sm-4">
+    					<input type="text" class="form-control" id="sistemaDestino" placeholder="sistemaDestino" th:field="*{sistemaDestino}"/>
+    				</div>
+  				</div>	
+    		</div>
+    	</div>
+    	
+  		<div class="form-group">
+    		<label for="numeroTarjeta" class="col-sm-2 control-label">Numero de tarjeta:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="numeroTarjeta" placeholder="Numero de tarjeta" th:field="*{numeroTarjeta}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="dni" class="col-sm-2 control-label">DNI:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="dni" placeholder="dni" th:field="*{dni}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="apellido1" class="col-sm-2 control-label">Apellido 1:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="apellido1" placeholder="Apellido 1" th:field="*{apellido1}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="apellido2" class="col-sm-2 control-label">Apellido 2:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="apellido2" placeholder="Apellido 2" th:field="*{apellido2}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="nombre" class="col-sm-2 control-label">Nombre:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="nombre" placeholder="Nombre del paciente" th:field="*{nombre}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="fechaNacimiento" class="col-sm-2 control-label">Fecha de nacimiento:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="fechaNacimiento" placeholder="Fecha de nacimiento" th:field="*{fechaNacimiento}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="genero" class="col-sm-2 control-label">Sexo:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="genero" placeholder="Genero" th:field="*{genero}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="tipoIngreso" class="col-sm-2 control-label">Tipo de ingreso:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="tipoIngreso" placeholder="Tipo de ingreso" th:field="*{tipoIngreso}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="nombreMedicoResponsable" class="col-sm-2 control-label">Nombre del medico responsable:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="nombreMedicoResponsable" placeholder="Nombre del medico responsable" th:field="*{nombreMedicoResponsable}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="apellido1MedicoResponsable" class="col-sm-2 control-label">Apellido1 del medico responsable:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="apellido1MedicoResponsable" placeholder="Apellido1 del medico responsable" th:field="*{apellido1MedicoResponsable}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="apellido2MedicoResponsable" class="col-sm-2 control-label">Apellido2 del medico responsable:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="apellido2MedicoResponsable" placeholder="Apellido2 del medico responsable" th:field="*{apellido2MedicoResponsable}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="codigoMedicoResponsable" class="col-sm-2 control-label">Codigo del medico responsable:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="codigoMedicoResponsable" placeholder="Codigo del medico responsable" th:field="*{codigoMedicoResponsable}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="servicio" class="col-sm-2 control-label">Servicio:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="servicio" placeholder="Servicio" th:field="*{servicio}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="codigoGarante" class="col-sm-2 control-label">Codigo del garante:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="codigoGarante" placeholder="Codigo del garante" th:field="*{codigoGarante}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="descripcionGarante" class="col-sm-2 control-label">Descripcion del garante:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="descripcionGarante" placeholder="Descripcion del garante" th:field="*{descripcionGarante}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="idPeticionarioPrueba" class="col-sm-2 control-label">Id prueba:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="idPeticionarioPrueba" placeholder="Id prueba" th:field="*{idPeticionarioPrueba}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="idPeticionarioPeticion" class="col-sm-2 control-label">Id peticion:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="idPeticionarioPeticion" placeholder="Id peticion" th:field="*{idPeticionarioPeticion}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="fechaPeticion" class="col-sm-2 control-label">Fecha peticion:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="fechaPeticion" placeholder="Fecha peticion" th:field="*{fechaPeticion}"/>
+    		</div>
+  		</div>
+  		
+  		
+  		<div class="form-group">
+    		<label for="nombreMedicoPeticion" class="col-sm-2 control-label">Nombre del medico peticion:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="nombreMedicoPeticion" placeholder="Nombre del medico peticion" th:field="*{nombreMedicoPeticion}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="apellido1MedicoPeticion" class="col-sm-2 control-label">Apellido1 del medico peticion:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="apellido1MedicoPeticion" placeholder="Apellido1 del medico peticion" th:field="*{apellido1MedicoPeticion}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="apellido2MedicoPeticion" class="col-sm-2 control-label">Apellido2 del medico peticion:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="apellido2MedicoPeticion" placeholder="Apellido2 del medico peticion" th:field="*{apellido2MedicoPeticion}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="codigoMedicoPeticion" class="col-sm-2 control-label">Codigo del medico peticion:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="codigoMedicoPeticion" placeholder="Codigo del medico peticion" th:field="*{codigoMedicoPeticion}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="servicioPeticion" class="col-sm-2 control-label">Servicio de la peticion:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="servicioPeticion" placeholder="Servicio de la peticion" th:field="*{servicioPeticion}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="codigoCentroPeticion" class="col-sm-2 control-label">Centro de la peticion:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="codigoCentroPeticion" placeholder="Centro de la peticion" th:field="*{codigoCentroPeticion}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="descripcionCentroPeticion" class="col-sm-2 control-label">Descripcion del centro de la peticion:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="descripcionCentroPeticion" placeholder="Descripcion del centro de la peticion" th:field="*{descripcionCentroPeticion}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="codigoPrioridadPeticion" class="col-sm-2 control-label">Codigo de prioridad de la peticion:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="codigoPrioridadPeticion" placeholder="Codigo de prioridad de la peticion" th:field="*{codigoPrioridadPeticion}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="descripcionPrioridadPeticion" class="col-sm-2 control-label">Descripcion de prioridad de la peticion:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="descripcionPrioridadPeticion" placeholder="Descripcion de prioridad de la peticion" th:field="*{descripcionPrioridadPeticion}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="codigoPrueba" class="col-sm-2 control-label">Codigo de prueba:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="codigoPrueba" placeholder="Codigo de prueba" th:field="*{codigoPrueba}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="descripcionPrueba" class="col-sm-2 control-label">Descripcion de la prueba:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="descripcionPrueba" placeholder="Descripcion de la prueba" th:field="*{descripcionPrueba}"/>
+    		</div>
+  		</div>
+		
+		<input type="text" th:field="*{mensaje}" />
+		<button type="submit">Generar Mensaje</button>
+		
+		
+		
+	</form>
+
+</div>
+</body>
+</html>

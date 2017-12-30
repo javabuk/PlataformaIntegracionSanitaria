@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+ 
+    <title>Spring Framework Guru</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen" />
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+    <link href="../static/css/guru.css"
+          th:href="@{css/guru.css}" rel="stylesheet" media="screen"/>
+</head>
+<body>
+<div class="container">
+    <!-- <div class="jumbotron">  -->
+		<h2>Pagina de prueba</h2>
+		<br/>
+		<nav class="navbar navbar-default">
+		<div class="container-fluid">
+		<div class="navbar-header">
+			<ul class="nav navbar-nav">
+				<li><a href="/configuraciones">Configuraciones</a></li>
+				<li><a href="/FormularioHL7">Mensajes HL7</a></li>
+			</ul>
+		</div>
+		</div>
+		</nav>
+	
+	<div class="list-group">
+    <a href="/MensajesOML" class="list-group-item">
+      <h4 class="list-group-item-heading">Mensajes OML</h4>
+      <p class="list-group-item-text">Mensajería de peticiones de laboratorio</p>
+    </a>
+    <a href="#" class="list-group-item">
+      <h4 class="list-group-item-heading">Mensajes OMG</h4>
+      <p class="list-group-item-text">Mensajes de peticiones de radiodiagnostico</p>
+    </a>    
+  </div>
+	
+	<!-- </div> -->
+</div>
+</body>
+</html>

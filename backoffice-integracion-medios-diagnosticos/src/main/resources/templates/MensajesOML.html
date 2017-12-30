@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+<title>Resultado Mensajes</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="panel panel-default col-sm-8 col-md-offset-2" >
+		<div class="panel-heading col-sm-12">Mensaje Nueva petición</div>
+		<div class="panel-body col-sm-8">
+			<textarea rows="10" cols="175" th:field="*{mensaje.mensaje}" > </textarea>
+		</div>
+		<div class="panel-heading col-sm-12">Mensaje Búsqueda por DNI</div>
+		<div class="panel-body col-sm-8">
+			<textarea rows="10" cols="175" th:text="${busquedaPorDNI}" > </textarea>
+		</div>
+	</div>
+	<br />
+</body>
+</html>

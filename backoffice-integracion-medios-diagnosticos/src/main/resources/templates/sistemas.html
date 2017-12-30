@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>BackOffice Integracion Medios Diagnosticos</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+   
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+   	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script> -->
+	<script src="https://unpkg.com/popper.js"></script>	
+	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>	
+  <script >
+  $(document).ready(function(){
+	  $("#mytable #checkall").click(function () {
+	          if ($("#mytable #checkall").is(':checked')) {
+	              $("#mytable input[type=checkbox]").each(function () {
+	                  $(this).prop("checked", true);
+	              });
+
+	          } else {
+	              $("#mytable input[type=checkbox]").each(function () {
+	                  $(this).prop("checked", false);
+	              });
+	          }
+	      });
+	      
+	      //$("[data-toggle=tooltip]").tooltip();
+	      
+	      $('#modificar-sistema-form').on('submit', function(e){
+	            e.preventDefault();
+	            $.ajax({
+	                url: 'modificarSistema/',
+	                type: 'POST',
+	                data: $('#modificar-sistema-form').serialize(),
+	                success: function(data){
+	                	// Eliminamos el botón de modificar y mostramos el mensaje de confirmación
+	                	$("#mensajeConfirmacion").removeClass('hidden');  
+	                	$("#btnUpdateSistema").addClass('hidden');
+                		// Ponemos un retardo para cerrar la ventana y el usuario pueda visionar el mensaje de confirmación
+	                	setTimeout(function() {
+	                		// Forzamos el click del boton que cierra la modal.
+	                     	$('#btnCerrarModificacion').trigger("click");	                     	
+	                	 	// Recarga la pagina para que actualice los cambios
+	                     	location.reload();	     
+	                	}, 1500); // milliseconds
+	                }
+	            });
+	        });
+	      
+	      	$('#eliminar-sistema-form').on('submit', function(e){
+	            e.preventDefault();
+	            
+	            $.ajax({
+	                url: 'eliminarSistema/',
+	                type: 'POST',
+	                data: $('#eliminar-sistema-form').serialize(),
+	                success: function(data){
+	                	$("#borradoConfirmacion").removeClass('hidden');
+	                	$("#btnCerrarConfirmacionEliminar").addClass('hidden');
+	                	$("#btnCerrarNoConfirmacionEliminar").addClass('hidden');
+	                	setTimeout(function() {
+	                		// Forzamos el click del boton que cierra la modal.
+		                     $('#btnCerrarConfirmacionEliminar').trigger("click");
+		                	 // Recarga la pagina para que actualice los cambios
+		                     location.reload();    
+	                        
+	                    }, 1500); // milliseconds
+	                		                     
+	                }
+	            });
+	        });
+	      	
+	      	
+	      	$('#formBusquedaSistemas').on('submit', function(e){
+	            e.preventDefault();
+	            $.ajax({
+	                url: 'buscarSistemas/',
+	                type: 'POST',
+	                data: $('#formBusquedaSistemas').serialize(),
+	                success: function(data){	                	
+	                	document.getElementById("resultadosBusqueda").src = "busquedaSistemas";
+	                	//location.reload();
+	                }
+	            });
+	        });
+	      
+	  });
+  
+	      	function modificarSistema(objeto){	  			
+	  			$('#idSistema').val(objeto.getAttribute('idSistema'));
+	      		$('#descripcion').val(objeto.getAttribute('descripcion'));
+	  		}
+	      	
+	      	function borrarSistema(objeto){	  			
+	  			$('#idSistemaOculto').val(objeto.getAttribute('idSistema'));
+	  		}
+  		
+  </script>
+  <style type="text/css">
+		/* Estilos para mostrar, ocultar el div */
+		.show {
+  			display: block !important;
+		}
+		.hidden {
+  			display: none !important;
+  			visibility: hidden !important;
+		}
+		.invisible {
+  			visibility: hidden;
+		}
+		/* Estilo para el ancho y alto del iframe, también lo aplicamos en el container */
+		iframe {
+    		position: absolute;
+    		width:100%;
+    		height:90%;    		
+    		left:0;  
+    		border: 0px;  		
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+	
+	<!-- Panel que incluye los parámetros de búsqueda -->
+	<div class="panel panel-default">
+  		<div class="panel-heading"><strong>Sistemas</strong></div>
+  		<div class="panel-body">
+			<form id="formBusquedaSistemas" class="form-horizontal" target="resultadosBusqueda" >
+				<div class="col-sm-2">
+					<!-- <input class="form-control " type="text" id="idSistemaBusq" name ="idSistemaBusq" th:value="${busquedaSistemasExistentes.IdSistemaBusq}" placeholder="idSistemaBusq"></input> -->
+					<input class="form-control " type="text" id="idSistemaBusq" name ="idSistemaBusq"  placeholder="idSistemaBusq"></input>
+				</div>
+				<div class="col-sm-4">
+					<!-- <input class="form-control " type="text" id="descripcionBusq" name ="descripcionBusq" th:value="${busquedaSistemasExistentes.DescripcionBusq}" placeholder="descripcionBusq"></input> -->
+					<input class="form-control " type="text" id="descripcionBusq" name ="descripcionBusq" placeholder="descripcionBusq"></input>
+				</div>
+				<div class="col-sm-2">
+					<button type="submit" class="btn btn-primary">Buscar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	<!-- <div class="row">
+        <div class="col-md-12">
+        <h4>Listado de sistemas registrados:</h4>
+        <div class="table-responsive">
+              <table id="mytable" class="table table-bordred table-striped" >
+                   <thead>
+                   		<th data-field="idSistema" width="40">Id Sistema</th>
+                    	<th data-field="descripcion" width="200">Descripcion</th>                     	
+                      	<th width="20">Modificar</th>
+                       <th width="20">Borrar</th>
+                   </thead>
+    				<tbody>
+    					<tr th:each="sistema : ${sistemasExistentes}">
+							<td id="idSistemaFila" th:text="${sistema.idSistema}">1</td>
+							<td id="descripcionFila" th:text="${sistema.descripcion}">Mark</td>
+							<td>
+								<p data-placement="top"	data-toggle="tooltip" title="Edit">
+									Incluimos los atributos personalizados idSistema y descripcion, para poder utlizarlos después en la modidficación
+									<button 
+										id="btnEditFilaSistema" 
+										class="btn btn-primary btn-xs" 
+										data-title="Edit" 
+										data-toggle="modal" 
+										data-target="#edit"
+										onclick="modificarSistema(this)"
+										th:attr = "idSistema = ${sistema.idSistema}, descripcion = ${sistema.descripcion}"	
+										>
+										<span class="glyphicon glyphicon-pencil"></span>
+									</button>
+								</p>
+							</td>
+    						<td>
+    							<p data-placement="top" data-toggle="tooltip" title="Delete">
+    								<button 
+    									id="btnDeleteFilaSistema" 
+    									class="btn btn-danger btn-xs" 
+    									data-title="Delete" 
+    									data-toggle="modal" 
+    									data-target="#delete" 
+    									onclick="borrarSistema(this)"
+										th:attr = "idSistema = ${sistema.idSistema}, descripcion = ${sistema.descripcion}"
+    									>
+    										<span class="glyphicon glyphicon-trash"></span>
+    									</button>
+    								</p>
+    							</td>
+						</tr>
+    				</tbody>
+				</table>
+<div class="clearfix"></div>
+
+                
+            </div>
+        </div>
+	</div> -->
+	<iframe 
+		id="resultadosBusqueda" 
+		style="position:absolute;"
+		src = "busquedaSistemas"
+		> 
+	</iframe>  
+</div>
+
+<!-- <form id="modificar-sistema-form" action="/modificarSistema/" method="post"> -->
+<form id="modificar-sistema-form">
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button id="btnCerrarModificacion" type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Modifica los datos del sistema</h4>
+      </div>
+          <div class="modal-body">
+          <div class="form-group">
+        <input class="form-control " type="text" id="idSistema" name ="idSistema" placeholder="idSistema"></input>
+        </div>
+        <div class="form-group">
+        
+        <input class="form-control " type="text" id="descripcion" name ="descripcion" placeholder="Descripcion"></input>
+        </div>        
+    	</div>           
+      	<div class="alert alert-success hidden" id="mensajeConfirmacion">
+  			El sistema se ha registrado correctamente.
+		</div>
+      
+          <div class="modal-footer ">
+        <button id="btnUpdateSistema" type="submit" class="btn btn-warning btn-lg" style="width: 100%;"><span id="spnUpdateSistema" class="glyphicon glyphicon-ok-sign"></span> Modificar</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+    
+    
+    	<div id="subscription-confirm" class="modal hide fade in" aria-hidden="true">
+    		<div class="modal-header">
+        		<label id="responsestatus"></label>
+    		</div>
+		</div>
+  
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
+</form>
+
+	<form id="eliminar-sistema-form">
+		<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+			aria-labelledby="edit" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+						<h4 class="modal-title custom_align" id="Heading">Borrar el
+							sistema</h4>
+					</div>
+					<div class="modal-body">
+
+						<div class="alert alert-danger">
+							<span class="glyphicon glyphicon-warning-sign"></span> ¿Desea
+							eliminar este sistema?
+						</div>
+						<input type="hidden" id="idSistemaOculto" name="idSistemaOculto"></input>
+					</div>
+					<div class="alert alert-success hidden" id="borradoConfirmacion">
+						El sistema se ha borrado correctamente.</div>
+					<div class="modal-footer ">
+						<button type="submit" id="btnCerrarConfirmacionEliminar"
+							class="btn btn-success">
+							<span class="glyphicon glyphicon-ok-sign"></span> Si
+						</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal" id="btnCerrarNoConfirmacionEliminar">
+							<span class="glyphicon glyphicon-remove"></span> No
+						</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+	</form>
+</body>
+</html>
