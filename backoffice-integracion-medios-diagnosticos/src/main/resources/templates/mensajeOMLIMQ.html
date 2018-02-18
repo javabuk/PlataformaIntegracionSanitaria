@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>	
+	
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script> -->
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<script>
+	$(document).ready(function() {
+	  	
+				
+		$("#myInput").on("keyup", function() {
+		    var value = $(this).val().toLowerCase();
+		    $("#myTable tr").filter(function() {
+		      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		    });
+		  });
+		
+		
+		$(":checkbox").change(function () {
+			
+			$("#seleccionados").append('<option value="'+ 	$(this).closest('td').prev('td').prev('td').text() + '-' +$(this).closest('td').prev('td').text()+'" selected = "true">'+ 	$(this).closest('td').prev('td').prev('td').text() + '-' +$(this).closest('td').prev('td').text()+'</option>');
+		});
+
+
+		
+	});
+	
+	
+	</script>
+	
+	
+	<style type="text/css">
+		/* Estilos para la tabla con scroll */			
+		.table-fixed thead {
+  			width: 97%;
+		}
+		.table-fixed tbody {
+  			height: 230px;
+  			overflow-y: auto;
+  			width: 100%;
+		}
+		.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  			display: block;
+		}
+		.table-fixed tbody td, .table-fixed thead > tr> th {
+  			float: left;
+  			border-bottom-width: 0;
+		}		
+
+	</style>
+	
+</head>
+<body>
+	<h2>Mensaje OML - Gestor peticiones</h2>
+		<div class="container">	
+			<form class="form-horizontal" th:object="${mensajeHL7}" th:action="@{/ResultadoMensajesHL7IMQ}" method="post">
+			<div class="tab-pane" id="tab1">
+			
+				<div class="row">
+			<div id="" style="background-color: #cfc; border-radius:8px; padding: 10px 10px 10px 10px;">
+				<div class="form-group jorge">
+    				<label for="sistemaOrigen" class="col-sm-3 control-label">Sistema Origen:</label>
+    				<div class="col-sm-4">
+    					<input type="text" class="form-control" id="sistemaOrigen" placeholder="sistemaOrigen" th:field="*{sistemaOrigen}"/>
+    				</div>
+    			</div>
+    			<div class="form-group">
+    				<label for="sistemaDestino" class="col-sm-3 control-label">Sistema Destino:</label>
+    				<div class="col-sm-4">
+    					<input type="text" class="form-control" id="sistemaDestino" placeholder="sistemaDestino" th:field="*{sistemaDestino}"/>
+    				</div>
+  				</div>	
+    		</div>
+    	</div>
+				
+			</div>
+			<div class="tab-pane" id="tab2">
+				<div class="form-group">
+					<label for="numeroTarjeta" class="col-sm-2 control-label">Numero
+						de tarjeta:</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="numeroTarjeta"
+							placeholder="Numero de tarjeta" th:field="*{numeroTarjeta}" />
+					</div>
+				</div>
+				<div class="form-group">
+    		<label for="dni" class="col-sm-2 control-label">DNI:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="dni" placeholder="dni" th:field="*{dni}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="apellido1" class="col-sm-2 control-label">Apellido 1:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="apellido1" placeholder="Apellido 1" th:field="*{apellido1}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="apellido2" class="col-sm-2 control-label">Apellido 2:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="apellido2" placeholder="Apellido 2" th:field="*{apellido2}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="nombre" class="col-sm-2 control-label">Nombre:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="nombre" placeholder="Nombre del paciente" th:field="*{nombre}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="fechaNacimiento" class="col-sm-2 control-label">Fecha de nacimiento:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="fechaNacimiento" placeholder="Fecha de nacimiento" th:field="*{fechaNacimiento}"/>
+    		</div>
+  		</div>
+  		
+			</div>
+			<div class="tab-pane" id="tab3">
+			<div class="form-group">
+    		<label for="tipoIngreso" class="col-sm-2 control-label">Tipo de ingreso:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="tipoIngreso" placeholder="Tipo de ingreso" th:field="*{tipoIngreso}"/>
+    		</div>
+  		</div>  		
+  		
+			</div>
+			<div class="tab-pane" id="tab4">
+				<div class="form-group">
+    		<label for="codigoGarante" class="col-sm-2 control-label">Codigo del garante:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="codigoGarante" placeholder="Codigo del garante" th:field="*{codigoGarante}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="descripcionGarante" class="col-sm-2 control-label">Descripcion del garante:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="descripcionGarante" placeholder="Descripcion del garante" th:field="*{descripcionGarante}"/>
+    		</div>
+  		</div>
+			</div>
+			<div class="tab-pane" id="tab5">
+			<div class="form-group">
+    		<label for="idPeticionarioPrueba" class="col-sm-2 control-label">Id prueba:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="idPeticionarioPrueba" placeholder="Id prueba" th:field="*{idPeticionarioPrueba}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="idPeticionarioPeticion" class="col-sm-2 control-label">Id peticion:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="idPeticionarioPeticion" placeholder="Id peticion" th:field="*{idPeticionarioPeticion}"/>
+    		</div>
+  		</div>
+  		<div class="form-group">
+    		<label for="fechaPeticion" class="col-sm-2 control-label">Fecha peticion:</label>
+    		<div class="col-sm-4">
+    			<input type="text" class="form-control" id="fechaPeticion" placeholder="Fecha peticion" th:field="*{fechaPeticion}"/>
+    		</div>
+  		</div>
+  		</div>
+						
+  		
+  		
+  		<div class="panel panel-default">
+  		<div class="panel-heading">
+          <h4>
+            Codigos Pruebas  
+          </h4>
+        </div>
+        <p>Busqueda por codigo o descripcion de la prueba</p>  
+  		<input class="form-control" id="myInput" type="text" placeholder="Search.."></input>
+  		<br></br>
+        <table class="table table-fixed">
+          <thead>
+            <tr>
+              <th class="col-xs-2">Codigo</th><th class="col-xs-8">Descripcion</th><th class="col-xs-2">Seleccionada</th>
+            </tr>
+          </thead>
+          <tbody id="myTable">						
+						<tr th:each="codigo : ${codigosExistentes}">    						
+							<td class="col-xs-2" th:text="${codigo.codigo}">1</td>
+							<td class="col-xs-8" th:text="${codigo.descripcion}">Mark</td>
+							<td class="col-xs-2"><input type="checkbox" class="checkthis" ></input></td>							
+						</tr>
+          </tbody>
+        </table>
+        
+        <select multiple = "true" class="form-control" id="seleccionados" name="seleccionados">        	        
+      	</select>
+      </div>
+  	
+  	
+  		<div class="col-sm-2">
+					<button type="submit" class="btn btn-primary">Generar</button>
+				</div>
+		</form>
+	</div>
+	
+	
+</body>
+</html>

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -171,11 +172,28 @@ public class LoginController {
 		return "busquedaGeneral";
 	}
 
+	@RequestMapping("/LlamadasWS")
+	public String llamadasWS(Model model) {
+		return "LlamadasWS";
+	}
+	
+	@RequestMapping("/LlamadasWSTratamiento")
+	public String llamadasWSTratamiento(Model model) {
+		return "LlamadasWSTratamiento";
+	}
+	
 	@RequestMapping("/mensajeOMLWizard")
 	public String mensajeOMLWizard(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
 			Model model) {
 		model.addAttribute("mensajeHL7", new MensajeHL7());
 		return "mensajeOMLWizard";
+	}
+	
+	@RequestMapping("/mensajeOMLIMQ")
+	public String mensajeOMLIMQ( Model model) {
+		model.addAttribute("mensajeHL7", new MensajeHL7());
+		model.addAttribute("codigosExistentes", codigoRepository.findCodigosSistemaTipo("INFO33","LAB"));
+		return "mensajeOMLIMQ";
 	}
 
 	@RequestMapping(value = "/ResultadoMensajesHL7", method = RequestMethod.POST)
@@ -187,6 +205,25 @@ public class LoginController {
 		mensajeBusquedaPorDni = hl7Service.generarConsultaPorDNI(mensaje);
 		model.addAttribute("mensaje", mensaje);
 		model.addAttribute("busquedaPorDNI", mensajeBusquedaPorDni);
+		return "MensajesOML";
+	}
+	
+	@RequestMapping(value = "/ResultadoMensajesHL7IMQ", method = RequestMethod.POST)
+	public String ResultadoMensajesHL7IMQ(Model model, MensajeHL7 mensaje, HttpServletRequest request,  @RequestParam Map<String, String> params
+			) {
+		// mensaje.setMensaje(hl7Service.convertirMensajeOML(mensaje.getSistemaOrigen(),
+		// mensaje.getSistemaDestino(), mensaje.getMensaje()));
+		
+		Map<String, String[]> parametros = request.getParameterMap(); 
+		for (String key: parametros.keySet()) {
+		    if(key.equalsIgnoreCase("seleccionados")){
+		    	String [] valores = parametros.get(key);
+		    	mensaje.setPruebasLaboratorio(valores);
+		    }
+		}
+		
+		mensaje.setMensaje(hl7Service.convertirMensajeOMLIMQ(mensaje));
+		model.addAttribute("mensaje", mensaje);
 		return "MensajesOML";
 	}
 

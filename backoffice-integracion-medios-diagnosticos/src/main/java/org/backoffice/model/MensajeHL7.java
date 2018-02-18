@@ -51,6 +51,9 @@ public class MensajeHL7 {
 	private String descripcionPrueba;
 	private String sistemaPrueba;
 
+	// Datos pruebas
+	private String [] pruebasLaboratorio;
+	
 	public String getNumeroTarjeta() {
 		return numeroTarjeta;
 	}
@@ -386,5 +389,15 @@ public class MensajeHL7 {
 	public void setDescripcionServicioPeticion(String descripcionServicioPeticion) {
 		this.descripcionServicioPeticion = descripcionServicioPeticion;
 	}
+
+	public String[] getPruebasLaboratorio() {
+		return pruebasLaboratorio;
+	}
+
+	public void setPruebasLaboratorio(String[] pruebasLaboratorio) {
+		this.pruebasLaboratorio = pruebasLaboratorio;
+	}
+	
+	
 
 }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+ 
+    <title>Llamadas WS</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link> 
+  <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/popper.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>	
+  <script >
+  /* <![CDATA[ */
+  	$(document).ready(function () {
+	    $('#invocarWS').click(function (event) {	    		    		    	
+	    	//var datosJSON = "mensajeConsulta=" + $('#consulta').val();
+	    	var datosJSON = { mensajeHL7:  $('#consulta').val() }
+	    	$.ajax({
+	              url: 'tratamientoGestorPeticiones/',
+	              type: 'POST',
+	              data: datosJSON,
+	              success: function(data){
+	            	  $('#respuesta').val(data);
+	              }
+	          });
+	    });
+	});
+  	      	  	
+  	/* ]]> */
+  </script>
+</head>
+<body>
+<h2>Mensaje</h2>
+<br/>
+<textarea rows="30" cols="250" id="consulta" name ="consulta"></textarea>
+<br/>
+<input type="button" id="invocarWS" value="InvocarWS"></input>
+<br/>
+<textarea rows="20" cols="250" id="respuesta" name ="respuesta"></textarea>
+<br/>
+</body>
+</html>

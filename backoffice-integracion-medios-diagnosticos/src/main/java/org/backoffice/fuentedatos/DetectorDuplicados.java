@@ -36,10 +36,14 @@ public class DetectorDuplicados {
 	
 	public List<CodigoDTO> eliminarDuplicados(List<CodigoDTO> listaOriginal){
 		ArrayList<CodigoDTO> listaDuplicados = new ArrayList<CodigoDTO>();// unique
+		//System.out.println("Total " + listaOriginal.size());
 	    for (CodigoDTO codigo : listaOriginal) {
-	    	if (!listaDuplicados.contains(codigo)) {
-	    		listaDuplicados.add(codigo);
-	        }
+	    	//System.out.println("Codigo " + codigo.getCodigo());
+	    	if(codigo != null){	    		
+	    		if (!listaDuplicados.contains(codigo)) {
+	    			listaDuplicados.add(codigo);
+	    		}
+	    	}
 	    }
 	    return listaDuplicados;
 	}

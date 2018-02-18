@@ -15,7 +15,11 @@ import org.backoffice.model.Codigo;
 import org.backoffice.model.Correlacion;
 import org.backoffice.model.Sistema;
 import org.backoffice.model.Traza;
+import org.backoffice.servicios.GeneracionHL7Service;
+import org.backoffice.servicios.GestorPeticionesWSService;
+import org.backoffice.servicios.TrazasService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +41,14 @@ public class RESTController {
 
 	@Autowired
 	TrazaRepository trazaRepository;
+	
+	
+	private GestorPeticionesWSService gestorPeticionesService;
+	
+	@Autowired
+	public void setTrazasService(GestorPeticionesWSService gestorPeticionesService) {
+		this.gestorPeticionesService = gestorPeticionesService;
+	}
 
 	@RequestMapping("/parque")
 	public List<BusquedaGeneralDTO> greeting(@RequestParam(value = "name") String name,
@@ -155,4 +167,27 @@ public class RESTController {
 		}
 		return resultados;
 	}
+	
+	
+	@RequestMapping("/busquedaGestorPeticiones")
+	public String consultaWS(
+			@RequestParam(value = "mensajeConsulta") String mensajeConsulta
+			){
+		String resultado = null;
+		resultado = gestorPeticionesService.busquedaPeticiones(mensajeConsulta);
+		return resultado;
+	}
+		
+	@RequestMapping("/tratamientoGestorPeticiones")
+	public String tratamientoWS(
+			@RequestParam(value = "mensajeHL7") String mensajeHL7
+			){
+		String resultado = null;
+		resultado = gestorPeticionesService.tratamientoPeticionesER7(mensajeHL7);
+		return resultado;
+	}		
+			
+			
+			
+	
 }

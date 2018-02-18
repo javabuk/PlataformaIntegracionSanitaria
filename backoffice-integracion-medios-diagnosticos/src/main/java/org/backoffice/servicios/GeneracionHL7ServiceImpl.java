@@ -232,6 +232,182 @@ public class GeneracionHL7ServiceImpl implements GeneracionHL7Service {
 		return texto;
 	}
 
+	
+	public String convertirMensajeOMLIMQ(MensajeHL7 mensajeHL7) {
+		String texto = "";
+		try {
+			// TODO Auto-generated method stub
+			OML_O21 adt = new OML_O21();
+			// ADT_A01 adt = new ADT_A01();
+			adt.initQuickstart("OML", "O21", "P");
+			// Segmento MSH
+			MSH mshSegment = adt.getMSH();
+			mshSegment.getMsh3_SendingApplication().getHd1_NamespaceID().setValue(mensajeHL7.getSistemaOrigen());
+			mshSegment.getMsh5_ReceivingApplication().getHd1_NamespaceID().setValue(mensajeHL7.getSistemaDestino());
+			mshSegment.getMsh7_DateTimeOfMessage().getTs1_Time().setValue(Util.obtenerFechaActual());
+			mshSegment.getMsh10_MessageControlID().setValue(Util.obtenerCorrelativo());
+			mshSegment.getMsh11_ProcessingID().getPt1_ProcessingID().setValue("P");
+			mshSegment.getMsh12_VersionID().getVid1_VersionID().setValue("2.5");
+			// Segmento PID
+			PID pid = adt.getPATIENT().getPID();
+			pid.getPid1_SetIDPID().setValue("1");
+			pid.getPatientIdentifierList(0).getCx1_IDNumber().setValue(mensajeHL7.getNumeroTarjeta());
+			// pid.getPatientIdentifierList(0).getCx4_AssigningAuthority().getHd1_NamespaceID().setValue(mensajeHL7.getSistemaTarjeta());
+			pid.getPatientIdentifierList(0).getCx4_AssigningAuthority().getHd1_NamespaceID()
+					.setValue(mensajeHL7.getCodigoGarante());
+			pid.getPatientIdentifierList(0).getCx5_IdentifierTypeCode().setValue("NUMTARJETA");
+
+			pid.getPatientIdentifierList(1).getCx1_IDNumber().setValue(mensajeHL7.getDni());
+			pid.getPatientIdentifierList(1).getCx4_AssigningAuthority().getHd1_NamespaceID().setValue("DNI");
+			pid.getPatientIdentifierList(1).getCx5_IdentifierTypeCode().setValue("MI");
+
+			pid.getPatientName(0).getXpn1_FamilyName().getSurname().setValue(mensajeHL7.getApellido1());
+			pid.getPatientName(0).getXpn2_GivenName().setValue(mensajeHL7.getNombre());
+			pid.getPid6_MotherSMaidenName(0).getXpn1_FamilyName().getFn1_Surname().setValue(mensajeHL7.getApellido2());
+
+			pid.getPid7_DateTimeOfBirth().getTs1_Time().setValue(mensajeHL7.getFechaNacimiento());
+			pid.getPid8_AdministrativeSex().setValue("M");
+			// Segmento PV1
+			PV1 pv1 = adt.getPATIENT().getPATIENT_VISIT().getPV1();
+			pv1.getSetIDPV1().setValue("1");
+			pv1.getPv12_PatientClass().setValue(mensajeHL7.getTipoIngreso());
+
+			pv1.getPv114_AdmitSource().setValue("1");
+			
+			pv1.getPv17_AttendingDoctor(0).getXcn1_IDNumber().setValue(mensajeHL7.getCodigoMedicoResponsable());
+			pv1.getPv17_AttendingDoctor(0).getXcn2_FamilyName().getFn1_Surname()
+					.setValue(mensajeHL7.getApellido1MedicoResponsable());
+			pv1.getPv17_AttendingDoctor(0).getXcn3_GivenName().setValue(mensajeHL7.getNombreMedicoResponsable());
+			pv1.getPv17_AttendingDoctor(0).getXcn4_SecondAndFurtherGivenNamesOrInitialsThereof()
+					.setValue(mensajeHL7.getApellido2MedicoResponsable());
+			// pv1.getPv17_AttendingDoctor(0).getXcn9_AssigningAuthority().getHd1_NamespaceID().setValue(mensajeHL7.getSistemaOrigen());
+			pv1.getPv17_AttendingDoctor(0).getXcn9_AssigningAuthority().getHd1_NamespaceID()
+					.setValue(mensajeHL7.getSistemaOrigen());
+
+			pv1.getPv18_ReferringDoctor(0).getXcn1_IDNumber().setValue(mensajeHL7.getCodigoMedicoResponsable());
+			pv1.getPv18_ReferringDoctor(0).getXcn2_FamilyName().getFn1_Surname()
+					.setValue(mensajeHL7.getApellido1MedicoResponsable());
+			pv1.getPv18_ReferringDoctor(0).getXcn3_GivenName().setValue(mensajeHL7.getNombreMedicoResponsable());
+			pv1.getPv18_ReferringDoctor(0).getXcn4_SecondAndFurtherGivenNamesOrInitialsThereof()
+					.setValue(mensajeHL7.getApellido2MedicoResponsable());
+			// pv1.getPv18_ReferringDoctor(0).getXcn9_AssigningAuthority().getHd1_NamespaceID().setValue(mensajeHL7.getSistemaMedicoResponsable());
+			pv1.getPv18_ReferringDoctor(0).getXcn9_AssigningAuthority().getHd1_NamespaceID()
+					.setValue(mensajeHL7.getSistemaOrigen());
+
+			pv1.getPv110_HospitalService().setValue(mensajeHL7.getServicio());
+			// Segmento GT1
+			GT1 gt1 = adt.getPATIENT().getGT1();
+			gt1.getGt11_SetIDGT1().setValue("1");
+			gt1.getGt12_GuarantorNumber(0).getCx1_IDNumber().setValue(mensajeHL7.getCodigoGarante());
+			// gt1.getGt12_GuarantorNumber(0).getCx4_AssigningAuthority().getHd1_NamespaceID().setValue(mensajeHL7.getSistemaGarante());
+			gt1.getGt12_GuarantorNumber(0).getCx4_AssigningAuthority().getHd1_NamespaceID()
+					.setValue(mensajeHL7.getSistemaOrigen());
+			gt1.getGt13_GuarantorName(0).getXpn2_GivenName().setValue(mensajeHL7.getDescripcionGarante());
+			gt1.getGt110_GuarantorType().setValue("GUARANTOR");
+			
+			
+			int idPeticionarioPrueba = Integer.parseInt(mensajeHL7.getIdPeticionarioPrueba());
+			int idPeticionarioPeticion = Integer.parseInt(mensajeHL7.getIdPeticionarioPeticion());
+			
+			if(mensajeHL7.getPruebasLaboratorio() !=null && mensajeHL7.getPruebasLaboratorio().length>0){
+				String [] codigosDescripion = mensajeHL7.getPruebasLaboratorio();
+				for (int i = 0; i < codigosDescripion.length; i++) {
+					String codigoDescripcion = codigosDescripion[i];
+					if(codigoDescripcion.contains("-")){
+						String [] valoresPruebas = codigoDescripcion.split("-");
+						
+						// Segmento ORC
+						ORC orc = adt.getORDER(i).getORC();
+						orc.getOrc1_OrderControl().setValue("NW");
+						orc.getOrc2_PlacerOrderNumber().getEi1_EntityIdentifier().setValue(Integer.toString(idPeticionarioPrueba));
+						// orc.getOrc2_PlacerOrderNumber().getEi2_NamespaceID().setValue(mensajeHL7.getSistemaPeticionarioPrueba());
+						orc.getOrc2_PlacerOrderNumber().getEi2_NamespaceID().setValue(mensajeHL7.getSistemaOrigen());
+						
+						orc.getOrc4_PlacerGroupNumber().getEi1_EntityIdentifier().setValue(Integer.toString(idPeticionarioPeticion));
+						// orc.getOrc3_FillerOrderNumber().getEi2_NamespaceID().setValue(mensajeHL7.getSistemaPeticionarioPeticion());
+						orc.getOrc4_PlacerGroupNumber().getEi2_NamespaceID().setValue(mensajeHL7.getSistemaOrigen());
+						//orc.getOrc9_DateTimeOfTransaction().getTs1_Time().setValue(mensajeHL7.getFechaPeticion());
+						orc.getOrc9_DateTimeOfTransaction().getTs1_Time().setValue(Util.obtenerFechaActual());
+
+						orc.getOrc12_OrderingProvider(0).getXcn1_IDNumber().setValue("10431");
+						orc.getOrc12_OrderingProvider(0).getXcn2_FamilyName().getFn1_Surname()
+						.setValue("VILLANUEVA");
+						orc.getOrc12_OrderingProvider(0).getXcn3_GivenName().setValue("MARTA");
+						orc.getOrc12_OrderingProvider(0).getXcn4_SecondAndFurtherGivenNamesOrInitialsThereof()
+						.setValue("VIELBA");
+						// orc.getOrc12_OrderingProvider(0).getXcn9_AssigningAuthority().getHd1_NamespaceID().setValue(mensajeHL7.getSistemaMedicoPeticion());
+						orc.getOrc12_OrderingProvider(0).getXcn9_AssigningAuthority().getHd1_NamespaceID()
+						.setValue(mensajeHL7.getSistemaOrigen());
+						orc.getOrc17_EnteringOrganization().getCe1_Identifier().setValue(mensajeHL7.getServicioPeticion());
+						orc.getOrc17_EnteringOrganization().getCe2_Text().setValue(mensajeHL7.getDescripcionServicioPeticion());
+						orc.getOrc17_EnteringOrganization().getCe3_NameOfCodingSystem().setValue(mensajeHL7.getSistemaOrigen());
+						
+						orc.getOrc21_OrderingFacilityName(0).getXon1_OrganizationName()
+						.setValue("CENTRO COLON");
+						// orc.getOrc21_OrderingFacilityName(0).getXon6_AssigningAuthority().getHd1_NamespaceID().setValue(mensajeHL7.getSistemaCentroPeticion());
+						orc.getOrc21_OrderingFacilityName(0).getXon6_AssigningAuthority().getHd1_NamespaceID()
+						.setValue(mensajeHL7.getSistemaOrigen());
+						orc.getOrc21_OrderingFacilityName(0).getXon10_OrganizationIdentifier()
+						.setValue("0606");
+						// Segmento TQ1
+						TQ1 tq1 = adt.getORDER(i).getTIMING(0).getTQ1();
+						tq1.getSetIDTQ1().setValue("1");
+						tq1.getTq19_Priority(0).getCwe1_Identifier().setValue("R");
+						tq1.getTq19_Priority(0).getCwe2_Text().setValue("NORMAL");
+						// tq1.getTq19_Priority(0).getCwe3_NameOfCodingSystem().setValue(mensajeHL7.getSistemaPrioridadPeticion());
+						tq1.getTq19_Priority(0).getCwe3_NameOfCodingSystem().setValue("HL70485");
+						// Segmento OBR
+						OBR obr = adt.getORDER(i).getOBSERVATION_REQUEST().getOBR();
+						obr.getSetIDOBR().setValue("1");
+						obr.getObr2_PlacerOrderNumber().getEi1_EntityIdentifier().setValue(Integer.toString(idPeticionarioPrueba));
+						// obr.getObr2_PlacerOrderNumber().getEi2_NamespaceID().setValue(mensajeHL7.getSistemaPeticionarioPrueba());
+						obr.getObr2_PlacerOrderNumber().getEi2_NamespaceID().setValue(mensajeHL7.getSistemaOrigen());
+						obr.getObr4_UniversalServiceIdentifier().getCe1_Identifier().setValue(valoresPruebas[0]);
+						obr.getObr4_UniversalServiceIdentifier().getCe2_Text().setValue(valoresPruebas[1]);
+						// obr.getObr4_UniversalServiceIdentifier().getCe3_NameOfCodingSystem().setValue(mensajeHL7.getSistemaPrueba());
+						obr.getObr4_UniversalServiceIdentifier().getCe3_NameOfCodingSystem()
+						.setValue(mensajeHL7.getSistemaOrigen());
+						
+						obr.getObr16_OrderingProvider(0).getXcn1_IDNumber().setValue("10431");
+						obr.getObr16_OrderingProvider(0).getXcn2_FamilyName().getFn1_Surname()
+						.setValue("VILLANUEVA");
+						obr.getObr16_OrderingProvider(0).getXcn3_GivenName().setValue("MARTA");
+						obr.getObr16_OrderingProvider(0).getXcn4_SecondAndFurtherGivenNamesOrInitialsThereof()
+						.setValue("VIELBA");
+						obr.getObr16_OrderingProvider(0).getXcn9_AssigningAuthority().getHd1_NamespaceID()
+						.setValue(mensajeHL7.getSistemaOrigen());
+						
+						idPeticionarioPrueba++;
+						//idPeticionarioPeticion++;
+					}
+				}
+			}
+			
+			
+			
+			
+
+			HapiContext context = new DefaultHapiContext();
+			// ParserConfiguration config = new ParserConfiguration();
+			ParserConfiguration config = context.getParserConfiguration();
+			Escaping escape = config.getEscaping();
+			Parser parser = context.getPipeParser();
+			String encodedMessage = parser.encode(adt);
+			texto = encodedMessage;
+
+			slf4jLogger.info(encodedMessage);
+			slf4jLogger.info(replaceNewlines(encodedMessage));
+			// Next, let's use the XML parser to encode as XML
+			parser = context.getXMLParser();
+			encodedMessage = parser.encode(adt);
+			// texto = encodedMessage;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return texto;
+	}
+	
 	public String convertirMensajeOMG(MensajeHL7 mensajeHL7) {
 		String texto = "";
 		try {

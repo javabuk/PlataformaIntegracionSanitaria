@@ -46,7 +46,7 @@ public class FicheroHojaCalculo {
 						int indiceColumna = cell.getColumnIndex();
 
 						if (indiceColumna == 0) {
-							if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+							if (cell.getCellType() == Cell.CELL_TYPE_STRING || cell.getCellType() == Cell.CELL_TYPE_FORMULA) {
 								codigo.setCodigo(cell.getStringCellValue());
 							} else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
 								double valorNumerico = cell.getNumericCellValue();
@@ -55,7 +55,7 @@ public class FicheroHojaCalculo {
 								codigo.setCodigo("No valido");
 							}
 						} else if (indiceColumna == 1) {
-							if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+							if (cell.getCellType() == Cell.CELL_TYPE_STRING || cell.getCellType() == Cell.CELL_TYPE_FORMULA) {
 								codigo.setDescripcion(cell.getStringCellValue());
 							} else {
 								codigo.setDescripcion("No es de tipo string");

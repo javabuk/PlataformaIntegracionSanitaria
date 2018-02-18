@@ -28,6 +28,10 @@
 	  document.getElementById("principal").src = "mensajeOMLWizard";
 	}
   
+  function goMensajeOMLIMQ() {
+	  document.getElementById("principal").src = "mensajeOMLIMQ";
+	}
+  
   function goTablaTrazas() {
 	  document.getElementById("principal").src = "tablaTrazas";
 	}
@@ -59,6 +63,15 @@
   	function goBusquedaGeneral() {
   	  document.getElementById("principal").src = "busquedaGeneral";
   	}
+  	
+  	function goLlamadasWS() {
+    	  document.getElementById("principal").src = "LlamadasWS";
+    	}
+  	
+  	function goLlamadasWSTratamiento() {
+  	  document.getElementById("principal").src = "LlamadasWSTratamiento";
+  	}
+  	
   
   </script>
   
@@ -98,6 +111,7 @@
           <li><a href="#" onclick="goFormularioCorrelaciones()">Nueva correlacion</a></li>
           <li><a href="#" onclick="goCargaAutomatica()">Carga automatica</a></li>
           <li><a href="#" onclick="goBusquedaGeneral()">BusquedaGeneral</a></li>          
+          <li><a href="#" onclick="goLlamadasWS()">Llamadas WS</a></li>
         </ul>
       </li>
       <li class="active"><a href="#" onclick="goTablaTrazas()">Trazas</a></li>
@@ -105,6 +119,8 @@
         <ul class="dropdown-menu">
           <li><a href="#" onclick="goInforme()">Generar informe a partir fichero hl7</a></li>
           <li><a href="#" onclick="goMensajeOMLWizard()">Generar mensajes OML - Gestor de Peticiones</a></li>
+          <li><a href="#" onclick="goMensajeOMLIMQ()">Generar mensajes OML PruebasIntegración IMQ</a></li>
+          <li><a href="#" onclick="goLlamadasWSTratamiento()">Invocar WS Tratamiento del Gestor de Peticiones</a></li>
         </ul>
       </li>      
     </ul>

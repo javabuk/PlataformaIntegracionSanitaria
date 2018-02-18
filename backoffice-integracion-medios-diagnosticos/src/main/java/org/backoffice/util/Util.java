@@ -13,7 +13,7 @@ public class Util {
 	 */
 	public static String obtenerFechaActual() {
 		Date fechaActual = new Date(System.currentTimeMillis());
-		SimpleDateFormat dt1 = new SimpleDateFormat("yyyymmddhhmmss");
+		SimpleDateFormat dt1 = new SimpleDateFormat("yyyyMMddhhmmss");
 		return dt1.format(fechaActual);
 	}
 

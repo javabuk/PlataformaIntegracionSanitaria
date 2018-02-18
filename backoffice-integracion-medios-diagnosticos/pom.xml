@@ -40,11 +40,17 @@
 			</exclusions>
 		</dependency>
 
-		<!-- Oracle JDBC driver -->
+		<!-- Oracle JDBC driver 
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc7</artifactId>
 			<version>12.1.0.1</version>
+		</dependency>-->
+		<!-- https://mvnrepository.com/artifact/oracle/ojdbc6 -->
+		<dependency>
+    		<groupId>com.oracle</groupId>
+    		<artifactId>ojdbc6</artifactId>
+    		<version>11.2.0</version>
 		</dependency>
 
 		<!-- hsqldb driver -->
@@ -130,7 +136,40 @@
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
             <scope>test</scope>
-        </dependency>		
+        </dependency>	
+        
+        <!-- org.apache.axis -->
+		<dependency>
+			<groupId>org.apache.axis</groupId>
+			<artifactId>axis</artifactId>
+			<version>1.4</version>			
+		</dependency>
+
+		<dependency>
+			<groupId>commons-discovery</groupId>
+			<artifactId>commons-discovery</artifactId>
+			<version>0.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>wsdl4j</groupId>
+			<artifactId>wsdl4j</artifactId>
+			<version>1.6.3</version>
+		</dependency>
+
+
+		<!-- javax.xml -->
+		<dependency>
+			<groupId>javax.xml</groupId>
+			<artifactId>jaxrpc-api</artifactId>
+			<version>1.1</version>
+		</dependency>
+		
+		<dependency>
+    		<groupId>commons-lang</groupId>
+    		<artifactId>commons-lang</artifactId>
+    		<version>2.6</version>
+		</dependency>	
 
 	</dependencies>
 
